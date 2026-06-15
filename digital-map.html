@@ -11,11 +11,14 @@
       font-family: 'Noto Sans KR', '맑은 고딕', sans-serif;
       background: #f0f4f8;
       color: #1a202c;
-      padding: 24px 20px 60px;
-      max-width: 560px;
+      padding: 20px 18px 72px;
+      max-width: 540px;
       margin: 0 auto;
+      font-size: 1.05rem;
+      line-height: 1.6;
     }
 
+    /* ── 뒤로가기 ── */
     .back {
       display: inline-flex;
       align-items: center;
@@ -24,254 +27,753 @@
       font-size: 1.1rem;
       font-weight: 600;
       text-decoration: none;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
+    /* ── 히어로 ── */
     .hero {
       background: #4B5FA8;
       color: #fff;
-      border-radius: 20px;
-      padding: 28px 24px;
-      margin-bottom: 32px;
+      border-radius: 22px;
+      padding: 28px 24px 24px;
+      margin-bottom: 28px;
     }
-
     .hero .badge {
-      font-size: 0.85rem;
-      background: rgba(255,255,255,0.22);
+      font-size: 0.8rem;
+      background: rgba(255,255,255,0.2);
       border-radius: 999px;
       padding: 3px 12px;
       display: inline-block;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       font-weight: 700;
+      letter-spacing: 0.04em;
     }
+    .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
+    .hero p  { font-size: 1.05rem; opacity: 0.9; line-height: 1.6; }
 
-    .hero h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      opacity: 0.88;
-      line-height: 1.5;
-    }
-
-    /* 핵심 비유 박스 */
-    .analogy {
-      background: #fff;
-      border-radius: 16px;
-      padding: 22px 20px;
-      margin-bottom: 32px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-
-    .analogy h2 {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #4B5FA8;
-      margin-bottom: 16px;
-    }
-
-    .analogy-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .analogy-item {
-      background: #eef1fb;
-      border-radius: 10px;
-      padding: 12px 14px;
-    }
-
-    .analogy-item .digital {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #2d3748;
-    }
-
-    .analogy-item .real {
-      font-size: 0.9rem;
-      color: #718096;
-      margin-top: 2px;
-    }
-
-    /* 목차 */
-    .chapters h2 {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #2d3748;
-      margin-bottom: 16px;
-    }
-
-    .chapter-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .chapter-item {
-      background: #fff;
+    /* ── 공감 박스 ── */
+    .relate {
+      background: #fff8e1;
+      border-left: 5px solid #f6c90e;
       border-radius: 14px;
-      padding: 16px 18px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+    }
+    .relate p { font-size: 1rem; color: #4a3c00; line-height: 1.7; }
+    .relate strong { color: #b7791f; }
+
+    /* ── 섹션 제목 ── */
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #718096;
+      margin-bottom: 12px;
+      margin-top: 32px;
+      padding-left: 4px;
+    }
+
+    /* ── 아파트 다이어그램 ── */
+    .building {
+      background: #fff;
+      border-radius: 20px;
+      padding: 22px 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    }
+    .building-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #2d3748;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .apt {
+      border: 3px solid #4B5FA8;
+      border-radius: 16px;
+      overflow: hidden;
+      font-size: 0.97rem;
+    }
+    .apt-roof {
+      background: #4B5FA8;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+    .apt-floor {
+      display: flex;
+      border-top: 2px solid #c3cdf5;
+    }
+    .apt-cell {
+      flex: 1;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-right: 2px solid #c3cdf5;
+      background: #eef1fb;
+      line-height: 1.4;
+    }
+    .apt-cell:last-child { border-right: none; }
+    .apt-cell .emoji { font-size: 1.5rem; display: block; margin-bottom: 3px; }
+    .apt-cell .label { color: #4B5FA8; }
+    .apt-cell .sub   { font-size: 0.75rem; color: #718096; font-weight: 500; }
+    .apt-ground {
+      background: #e2e8f0;
+      border-top: 2px solid #c3cdf5;
+      padding: 10px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #4a5568;
+      font-weight: 600;
+    }
+    .road-arrow {
+      text-align: center;
+      font-size: 1.5rem;
+      margin: 6px 0;
+      color: #718096;
+    }
+    .road {
+      background: #2d3748;
+      color: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .road .sub { font-size: 0.8rem; opacity: 0.7; margin-top: 3px; }
+
+    /* ── Accordion 그룹 ── */
+    .group {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      margin-bottom: 14px;
+    }
+    .group-header {
       display: flex;
       align-items: center;
       gap: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.12s;
+      padding: 20px 20px;
+      background: var(--g-color);
+      color: #fff;
     }
+    .group-icon { font-size: 2rem; flex-shrink: 0; }
+    .group-header h2 { font-size: 1.25rem; font-weight: 800; }
+    .group-header p  { font-size: 0.9rem; opacity: 0.88; margin-top: 2px; }
 
-    .chapter-item:active { transform: scale(0.97); }
+    /* ── 개별 항목 (details/summary) ── */
+    details {
+      border-top: 1px solid #edf2f7;
+    }
+    details:first-of-type { border-top: none; }
 
-    .chapter-num {
-      width: 36px;
-      height: 36px;
-      background: #eef1fb;
-      border-radius: 50%;
+    summary {
+      list-style: none;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-weight: 800;
-      color: #4B5FA8;
+      justify-content: space-between;
+      padding: 18px 20px;
+      cursor: pointer;
+      gap: 12px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    summary::-webkit-details-marker { display: none; }
+
+    .sum-left { display: flex; align-items: center; gap: 12px; }
+    .sum-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--g-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
       flex-shrink: 0;
     }
+    .sum-text strong { display: block; font-size: 1.05rem; font-weight: 700; color: #1a202c; }
+    .sum-text span   { font-size: 0.88rem; color: #718096; }
 
-    .chapter-text strong {
-      font-size: 1.05rem;
-      font-weight: 700;
-      display: block;
-      margin-bottom: 2px;
+    .chevron {
+      font-size: 1.1rem;
+      color: #a0aec0;
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    details[open] .chevron { transform: rotate(180deg); }
+
+    /* ── 펼쳐진 내용 ── */
+    .detail-body {
+      padding: 0 20px 22px;
     }
 
-    .chapter-text span {
-      font-size: 0.9rem;
-      color: #718096;
+    /* 비유 카드 */
+    .analogy-card {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: #f7fafc;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 16px;
     }
+    .analogy-side {
+      flex: 1;
+      padding: 16px 14px;
+      text-align: center;
+    }
+    .analogy-side .big   { font-size: 2.2rem; margin-bottom: 4px; }
+    .analogy-side .name  { font-size: 0.95rem; font-weight: 800; color: #2d3748; }
+    .analogy-side .desc  { font-size: 0.8rem; color: #718096; margin-top: 2px; }
+    .analogy-eq {
+      font-size: 1.5rem;
+      color: #a0aec0;
+      font-weight: 300;
+      padding: 0 4px;
+    }
+    .analogy-side.real { background: #eef1fb; }
+
+    /* 왜? 설명 */
+    .why-box {
+      background: #fffaf0;
+      border-left: 4px solid #f6ad55;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .why-box .why-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #c05621;
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+    .why-box p { font-size: 0.95rem; color: #4a3c00; }
+
+    /* 오해 바로잡기 */
+    .myth-box {
+      background: #fff5f5;
+      border-left: 4px solid #fc8181;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .myth-box .myth-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #c53030;
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+    .myth-box p { font-size: 0.95rem; color: #63171b; }
+
+    /* 핵심 정리 */
+    .key-box {
+      background: #ebf8ff;
+      border-left: 4px solid #4299e1;
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .key-box p { font-size: 0.95rem; color: #2a4365; font-weight: 600; }
+
+    /* 색상 테마 변수 */
+    .group--building { --g-color: #4B5FA8; --g-bg: #eef1fb; }
+    .group--store    { --g-color: #2f855a; --g-bg: #e6fffa; }
+    .group--road     { --g-color: #b7791f; --g-bg: #fffbeb; }
+    .group--safe     { --g-color: #6b46c1; --g-bg: #faf5ff; }
   </style>
 </head>
 <body>
 
   <a href="index.html" class="back">← 처음으로</a>
 
+  <!-- 히어로 -->
   <div class="hero">
     <span class="badge">0강 · 먼저 보기</span>
     <h1>🧭 디지털 지도</h1>
-    <p>스마트폰을 배우기 전에,<br>디지털 세상의 지도를 먼저 봐요.</p>
+    <p>앱·카카오·인터넷·네이버…<br>뭐가 뭔지 헷갈리셨죠?<br>딱 한 가지 비유로 정리해 드릴게요.</p>
   </div>
 
-  <!-- 핵심 비유 -->
-  <div class="analogy">
-    <h2>💡 이 비유 하나면 다 이해돼요</h2>
-    <div class="analogy-grid">
-      <div class="analogy-item">
-        <div class="digital">📱 휴대폰</div>
-        <div class="real">= 아파트 건물</div>
+  <!-- 공감 -->
+  <div class="relate">
+    <p>
+      많은 분들이 이렇게 생각하세요.<br>
+      <strong>"카카오톡 = 인터넷"</strong>,
+      <strong>"네이버 = 휴대폰 회사"</strong>,
+      <strong>"앱 = 휴대폰 자체 기능"</strong>…<br><br>
+      틀린 게 아니에요. 그냥 아직 지도가 없으셨던 거예요.
+      지금부터 딱 하나의 비유로 전부 설명할게요.
+    </p>
+  </div>
+
+  <!-- 아파트 다이어그램 -->
+  <p class="section-label">핵심 비유 — 한눈에 보기</p>
+
+  <div class="building">
+    <p class="building-title">📱 스마트폰 = 아파트 건물</p>
+    <div class="apt">
+      <div class="apt-roof">🏢 내 스마트폰 (아파트 건물)</div>
+      <div class="apt-floor">
+        <div class="apt-cell">
+          <span class="emoji">⚙️</span>
+          <span class="label">관리실</span><br>
+          <span class="sub">(OS: 안드로이드 / iOS)</span>
+        </div>
       </div>
-      <div class="analogy-item">
-        <div class="digital">⚙️ OS (운영체제)</div>
-        <div class="real">= 건물 관리실</div>
+      <div class="apt-floor">
+        <div class="apt-cell">
+          <span class="emoji">💬</span>
+          <span class="label">카카오톡</span><br>
+          <span class="sub">입점 가게</span>
+        </div>
+        <div class="apt-cell">
+          <span class="emoji">🔍</span>
+          <span class="label">네이버</span><br>
+          <span class="sub">입점 가게</span>
+        </div>
+        <div class="apt-cell">
+          <span class="emoji">📦</span>
+          <span class="label">기타 앱</span><br>
+          <span class="sub">입점 가게들</span>
+        </div>
       </div>
-      <div class="analogy-item">
-        <div class="digital">📦 앱</div>
-        <div class="real">= 각 가게</div>
-      </div>
-      <div class="analogy-item">
-        <div class="digital">🌐 인터넷</div>
-        <div class="real">= 도로</div>
-      </div>
-      <div class="analogy-item">
-        <div class="digital">🚗 브라우저</div>
-        <div class="real">= 자동차</div>
-      </div>
-      <div class="analogy-item">
-        <div class="digital">📍 URL</div>
-        <div class="real">= 주소</div>
-      </div>
-      <div class="analogy-item">
-        <div class="digital">🏪 카카오톡</div>
-        <div class="real">= 특정 가게</div>
-      </div>
-      <div class="analogy-item">
-        <div class="digital">🏪 네이버</div>
-        <div class="real">= 특정 가게</div>
-      </div>
+      <div class="apt-ground">🚪 출입구: 브라우저 (자동차를 타고 나갈 수 있어요)</div>
+    </div>
+    <div class="road-arrow">⬆️⬇️</div>
+    <div class="road">
+      🛣️ 인터넷 (도로)<br>
+      <div class="sub">전 세계 모든 웹사이트로 연결됩니다</div>
     </div>
   </div>
 
-  <!-- 목차 -->
-  <div class="chapters">
-    <h2>📋 배울 내용</h2>
-    <div class="chapter-list">
-      <a class="chapter-item" href="#">
-        <div class="chapter-num">1</div>
-        <div class="chapter-text">
-          <strong>휴대폰은 무엇인가요?</strong>
-          <span>작은 컴퓨터, 아파트 건물</span>
-        </div>
-      </a>
-      <a class="chapter-item" href="#">
-        <div class="chapter-num">2</div>
-        <div class="chapter-text">
-          <strong>OS란 무엇인가요?</strong>
-          <span>안드로이드 vs 아이폰의 차이</span>
-        </div>
-      </a>
-      <a class="chapter-item" href="#">
-        <div class="chapter-num">3</div>
-        <div class="chapter-text">
-          <strong>앱과 웹의 차이</strong>
-          <span>설치하는 것 vs 그냥 가는 것</span>
-        </div>
-      </a>
-      <a class="chapter-item" href="#">
-        <div class="chapter-num">4</div>
-        <div class="chapter-text">
-          <strong>인터넷은 무엇인가요?</strong>
-          <span>전 세계를 연결하는 도로</span>
-        </div>
-      </a>
-      <a class="chapter-item" href="#">
-        <div class="chapter-num">5</div>
-        <div class="chapter-text">
-          <strong>브라우저란 무엇인가요?</strong>
-          <span>인터넷을 달리는 자동차</span>
-        </div>
-      </a>
-      <a class="chapter-item" href="#">
-        <div class="chapter-num">6</div>
-        <div class="chapter-text">
-          <strong>URL이란 무엇인가요?</strong>
-          <span>웹사이트의 주소</span>
-        </div>
-      </a>
-      <a class="chapter-item" href="#">
-        <div class="chapter-num">7</div>
-        <div class="chapter-text">
-          <strong>카카오·네이버는 무엇인가요?</strong>
-          <span>휴대폰 속의 가게들</span>
-        </div>
-      </a>
-      <a class="chapter-item" href="#">
-        <div class="chapter-num">8</div>
-        <div class="chapter-text">
-          <strong>로그인은 왜 하나요?</strong>
-          <span>내 자리를 알려주는 이름표</span>
-        </div>
-      </a>
-      <a class="chapter-item" href="#">
-        <div class="chapter-num">9</div>
-        <div class="chapter-text">
-          <strong>업데이트는 왜 하나요?</strong>
-          <span>건물 수리·보안 점검</span>
-        </div>
-      </a>
+  <p style="text-align:center; color:#718096; font-size:0.9rem; margin-bottom:28px;">
+    아래 항목을 눌러서 하나씩 자세히 알아보세요 👇
+  </p>
+
+  <!-- ═══════════════════════════════════
+       그룹 1: 내 손 안의 건물
+  ════════════════════════════════════ -->
+  <p class="section-label">1단계 — 내 손 안의 건물</p>
+
+  <div class="group group--building">
+    <div class="group-header">
+      <span class="group-icon">🏢</span>
+      <div>
+        <h2>스마트폰과 OS</h2>
+        <p>건물과 관리실의 관계예요</p>
+      </div>
     </div>
+
+    <details>
+      <summary>
+        <div class="sum-left">
+          <div class="sum-icon">📱</div>
+          <div class="sum-text">
+            <strong>스마트폰이란?</strong>
+            <span>손 안의 작은 아파트 건물</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </summary>
+      <div class="detail-body">
+        <div class="analogy-card">
+          <div class="analogy-side">
+            <div class="big">📱</div>
+            <div class="name">스마트폰</div>
+            <div class="desc">디지털 세상</div>
+          </div>
+          <div class="analogy-eq">=</div>
+          <div class="analogy-side real">
+            <div class="big">🏢</div>
+            <div class="name">아파트 건물</div>
+            <div class="desc">현실 세상</div>
+          </div>
+        </div>
+        <div class="why-box">
+          <div class="why-label">📌 왜 이런 비유인가요?</div>
+          <p>아파트 건물 안에 여러 가게가 들어올 수 있듯이, 스마트폰 안에도 카카오톡·네이버·유튜브 같은 앱들이 들어와 있어요. 건물 자체가 없으면 가게도 없는 것처럼, 스마트폰이 없으면 앱도 쓸 수 없어요.</p>
+        </div>
+        <div class="key-box">
+          <p>💡 스마트폰 = 모든 것을 담는 그릇. 카카오톡도, 네이버도, 유튜브도 이 안에 들어있어요.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="sum-left">
+          <div class="sum-icon">⚙️</div>
+          <div class="sum-text">
+            <strong>OS(운영체제)란?</strong>
+            <span>안드로이드 vs 아이폰이 다른 이유</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </summary>
+      <div class="detail-body">
+        <div class="analogy-card">
+          <div class="analogy-side">
+            <div class="big">⚙️</div>
+            <div class="name">OS</div>
+            <div class="desc">안드로이드 / iOS</div>
+          </div>
+          <div class="analogy-eq">=</div>
+          <div class="analogy-side real">
+            <div class="big">🏠</div>
+            <div class="name">건물 관리실</div>
+            <div class="desc">GS건설 / 현대건설</div>
+          </div>
+        </div>
+        <div class="why-box">
+          <div class="why-label">📌 왜 안드로이드폰과 아이폰이 다른가요?</div>
+          <p>GS건설이 지은 아파트와 현대건설이 지은 아파트는 구조가 조금 달라요. 그것처럼 삼성(안드로이드)과 애플(iOS)은 건물 관리 방식이 달라서, 같은 앱도 두 버전이 필요해요.</p>
+        </div>
+        <div class="myth-box">
+          <div class="myth-label">❌ 흔한 오해</div>
+          <p>"안드로이드폰에서 쓰던 앱이 아이폰에 없는 것 같아요" → 있긴 한데, 아이폰용으로 따로 설치해야 해요. 건물이 달라졌으니 이사 들어온 가게를 새로 찾아야 하는 것처럼요.</p>
+        </div>
+      </div>
+    </details>
   </div>
+
+
+  <!-- ═══════════════════════════════════
+       그룹 2: 건물 안의 가게들
+  ════════════════════════════════════ -->
+  <p class="section-label">2단계 — 건물 안의 가게들</p>
+
+  <div class="group group--store">
+    <div class="group-header">
+      <span class="group-icon">🏪</span>
+      <div>
+        <h2>앱 · 웹 · 카카오 · 네이버</h2>
+        <p>뭐가 다른지 이제 구분해요</p>
+      </div>
+    </div>
+
+    <details>
+      <summary>
+        <div class="sum-left">
+          <div class="sum-icon">📦</div>
+          <div class="sum-text">
+            <strong>앱이란?</strong>
+            <span>건물 안에 직접 입점한 가게</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </summary>
+      <div class="detail-body">
+        <div class="analogy-card">
+          <div class="analogy-side">
+            <div class="big">📦</div>
+            <div class="name">앱</div>
+            <div class="desc">설치해서 쓰는 것</div>
+          </div>
+          <div class="analogy-eq">=</div>
+          <div class="analogy-side real">
+            <div class="big">🏪</div>
+            <div class="name">입점 가게</div>
+            <div class="desc">건물 안에 있어요</div>
+          </div>
+        </div>
+        <div class="why-box">
+          <div class="why-label">📌 왜 앱은 설치해야 하나요?</div>
+          <p>가게가 건물 안으로 이사 들어오는 과정이 "설치"예요. 설치 전엔 그 가게가 내 건물에 없는 거예요. 한번 이사 오면(설치하면) 언제든 바로 들어갈 수 있어요.</p>
+        </div>
+        <div class="key-box">
+          <p>💡 카카오톡, 유튜브, 배달의민족 모두 앱이에요. 처음엔 설치가 필요해요.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="sum-left">
+          <div class="sum-icon">🌐</div>
+          <div class="sum-text">
+            <strong>앱 vs 웹사이트, 뭐가 달라요?</strong>
+            <span>입점 가게 vs 도로 나가서 가는 곳</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </summary>
+      <div class="detail-body">
+        <div class="analogy-card">
+          <div class="analogy-side">
+            <div class="big">📦</div>
+            <div class="name">앱</div>
+            <div class="desc">건물 안 가게<br>(설치 필요)</div>
+          </div>
+          <div class="analogy-eq">vs</div>
+          <div class="analogy-side real">
+            <div class="big">🏬</div>
+            <div class="name">웹사이트</div>
+            <div class="desc">도로 나가서 가는 곳<br>(설치 불필요)</div>
+          </div>
+        </div>
+        <div class="why-box">
+          <div class="why-label">📌 핵심 차이</div>
+          <p>앱은 건물(내 폰) 안에 있어서 인터넷 없어도 열 수 있어요. 웹사이트는 도로(인터넷)를 타고 나가야 하기 때문에, 인터넷이 끊기면 못 가요.</p>
+        </div>
+        <div class="myth-box">
+          <div class="myth-label">❌ 흔한 오해</div>
+          <p>"네이버는 앱인가요, 웹사이트인가요?" → 둘 다예요! 네이버 앱을 설치하면 건물 안 가게고, 브라우저에서 naver.com을 치면 도로를 타고 나가는 거예요. 같은 네이버인데 가는 방법이 다른 거예요.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="sum-left">
+          <div class="sum-icon">💬</div>
+          <div class="sum-text">
+            <strong>카카오톡·네이버는 뭔가요?</strong>
+            <span>건물 안에 입점한 유명 가게들</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </summary>
+      <div class="detail-body">
+        <div class="analogy-card">
+          <div class="analogy-side">
+            <div class="big">💬</div>
+            <div class="name">카카오톡</div>
+            <div class="desc">메시지 전문 가게</div>
+          </div>
+          <div class="analogy-eq">≠</div>
+          <div class="analogy-side real">
+            <div class="big">📱</div>
+            <div class="name">스마트폰</div>
+            <div class="desc">건물 자체</div>
+          </div>
+        </div>
+        <div class="myth-box">
+          <div class="myth-label">❌ "카카오톡 = 인터넷" 아닌가요?</div>
+          <p>아니에요! 카카오톡은 인터넷(도로)을 이용하긴 하지만, 인터넷 자체가 아니에요. 도로를 달리는 특정 가게라고 생각하면 돼요. 카카오톡 없어도 인터넷은 되고, 인터넷 없으면 카카오톡도 안 돼요.</p>
+        </div>
+        <div class="why-box">
+          <div class="why-label">📌 정리</div>
+          <p>카카오톡 = 메시지·통화 전문 가게<br>네이버 = 검색·뉴스·쇼핑 전문 가게<br>유튜브 = 영상 전문 가게<br>모두 각자 다른 가게예요. 건물(스마트폰)이 아니에요.</p>
+        </div>
+      </div>
+    </details>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       그룹 3: 세상으로 나가는 길
+  ════════════════════════════════════ -->
+  <p class="section-label">3단계 — 바깥 세상으로 나가는 길</p>
+
+  <div class="group group--road">
+    <div class="group-header">
+      <span class="group-icon">🛣️</span>
+      <div>
+        <h2>인터넷 · 브라우저 · URL</h2>
+        <p>도로·자동차·주소의 관계예요</p>
+      </div>
+    </div>
+
+    <details>
+      <summary>
+        <div class="sum-left">
+          <div class="sum-icon">🌐</div>
+          <div class="sum-text">
+            <strong>인터넷이란?</strong>
+            <span>전 세계를 연결하는 도로망</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </summary>
+      <div class="detail-body">
+        <div class="analogy-card">
+          <div class="analogy-side">
+            <div class="big">🌐</div>
+            <div class="name">인터넷</div>
+            <div class="desc">데이터가 다니는 길</div>
+          </div>
+          <div class="analogy-eq">=</div>
+          <div class="analogy-side real">
+            <div class="big">🛣️</div>
+            <div class="name">도로망</div>
+            <div class="desc">차가 다니는 길</div>
+          </div>
+        </div>
+        <div class="why-box">
+          <div class="why-label">📌 "인터넷이 안 된다"는 말의 뜻</div>
+          <p>도로가 막혔다는 뜻이에요. 도로가 없으면 카카오톡도, 유튜브도, 네이버도 못 써요. 반대로 도로(인터넷)만 있다고 목적지(웹사이트)가 생기는 건 아니에요.</p>
+        </div>
+        <div class="myth-box">
+          <div class="myth-label">❌ 흔한 오해</div>
+          <p>"와이파이 = 인터넷 아닌가요?" → 와이파이는 도로까지 가는 진입로예요. 와이파이로 도로에 올라타는 거예요. 데이터(LTE/5G)도 다른 진입로예요. 도로 자체는 같아요.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="sum-left">
+          <div class="sum-icon">🚗</div>
+          <div class="sum-text">
+            <strong>브라우저란?</strong>
+            <span>인터넷 도로를 달리는 자동차</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </summary>
+      <div class="detail-body">
+        <div class="analogy-card">
+          <div class="analogy-side">
+            <div class="big">🚗</div>
+            <div class="name">브라우저</div>
+            <div class="desc">크롬, 사파리, 삼성인터넷</div>
+          </div>
+          <div class="analogy-eq">=</div>
+          <div class="analogy-side real">
+            <div class="big">🚘</div>
+            <div class="name">자동차</div>
+            <div class="desc">현대, 기아, BMW</div>
+          </div>
+        </div>
+        <div class="why-box">
+          <div class="why-label">📌 브라우저는 왜 여러 종류인가요?</div>
+          <p>자동차 회사가 여러 곳인 것처럼, 브라우저도 크롬(구글), 사파리(애플), 삼성인터넷 등 여러 종류가 있어요. 어떤 걸 써도 같은 도로(인터넷)를 달리고, 같은 웹사이트에 갈 수 있어요.</p>
+        </div>
+        <div class="key-box">
+          <p>💡 폰에서 인터넷 검색할 때 여는 앱이 바로 브라우저예요. "인터넷" 앱이라고 불러도 돼요.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="sum-left">
+          <div class="sum-icon">📍</div>
+          <div class="sum-text">
+            <strong>URL이란?</strong>
+            <span>웹사이트의 주소</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </summary>
+      <div class="detail-body">
+        <div class="analogy-card">
+          <div class="analogy-side">
+            <div class="big">📍</div>
+            <div class="name">URL</div>
+            <div class="desc">naver.com, kakao.com</div>
+          </div>
+          <div class="analogy-eq">=</div>
+          <div class="analogy-side real">
+            <div class="big">🗺️</div>
+            <div class="name">주소</div>
+            <div class="desc">서울시 강남구 ○○로</div>
+          </div>
+        </div>
+        <div class="why-box">
+          <div class="why-label">📌 왜 www.naver.com 같은 게 필요한가요?</div>
+          <p>내비게이션에 주소를 넣어야 찾아갈 수 있듯이, 브라우저에도 가고 싶은 웹사이트의 주소(URL)를 입력해야 해요. 주소를 모르면 검색창에 이름을 치면 내비게이션이 찾아주는 것처럼 구글·네이버가 찾아줘요.</p>
+        </div>
+      </div>
+    </details>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       그룹 4: 내 자리 지키기
+  ════════════════════════════════════ -->
+  <p class="section-label">4단계 — 내 자리 만들고 지키기</p>
+
+  <div class="group group--safe">
+    <div class="group-header">
+      <span class="group-icon">🔑</span>
+      <div>
+        <h2>로그인 · 업데이트</h2>
+        <p>왜 해야 하는지 이해해요</p>
+      </div>
+    </div>
+
+    <details>
+      <summary>
+        <div class="sum-left">
+          <div class="sum-icon">🪪</div>
+          <div class="sum-text">
+            <strong>로그인은 왜 하나요?</strong>
+            <span>디지털 세상의 이름표·열쇠</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </summary>
+      <div class="detail-body">
+        <div class="analogy-card">
+          <div class="analogy-side">
+            <div class="big">🪪</div>
+            <div class="name">로그인</div>
+            <div class="desc">아이디 + 비밀번호</div>
+          </div>
+          <div class="analogy-eq">=</div>
+          <div class="analogy-side real">
+            <div class="big">🏠</div>
+            <div class="name">집 열쇠 + 이름표</div>
+            <div class="desc">내 것임을 증명</div>
+          </div>
+        </div>
+        <div class="why-box">
+          <div class="why-label">📌 왜 로그인을 해야 하나요?</div>
+          <p>가게에 내 물건을 맡겨두고 다음에 다시 찾으려면, 가게 주인이 "이 물건이 당신 거 맞아요?"를 확인해야 해요. 로그인이 그 확인 과정이에요. 로그인 안 하면 내 물건(사진, 대화, 설정)을 가게가 알아볼 수 없어요.</p>
+        </div>
+        <div class="myth-box">
+          <div class="myth-label">❌ 흔한 오해</div>
+          <p>"로그인 안 해도 카카오톡 되던데요?" → 처음 설치할 때 이미 로그인했어요. 그 뒤로는 폰이 열쇠를 기억하고 있어서 매번 안 물어보는 것뿐이에요.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="sum-left">
+          <div class="sum-icon">🔧</div>
+          <div class="sum-text">
+            <strong>업데이트는 왜 하나요?</strong>
+            <span>건물 보수공사·보안 점검</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </summary>
+      <div class="detail-body">
+        <div class="analogy-card">
+          <div class="analogy-side">
+            <div class="big">🔧</div>
+            <div class="name">업데이트</div>
+            <div class="desc">새 버전으로 교체</div>
+          </div>
+          <div class="analogy-eq">=</div>
+          <div class="analogy-side real">
+            <div class="big">🏗️</div>
+            <div class="name">건물 보수공사</div>
+            <div class="desc">더 안전하게 고치기</div>
+          </div>
+        </div>
+        <div class="why-box">
+          <div class="why-label">📌 왜 자꾸 업데이트 알림이 오나요?</div>
+          <p>건물에서 불편한 부분이 발견되면 고쳐야 해요. 특히 도둑이 들어올 수 있는 구멍(보안 취약점)이 발견되면 빨리 막아야 해요. 업데이트를 미루면 그 구멍이 열린 채로 있는 거예요.</p>
+        </div>
+        <div class="key-box">
+          <p>💡 "업데이트 나중에"를 너무 오래 미루지 마세요. 특히 보안 업데이트는 빨리 하는 게 좋아요.</p>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <p style="text-align:center; color:#718096; font-size:0.95rem; margin-top:32px; line-height:1.7;">
+    🎉 이 비유를 기억하면<br>
+    QR코드, 키오스크, 온라인 쇼핑도<br>
+    다 이해할 수 있어요!
+  </p>
 
 </body>
 </html>
