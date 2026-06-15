@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>0강 · 디지털 지도 | 디지털 배움터</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans KR', '맑은 고딕', sans-serif;
+      background: #f0f4f8;
+      color: #1a202c;
+      padding: 24px 20px 60px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #4B5FA8;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 28px;
+    }
+
+    .hero {
+      background: #4B5FA8;
+      color: #fff;
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin-bottom: 32px;
+    }
+
+    .hero .badge {
+      font-size: 0.85rem;
+      background: rgba(255,255,255,0.22);
+      border-radius: 999px;
+      padding: 3px 12px;
+      display: inline-block;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      opacity: 0.88;
+      line-height: 1.5;
+    }
+
+    /* 핵심 비유 박스 */
+    .analogy {
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px 20px;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .analogy h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #4B5FA8;
+      margin-bottom: 16px;
+    }
+
+    .analogy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .analogy-item {
+      background: #eef1fb;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .analogy-item .digital {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #2d3748;
+    }
+
+    .analogy-item .real {
+      font-size: 0.9rem;
+      color: #718096;
+      margin-top: 2px;
+    }
+
+    /* 목차 */
+    .chapters h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #2d3748;
+      margin-bottom: 16px;
+    }
+
+    .chapter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .chapter-item {
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.12s;
+    }
+
+    .chapter-item:active { transform: scale(0.97); }
+
+    .chapter-num {
+      width: 36px;
+      height: 36px;
+      background: #eef1fb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #4B5FA8;
+      flex-shrink: 0;
+    }
+
+    .chapter-text strong {
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .chapter-text span {
+      font-size: 0.9rem;
+      color: #718096;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back">← 처음으로</a>
+
+  <div class="hero">
+    <span class="badge">0강 · 먼저 보기</span>
+    <h1>🧭 디지털 지도</h1>
+    <p>스마트폰을 배우기 전에,<br>디지털 세상의 지도를 먼저 봐요.</p>
+  </div>
+
+  <!-- 핵심 비유 -->
+  <div class="analogy">
+    <h2>💡 이 비유 하나면 다 이해돼요</h2>
+    <div class="analogy-grid">
+      <div class="analogy-item">
+        <div class="digital">📱 휴대폰</div>
+        <div class="real">= 아파트 건물</div>
+      </div>
+      <div class="analogy-item">
+        <div class="digital">⚙️ OS (운영체제)</div>
+        <div class="real">= 건물 관리실</div>
+      </div>
+      <div class="analogy-item">
+        <div class="digital">📦 앱</div>
+        <div class="real">= 각 가게</div>
+      </div>
+      <div class="analogy-item">
+        <div class="digital">🌐 인터넷</div>
+        <div class="real">= 도로</div>
+      </div>
+      <div class="analogy-item">
+        <div class="digital">🚗 브라우저</div>
+        <div class="real">= 자동차</div>
+      </div>
+      <div class="analogy-item">
+        <div class="digital">📍 URL</div>
+        <div class="real">= 주소</div>
+      </div>
+      <div class="analogy-item">
+        <div class="digital">🏪 카카오톡</div>
+        <div class="real">= 특정 가게</div>
+      </div>
+      <div class="analogy-item">
+        <div class="digital">🏪 네이버</div>
+        <div class="real">= 특정 가게</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 목차 -->
+  <div class="chapters">
+    <h2>📋 배울 내용</h2>
+    <div class="chapter-list">
+      <a class="chapter-item" href="#">
+        <div class="chapter-num">1</div>
+        <div class="chapter-text">
+          <strong>휴대폰은 무엇인가요?</strong>
+          <span>작은 컴퓨터, 아파트 건물</span>
+        </div>
+      </a>
+      <a class="chapter-item" href="#">
+        <div class="chapter-num">2</div>
+        <div class="chapter-text">
+          <strong>OS란 무엇인가요?</strong>
+          <span>안드로이드 vs 아이폰의 차이</span>
+        </div>
+      </a>
+      <a class="chapter-item" href="#">
+        <div class="chapter-num">3</div>
+        <div class="chapter-text">
+          <strong>앱과 웹의 차이</strong>
+          <span>설치하는 것 vs 그냥 가는 것</span>
+        </div>
+      </a>
+      <a class="chapter-item" href="#">
+        <div class="chapter-num">4</div>
+        <div class="chapter-text">
+          <strong>인터넷은 무엇인가요?</strong>
+          <span>전 세계를 연결하는 도로</span>
+        </div>
+      </a>
+      <a class="chapter-item" href="#">
+        <div class="chapter-num">5</div>
+        <div class="chapter-text">
+          <strong>브라우저란 무엇인가요?</strong>
+          <span>인터넷을 달리는 자동차</span>
+        </div>
+      </a>
+      <a class="chapter-item" href="#">
+        <div class="chapter-num">6</div>
+        <div class="chapter-text">
+          <strong>URL이란 무엇인가요?</strong>
+          <span>웹사이트의 주소</span>
+        </div>
+      </a>
+      <a class="chapter-item" href="#">
+        <div class="chapter-num">7</div>
+        <div class="chapter-text">
+          <strong>카카오·네이버는 무엇인가요?</strong>
+          <span>휴대폰 속의 가게들</span>
+        </div>
+      </a>
+      <a class="chapter-item" href="#">
+        <div class="chapter-num">8</div>
+        <div class="chapter-text">
+          <strong>로그인은 왜 하나요?</strong>
+          <span>내 자리를 알려주는 이름표</span>
+        </div>
+      </a>
+      <a class="chapter-item" href="#">
+        <div class="chapter-num">9</div>
+        <div class="chapter-text">
+          <strong>업데이트는 왜 하나요?</strong>
+          <span>건물 수리·보안 점검</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>
