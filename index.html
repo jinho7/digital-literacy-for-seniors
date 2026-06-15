@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>어르신을 위한 디지털 배움터</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', '맑은 고딕', sans-serif;
+      background: #f0f4f8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      color: #1a365d;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      color: #4a5568;
+      margin-top: 12px;
+    }
+
+    .btn-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 28px 32px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    }
+
+    .btn-icon {
+      font-size: 3rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .btn-text h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .btn-text p {
+      font-size: 1.05rem;
+      opacity: 0.85;
+    }
+
+    .btn-smartphone {
+      background: #3182ce;
+      color: #fff;
+    }
+
+    .btn-internet {
+      background: #38a169;
+      color: #fff;
+    }
+
+    .btn-kiosk {
+      background: #d69e2e;
+      color: #fff;
+    }
+
+    footer {
+      margin-top: 48px;
+      font-size: 1rem;
+      color: #718096;
+      text-align: center;
+    }
+
+    @media (min-width: 600px) {
+      header h1 { font-size: 3rem; }
+      .btn-text h2 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📱 디지털 배움터</h1>
+    <p>천천히, 함께 배워요!</p>
+  </header>
+
+  <nav class="btn-grid" role="navigation" aria-label="학습 메뉴">
+    <a href="smartphone.html" class="btn btn-smartphone" aria-label="스마트폰 기초 배우기">
+      <span class="btn-icon" aria-hidden="true">📱</span>
+      <div class="btn-text">
+        <h2>스마트폰 기초</h2>
+        <p>전화·문자·사진 찍기</p>
+      </div>
+    </a>
+
+    <a href="internet.html" class="btn btn-internet" aria-label="인터넷 사용법 배우기">
+      <span class="btn-icon" aria-hidden="true">🌐</span>
+      <div class="btn-text">
+        <h2>인터넷 사용법</h2>
+        <p>검색·유튜브·온라인 쇼핑</p>
+      </div>
+    </a>
+
+    <a href="kiosk.html" class="btn btn-kiosk" aria-label="키오스크 사용법 배우기">
+      <span class="btn-icon" aria-hidden="true">🏧</span>
+      <div class="btn-text">
+        <h2>키오스크 사용법</h2>
+        <p>주문·발권·ATM 쉽게 하기</p>
+      </div>
+    </a>
+  </nav>
+
+  <footer>
+    <p>글자가 작으면 화면을 두 손가락으로 벌려 크게 하세요 🔍</p>
+  </footer>
+
+</body>
+</html>
