@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>2강 · 인터넷 사용법 | 디지털 배움터</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Noto Sans KR','맑은 고딕',sans-serif;background:#f0f4f8;color:#1a202c;padding:20px 18px 80px;max-width:560px;margin:0 auto;font-size:1.08rem;line-height:1.75}
+    a.back{display:inline-flex;align-items:center;gap:6px;color:#38a169;font-size:1.1rem;font-weight:700;text-decoration:none;margin-bottom:22px}
+    .hero{background:linear-gradient(135deg,#38a169,#276749);color:#fff;border-radius:22px;padding:28px 24px 22px;margin-bottom:24px}
+    .badge{font-size:.8rem;background:rgba(255,255,255,.22);border-radius:999px;padding:3px 12px;display:inline-block;margin-bottom:12px;font-weight:800}
+    .hero h1{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+    .hero p{font-size:1rem;opacity:.9;line-height:1.6}
+    .section-label{font-size:.78rem;font-weight:800;letter-spacing:.08em;color:#718096;margin:28px 0 10px;padding-left:4px}
+    .chapter{background:#fff;border-radius:20px;padding:26px 22px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+    .ch-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .ch-num{width:38px;height:38px;border-radius:50%;background:#38a169;color:#fff;font-weight:800;font-size:1.05rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ch-title{font-size:1.25rem;font-weight:800}
+    .ch-body p{color:#2d3748;margin-bottom:14px}
+    .demo{background:#f7fafc;border:2px solid #e2e8f0;border-radius:16px;padding:18px;margin:18px 0}
+    .demo-label{font-size:.78rem;font-weight:800;color:#718096;letter-spacing:.06em;margin-bottom:14px;text-align:center}
+    .keypoint{background:#f0fff4;border-left:4px solid #68d391;border-radius:10px;padding:13px 15px;margin-top:16px;font-size:.95rem;color:#22543d;font-weight:600;line-height:1.5}
+    .myth{background:#fff5f5;border-left:4px solid #fc8181;border-radius:10px;padding:13px 15px;margin-top:12px;font-size:.92rem;color:#63171b;line-height:1.55}
+    .myth strong{display:block;font-size:.78rem;color:#c53030;font-weight:800;margin-bottom:5px}
+    .tip{background:#ebf8ff;border-left:4px solid #63b3ed;border-radius:10px;padding:13px 15px;margin-top:12px;font-size:.92rem;color:#2a4365;line-height:1.55}
+    .tip strong{display:block;font-size:.78rem;color:#2b6cb0;font-weight:800;margin-bottom:5px}
+
+    /* 와이파이 상태 */
+    .wifi-status{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+    .wifi-card{border-radius:14px;padding:14px;text-align:center;cursor:pointer;border:3px solid transparent;transition:.2s}
+    .wifi-card.sel{border-color:#38a169}
+    .wifi-card h4{font-size:.9rem;font-weight:800;margin:6px 0 3px}
+    .wifi-card p{font-size:.75rem;color:#718096;line-height:1.4}
+    .signal-bars{font-size:1.6rem;margin-bottom:4px}
+    .wifi-result{background:#fff;border-radius:10px;padding:12px 14px;font-size:.88rem;color:#276749;font-weight:600;min-height:40px;text-align:center}
+
+    /* 브라우저 목업 */
+    .browser-wrap{background:#fff;border-radius:14px;overflow:hidden;border:2px solid #e2e8f0;box-shadow:0 4px 16px rgba(0,0,0,.1)}
+    .browser-bar{background:#f1f3f4;padding:10px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #ddd}
+    .browser-url{flex:1;background:#fff;border:1px solid #ddd;border-radius:20px;padding:7px 12px;display:flex;align-items:center;gap:6px;font-size:.85rem}
+    .browser-content{padding:0;min-height:200px}
+
+    /* 검색 데모 */
+    .search-bar-big{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #ddd;border-radius:28px;padding:11px 18px;font-size:1rem;margin-bottom:14px;transition:.2s}
+    .search-bar-big:focus-within{border-color:#38a169;box-shadow:0 0 0 3px rgba(56,161,105,.15)}
+    .search-bar-big input{border:none;outline:none;flex:1;font-size:1rem;font-family:inherit;color:#1a202c}
+    .search-bar-big .sico{font-size:1.2rem;color:#718096}
+    .search-btn{padding:11px 20px;background:#38a169;color:#fff;border:none;border-radius:22px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap}
+    .search-results{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+    .search-result-item{background:#fff;border-radius:12px;padding:12px 14px;border:1px solid #e2e8f0;cursor:pointer;transition:.15s}
+    .search-result-item:hover{background:#f0fff4;border-color:#68d391}
+    .sri-url{font-size:.72rem;color:#38a169;margin-bottom:2px}
+    .sri-title{font-size:.95rem;font-weight:700;color:#1a202c;margin-bottom:3px}
+    .sri-desc{font-size:.8rem;color:#718096;line-height:1.45}
+    .search-empty{text-align:center;padding:20px;color:#a0aec0;font-size:.9rem}
+
+    /* 유튜브 데모 */
+    .yt-header{background:#ff0000;padding:12px 14px;display:flex;align-items:center;gap:8px}
+    .yt-logo{color:#fff;font-weight:800;font-size:1.1rem;letter-spacing:-.03em}
+    .yt-list{padding:12px}
+    .yt-item{display:flex;gap:10px;margin-bottom:12px;cursor:pointer;align-items:flex-start}
+    .yt-thumb{width:100px;height:60px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;position:relative;overflow:hidden}
+    .yt-play{position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;opacity:0;transition:.2s}
+    .yt-item:hover .yt-play{opacity:1}
+    .yt-info{}
+    .yt-title{font-size:.85rem;font-weight:700;color:#1a202c;line-height:1.35;margin-bottom:3px}
+    .yt-meta{font-size:.72rem;color:#718096}
+    .yt-player{display:none;background:#000;border-radius:12px;overflow:hidden;margin-top:10px}
+    .yt-player-screen{background:#111;height:160px;display:flex;align-items:center;justify-content:center;font-size:3rem;cursor:pointer;position:relative}
+    .yt-controls{background:#222;padding:10px 14px;display:flex;align-items:center;gap:10px}
+    .yt-progress-bar{flex:1;height:4px;background:#555;border-radius:2px;cursor:pointer;position:relative}
+    .yt-progress-fill{height:100%;background:#ff0000;border-radius:2px;width:0%;transition:.5s linear}
+    .yt-ctrl-btn{background:none;border:none;color:#fff;font-size:1.1rem;cursor:pointer;padding:0}
+    .yt-time{font-size:.72rem;color:#aaa}
+
+    /* 카카오 데모 */
+    .kakao-header{background:#fee500;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+    .kakao-logo{font-weight:800;font-size:1rem;color:#3c1e1e}
+    .kakao-chat-list{padding:0}
+    .kakao-chat-item{display:flex;gap:10px;padding:12px 14px;border-bottom:1px solid #f5f5f5;align-items:center;cursor:pointer}
+    .kakao-chat-item:hover{background:#fffde7}
+    .kakao-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+    .kakao-name{font-size:.92rem;font-weight:700;margin-bottom:2px}
+    .kakao-preview{font-size:.78rem;color:#718096;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+    .kakao-time{font-size:.7rem;color:#a0aec0;margin-left:auto;text-align:right;flex-shrink:0}
+    .kakao-badge{background:#ff4444;color:#fff;border-radius:999px;font-size:.65rem;font-weight:800;padding:1px 5px;margin-top:2px;display:inline-block}
+
+    /* 사기 경고 */
+    .scam-card{border-radius:14px;padding:14px 16px;margin-bottom:10px}
+    .scam-safe{background:#f0fff4;border:2px solid #68d391}
+    .scam-danger{background:#fff5f5;border:2px solid #fc8181}
+    .scam-card h4{font-size:.88rem;font-weight:800;margin-bottom:6px}
+    .scam-card p{font-size:.82rem;color:#4a5568;line-height:1.5}
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="back">← 처음으로</a>
+
+<div class="hero">
+  <span class="badge">2강</span>
+  <h1>🌐 인터넷 사용법</h1>
+  <p>검색·유튜브·카카오톡까지<br>실제 화면으로 배워봐요.</p>
+</div>
+
+<!-- ─────────── 와이파이 ─────────── -->
+<p class="section-label">기초 1 — 인터넷 연결 확인하기</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">1</div>
+    <div class="ch-title">와이파이 vs 데이터, 뭐가 달라요?</div>
+  </div>
+  <div class="ch-body">
+    <p>인터넷을 쓰려면 먼저 연결이 되어 있어야 해요. 연결 방법은 두 가지예요. <strong>와이파이(WiFi)</strong>와 <strong>데이터(LTE·5G)</strong>예요.</p>
+    <p>와이파이는 집이나 카페의 공유기에서 나오는 무선 신호예요. 한 번 연결해두면 그 장소에 있는 동안 자동으로 연결돼요. 대부분 무제한으로 쓸 수 있고 빠르고 요금이 따로 없어요.</p>
+    <p>데이터는 통신사(KT·SKT·LGU+)가 제공하는 인터넷이에요. 어디서든 사용할 수 있지만, 요금제에 따라 사용 한도가 있어요. 와이파이가 잡히지 않는 곳에서는 자동으로 데이터로 바뀌어요.</p>
+
+    <div class="demo">
+      <div class="demo-label">📶 지금 연결 상태를 확인해보세요</div>
+      <div class="wifi-status">
+        <div class="wifi-card" id="wc-wifi" style="background:#f0fff4" onclick="selectConn('wifi')">
+          <div class="signal-bars">📶</div>
+          <h4>와이파이 연결됨</h4>
+          <p>집 와이파이<br>무료·빠름</p>
+        </div>
+        <div class="wifi-card" id="wc-data" style="background:#f7fafc" onclick="selectConn('data')">
+          <div class="signal-bars">🗼</div>
+          <h4>LTE 데이터</h4>
+          <p>통신사 신호<br>어디서나 가능</p>
+        </div>
+      </div>
+      <div class="wifi-result" id="wifi-result">위를 눌러 현재 상태를 선택해보세요</div>
+    </div>
+
+    <div class="tip"><strong>💡 폰 화면 맨 위를 확인하세요</strong>📶 아이콘이 있으면 와이파이 연결 중. LTE나 5G 글자가 있으면 데이터 사용 중이에요. 둘 다 없으면 인터넷 연결이 안 된 거예요.</div>
+    <div class="myth"><strong>❌ 흔한 오해</strong>"와이파이 꺼도 카카오톡 되던데요?" → 데이터로 자동 전환됐기 때문이에요. 이때 데이터 요금이 나갈 수 있어요. 와이파이 신호가 약할 때 많이 생겨요.</div>
+    <div class="keypoint">💡 집에서는 항상 와이파이를 쓰세요. 데이터를 아낄 수 있어요. 와이파이 아이콘(📶)이 상단에 보이면 와이파이 연결 중이에요.</div>
+  </div>
+</div>
+
+<!-- ─────────── 검색 ─────────── -->
+<p class="section-label">기초 2 — 검색하기</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">2</div>
+    <div class="ch-title">궁금한 것 검색하기</div>
+  </div>
+  <div class="ch-body">
+    <p>검색은 인터넷에서 가장 많이 쓰는 기능이에요. 네이버나 구글 앱을 열고, 검색창에 궁금한 것을 타이핑하면 관련 정보가 쭉 나와요.</p>
+    <p>검색어를 정확히 쓸 필요 없어요. <strong>"오늘 날씨"</strong>, <strong>"삼성전자 AS 전화번호"</strong>, <strong>"혈압약 먹는 시간"</strong>처럼 자연스럽게 쓰면 알아서 찾아줘요. 맞춤법이 좀 틀려도 괜찮아요.</p>
+    <p>검색 결과 중 가장 위에 나오는 것이 보통 가장 관련 있는 내용이에요. 여러 결과 중 원하는 것을 눌러보고, 내용이 맞지 않으면 뒤로 가서 다른 결과를 눌러보면 돼요.</p>
+
+    <div class="demo">
+      <div class="demo-label">🔍 직접 검색해보세요 — 무엇이든 입력하고 검색 버튼을 누르세요</div>
+      <div class="browser-wrap">
+        <div class="browser-bar">
+          <span style="font-size:1rem">‹</span>
+          <div class="browser-url"><span style="color:#0a0;font-size:.75rem">🔒</span><span style="font-size:.83rem;color:#444">search.naver.com</span></div>
+          <span style="font-size:.9rem">⟳</span>
+        </div>
+        <div class="browser-content" style="padding:16px">
+          <div style="text-align:center;margin-bottom:14px">
+            <div style="font-size:1.4rem;font-weight:800;color:#03c75a;margin-bottom:12px">NAVER</div>
+            <div style="display:flex;gap:8px">
+              <div class="search-bar-big" style="flex:1;margin-bottom:0">
+                <span class="sico">🔍</span>
+                <input id="search-input" placeholder="검색어를 입력하세요" onkeydown="if(event.key==='Enter')doSearch()" />
+              </div>
+              <button class="search-btn" onclick="doSearch()">검색</button>
+            </div>
+          </div>
+          <div id="search-results" class="search-results">
+            <div class="search-result-item">
+              <div class="sri-url">📌 인기 검색어</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+                <span onclick="quickSearch('오늘 날씨')" style="background:#f0f4f8;border-radius:20px;padding:5px 12px;font-size:.8rem;cursor:pointer;font-weight:600">오늘 날씨</span>
+                <span onclick="quickSearch('혈압에 좋은 음식')" style="background:#f0f4f8;border-radius:20px;padding:5px 12px;font-size:.8rem;cursor:pointer;font-weight:600">혈압에 좋은 음식</span>
+                <span onclick="quickSearch('버스 시간표')" style="background:#f0f4f8;border-radius:20px;padding:5px 12px;font-size:.8rem;cursor:pointer;font-weight:600">버스 시간표</span>
+                <span onclick="quickSearch('트로트 노래')" style="background:#f0f4f8;border-radius:20px;padding:5px 12px;font-size:.8rem;cursor:pointer;font-weight:600">트로트 노래</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip"><strong>💡 음성 검색도 돼요!</strong>검색창 옆에 🎤 마이크 아이콘을 누르고 말하면 알아서 검색해줘요. "오늘 서울 날씨 알려줘"라고 말해보세요.</div>
+    <div class="keypoint">💡 궁금한 것은 뭐든 검색해보세요. "이 약 부작용", "가까운 병원", "○○요리 만드는 법" — 검색은 틀릴 게 없어요.</div>
+  </div>
+</div>
+
+<!-- ─────────── 유튜브 ─────────── -->
+<p class="section-label">기초 3 — 유튜브 보기</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">3</div>
+    <div class="ch-title">유튜브로 영상 보기</div>
+  </div>
+  <div class="ch-body">
+    <p>유튜브는 전 세계 사람들이 올린 영상을 무료로 볼 수 있는 앱이에요. 트로트, 뉴스, 요리법, 운동법, 드라마 다시보기까지 없는 게 없어요.</p>
+    <p>유튜브 앱을 열면 내가 좋아할 만한 영상들이 추천으로 떠요. 보고 싶은 영상을 누르면 재생되고, 화면을 누르면 일시정지·재생 버튼이 나와요. 영상이 끝나면 관련 영상들이 자동으로 추천돼요.</p>
+    <p>소리 없이 보고 싶다면 폰 옆의 볼륨(–) 버튼을 누르거나, 영상 화면을 누른 뒤 소리 아이콘을 눌러 끄면 돼요. 자막이 있는 영상은 CC 버튼으로 켤 수 있어요.</p>
+
+    <div class="demo">
+      <div class="demo-label">▶️ 영상을 눌러서 재생해보세요</div>
+      <div class="browser-wrap">
+        <div class="yt-header">
+          <div class="yt-logo">▶ YouTube</div>
+          <span style="color:#fff;font-size:.8rem">🔍</span>
+        </div>
+        <div class="yt-list" id="yt-list">
+          <div class="yt-item" onclick="playYT(0)">
+            <div class="yt-thumb" style="background:linear-gradient(135deg,#ff6b6b,#ffa07a)">🎵<div class="yt-play">▶</div></div>
+            <div class="yt-info">
+              <div class="yt-title">2024 트로트 메들리 베스트 50곡 연속 재생 🎤</div>
+              <div class="yt-meta">트로트방송국 · 조회 320만</div>
+            </div>
+          </div>
+          <div class="yt-item" onclick="playYT(1)">
+            <div class="yt-thumb" style="background:linear-gradient(135deg,#74c0fc,#339af0)">🍳<div class="yt-play">▶</div></div>
+            <div class="yt-info">
+              <div class="yt-title">어르신도 쉽게! 5분 반찬 레시피 모음</div>
+              <div class="yt-meta">요리하는엄마 · 조회 88만</div>
+            </div>
+          </div>
+          <div class="yt-item" onclick="playYT(2)">
+            <div class="yt-thumb" style="background:linear-gradient(135deg,#51cf66,#2f9e44)">🌿<div class="yt-play">▶</div></div>
+            <div class="yt-info">
+              <div class="yt-title">혈압 낮추는 하루 10분 가벼운 운동</div>
+              <div class="yt-meta">건강TV · 조회 150만</div>
+            </div>
+          </div>
+        </div>
+        <div class="yt-player" id="yt-player">
+          <div class="yt-player-screen" id="yt-screen" onclick="togglePlay()">
+            <span id="yt-scene">🎵</span>
+            <div id="yt-pause-icon" style="position:absolute;background:rgba(0,0,0,.5);border-radius:50%;width:50px;height:50px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;display:none">⏸</div>
+          </div>
+          <div class="yt-controls">
+            <button class="yt-ctrl-btn" onclick="togglePlay()" id="play-btn">⏸</button>
+            <div class="yt-progress-bar" onclick="seekVideo(event)">
+              <div class="yt-progress-fill" id="yt-progress"></div>
+            </div>
+            <span class="yt-time" id="yt-time">0:00</span>
+            <button class="yt-ctrl-btn" onclick="toggleMute()" id="mute-btn">🔊</button>
+          </div>
+          <div style="padding:10px 12px;background:#111">
+            <div id="yt-playing-title" style="color:#fff;font-size:.82rem;font-weight:700"></div>
+            <div style="color:#aaa;font-size:.72rem;margin-top:2px">유튜브 시뮬레이션</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip"><strong>💡 화면이 너무 작아요</strong>영상을 가로로 돌리면 전체화면으로 커져요. 폰을 옆으로 돌리면 자동으로 가로 화면이 돼요. 세로로 돌리면 다시 작아지고요.</div>
+    <div class="myth"><strong>❌ 흔한 오해</strong>"유튜브 보면 돈이 나가나요?" → 유튜브 자체는 무료예요. 다만 데이터(LTE)로 보면 데이터 요금이 나가요. 집 와이파이로 보면 추가 요금 없어요.</div>
+    <div class="keypoint">💡 유튜브는 검색도 돼요! 검색창에 "트로트 노래", "○○ 드라마 1화"라고 치면 찾을 수 있어요.</div>
+  </div>
+</div>
+
+<!-- ─────────── 카카오톡 ─────────── -->
+<p class="section-label">기초 4 — 카카오톡 사용하기</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">4</div>
+    <div class="ch-title">카카오톡으로 연락하기</div>
+  </div>
+  <div class="ch-body">
+    <p>카카오톡은 우리나라에서 가장 많이 쓰는 메시지 앱이에요. 문자보다 훨씬 편해요 — 사진 전송이 무료고, 상대방이 읽었는지 확인도 되고, 영상통화도 가능해요.</p>
+    <p>카카오톡을 열면 채팅 목록이 보여요. 내가 대화를 나눈 사람들이 최근 순서로 정렬되어 있어요. 대화하고 싶은 사람 이름을 누르면 대화창이 열려요.</p>
+    <p>숫자가 써 있는 빨간 동그라미(🔴)는 읽지 않은 메시지 개수예요. 그 대화를 누르면 새 메시지를 볼 수 있어요. 메시지를 보내려면 아래 입력창에 글을 쓰고 보내기를 누르면 돼요.</p>
+
+    <div class="demo">
+      <div class="demo-label">💬 카카오톡 채팅 목록이 이렇게 생겼어요</div>
+      <div class="browser-wrap">
+        <div class="kakao-header">
+          <span class="kakao-logo">💬 카카오톡</span>
+          <span style="color:#3c1e1e;font-size:.85rem">🔍 ⚙️</span>
+        </div>
+        <div class="kakao-chat-list" id="kakao-list">
+          <div class="kakao-chat-item" onclick="openKakaoChat('큰딸 (영희)')">
+            <div class="kakao-avatar" style="background:#ffe0b2">👩</div>
+            <div style="flex:1;min-width:0">
+              <div class="kakao-name">큰딸 (영희)</div>
+              <div class="kakao-preview">엄마 오늘 저녁 드셨어요? 🍚</div>
+            </div>
+            <div class="kakao-time">오후 6:30<br><span class="kakao-badge">3</span></div>
+          </div>
+          <div class="kakao-chat-item" onclick="openKakaoChat('아들 (철수)')">
+            <div class="kakao-avatar" style="background:#e3f2fd">👦</div>
+            <div style="flex:1;min-width:0">
+              <div class="kakao-name">아들 (철수)</div>
+              <div class="kakao-preview">이번 주말에 놀러 갈게요!</div>
+            </div>
+            <div class="kakao-time">어제<br></div>
+          </div>
+          <div class="kakao-chat-item" onclick="openKakaoChat('동네 친구들')">
+            <div class="kakao-avatar" style="background:#f3e5f5">👥</div>
+            <div style="flex:1;min-width:0">
+              <div class="kakao-name">동네 친구들</div>
+              <div class="kakao-preview">순자: 내일 공원 나오시나요?</div>
+            </div>
+            <div class="kakao-time">어제<br><span class="kakao-badge">12</span></div>
+          </div>
+          <div class="kakao-chat-item" onclick="openKakaoChat('병원 예약 알림')">
+            <div class="kakao-avatar" style="background:#e8f5e9">🏥</div>
+            <div style="flex:1;min-width:0">
+              <div class="kakao-name">병원 예약 알림</div>
+              <div class="kakao-preview">[한마음내과] 내일 오전 10시 예약...</div>
+            </div>
+            <div class="kakao-time">2일 전</div>
+          </div>
+        </div>
+        <div id="kakao-chat-open" style="display:none;padding:12px">
+          <div id="kakao-chat-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip"><strong>💡 단체 채팅방에서 알림이 너무 많아요</strong>채팅방 이름을 꾹 누르면 '알림 끄기' 옵션이 나와요. 중요한 메시지는 놓치지 않되 방해받지 않을 수 있어요.</div>
+    <div class="keypoint">💡 카카오톡 1 표시(읽음)가 사라지면 상대방이 메시지를 읽은 거예요. 답장이 없어도 읽었다는 건 알 수 있어요.</div>
+  </div>
+</div>
+
+<!-- ─────────── 인터넷 안전 ─────────── -->
+<p class="section-label">기초 5 — 인터넷 안전하게 쓰기</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">5</div>
+    <div class="ch-title">인터넷 사기 조심하기</div>
+  </div>
+  <div class="ch-body">
+    <p>인터넷은 편리하지만 조심해야 할 것도 있어요. 나쁜 사람들이 인터넷을 이용해서 돈을 빼앗거나 개인정보를 훔치려 해요. 몇 가지만 기억하면 충분히 안전하게 쓸 수 있어요.</p>
+    <p><strong>절대 하면 안 되는 것:</strong> 모르는 사람이 카카오톡으로 "지금 계좌로 돈을 보내달라"고 하면 무조건 사기예요. 아들·딸을 사칭하는 경우도 있어요. 직접 전화로 확인하세요.</p>
+    <p><strong>링크 클릭 주의:</strong> 문자로 온 "택배 배송 확인", "건강보험 환급금" 같은 링크는 누르지 마세요. 개인정보나 돈을 빼앗는 가짜 사이트로 연결될 수 있어요.</p>
+
+    <div class="demo">
+      <div class="demo-label">⚠️ 이것은 안전할까요? 눌러서 확인해보세요</div>
+      <div class="scam-card scam-safe" onclick="showScamResult('safe1')" style="cursor:pointer">
+        <h4>✅ 이런 경우는 괜찮아요</h4>
+        <p>네이버, 카카오, 쿠팡 등 알고 있는 사이트에서 온 공식 메시지</p>
+      </div>
+      <div class="scam-card scam-danger" onclick="showScamResult('danger1')" style="cursor:pointer">
+        <h4>🔴 이런 문자는 사기예요!</h4>
+        <p>📦 "[국제택배] 주소 불명확. 확인 필요: http://bit.ly/3x..." — 모르는 링크</p>
+      </div>
+      <div class="scam-card scam-danger" onclick="showScamResult('danger2')" style="cursor:pointer">
+        <h4>🔴 이런 카카오톡도 사기예요!</h4>
+        <p>💬 "엄마 나 지갑 잃어버렸어. 급하니까 100만원만 먼저 보내줘"</p>
+      </div>
+      <div id="scam-result" style="background:#fff;border-radius:10px;padding:12px 14px;font-size:.9rem;min-height:40px;display:none;margin-top:4px;font-weight:600"></div>
+    </div>
+
+    <div class="keypoint">💡 "급하다", "지금 당장", "계좌로 돈 보내라" → 99% 사기예요. 아무리 가족처럼 보여도 전화로 직접 확인하세요.</div>
+  </div>
+</div>
+
+<div style="background:linear-gradient(135deg,#38a169,#276749);color:#fff;border-radius:20px;padding:24px;text-align:center;margin-top:8px">
+  <h3 style="font-size:1.2rem;font-weight:800;margin-bottom:10px">🌐 잘 하셨어요!</h3>
+  <p style="font-size:.95rem;opacity:.9;line-height:1.65">검색·유튜브·카카오톡까지 배웠어요.<br>이제 키오스크도 두렵지 않아요!</p>
+  <a href="kiosk.html" style="display:inline-block;margin-top:14px;background:#fff;color:#276749;font-weight:800;padding:12px 24px;border-radius:12px;text-decoration:none;font-size:.95rem">키오스크 배우기 →</a>
+</div>
+
+<script>
+// 와이파이 선택
+var connInfo={
+  wifi:'✅ 와이파이 연결 중이에요. 빠르고 데이터 요금이 없어요. 유튜브, 카카오톡 마음껏 쓰세요!',
+  data:'📡 LTE 데이터 사용 중이에요. 와이파이가 없을 때 자동으로 연결돼요. 동영상을 많이 보면 데이터가 빨리 줄 수 있어요.'
+};
+function selectConn(t){
+  document.getElementById('wc-wifi').classList.toggle('sel',t==='wifi');
+  document.getElementById('wc-data').classList.toggle('sel',t==='data');
+  document.getElementById('wifi-result').textContent=connInfo[t];
+}
+
+// 검색 데모
+var searchData={
+  '날씨':[{url:'weather.naver.com',title:'오늘 서울 날씨 — 맑음 23°C',desc:'현재 서울 날씨: 맑음, 23도. 미세먼지: 좋음. 낮 최고 26도, 밤 최저 17도.'},
+          {url:'weather.kr',title:'전국 날씨 예보 | 기상청',desc:'내일부터 비가 오기 시작합니다. 우산을 준비하세요.'}],
+  '혈압':[{url:'health.naver.com',title:'혈압 정상 수치 — 120/80 이하',desc:'정상 혈압은 수축기 120mmHg 미만, 이완기 80mmHg 미만입니다. 혈압약은 식후에 복용하는 것을 권장해요.'},
+          {url:'amc.seoul.kr',title:'혈압 낮추는 생활 습관 | 서울아산병원',desc:'걷기 운동, 저염식, 금연이 혈압 관리에 효과적입니다.'}],
+  '버스':[{url:'bus.go.kr',title:'버스 노선 조회 — 전국버스정보',desc:'출발지와 도착지를 입력하면 버스 노선과 도착 시간을 알려드려요.'},
+          {url:'kakaomap.kakao.com',title:'카카오맵 대중교통 길찾기',desc:'카카오맵에서 버스·지하철 도착 시간을 실시간으로 확인하세요.'}],
+  '트로트':[{url:'youtube.com',title:'2024 최신 트로트 인기곡 모음 — YouTube',desc:'임영웅, 송가인, 영탁 등 인기 트로트 가수들의 히트곡 모음. 무료로 감상하세요.'},
+            {url:'melon.com',title:'트로트 차트 TOP 100 | 멜론',desc:'이번 주 가장 많이 들은 트로트 곡 순위를 확인해보세요.'}]
+};
+function doSearch(){
+  var q=document.getElementById('search-input').value.trim();
+  if(!q)return;
+  showSearchResults(q);
+}
+function quickSearch(q){
+  document.getElementById('search-input').value=q;
+  showSearchResults(q);
+}
+function showSearchResults(q){
+  var data=null;
+  var lq=q.toLowerCase();
+  if(lq.includes('날씨'))data=searchData['날씨'];
+  else if(lq.includes('혈압')||lq.includes('혈'))data=searchData['혈압'];
+  else if(lq.includes('버스'))data=searchData['버스'];
+  else if(lq.includes('트로트')||lq.includes('노래'))data=searchData['트로트'];
+  var res=document.getElementById('search-results');
+  if(data){
+    res.innerHTML='<div style="font-size:.78rem;color:#718096;margin-bottom:8px">\''+q+'\' 검색 결과 약 2,340,000개</div>'+
+      data.map(d=>'<div class="search-result-item"><div class="sri-url">🌐 '+d.url+'</div><div class="sri-title">'+d.title+'</div><div class="sri-desc">'+d.desc+'</div></div>').join('');
+  } else {
+    res.innerHTML='<div class="search-result-item"><div class="sri-url">🔍 검색 중...</div><div class="sri-title">\''+q+'\' 검색 결과</div><div class="sri-desc">실제 검색에서는 수백만 개의 결과가 나와요. 맨 위에서부터 하나씩 눌러보세요.</div></div>';
+  }
+}
+
+// 유튜브 데모
+var ytItems=[
+  {title:'2024 트로트 메들리 베스트 50곡',scene:'🎵',color:'linear-gradient(135deg,#ff6b6b,#ffa07a)'},
+  {title:'어르신도 쉽게! 5분 반찬 레시피',scene:'🍳',color:'linear-gradient(135deg,#74c0fc,#339af0)'},
+  {title:'혈압 낮추는 하루 10분 운동',scene:'🌿',color:'linear-gradient(135deg,#51cf66,#2f9e44)'}
+];
+var ytPlaying=false, ytMuted=false, ytTimer=null, ytProgress=0;
+function playYT(idx){
+  document.getElementById('yt-list').style.display='none';
+  var player=document.getElementById('yt-player');
+  player.style.display='block';
+  document.getElementById('yt-scene').textContent=ytItems[idx].scene;
+  document.getElementById('yt-player-screen').style.background=ytItems[idx].color;
+  document.getElementById('yt-playing-title').textContent=ytItems[idx].title;
+  ytProgress=0;ytPlaying=true;
+  document.getElementById('play-btn').textContent='⏸';
+  startProgress();
+}
+function togglePlay(){
+  ytPlaying=!ytPlaying;
+  document.getElementById('play-btn').textContent=ytPlaying?'⏸':'▶';
+  if(ytPlaying)startProgress();else{clearInterval(ytTimer);}
+}
+function startProgress(){
+  clearInterval(ytTimer);
+  ytTimer=setInterval(()=>{
+    if(!ytPlaying)return;
+    ytProgress=Math.min(100,ytProgress+.5);
+    document.getElementById('yt-progress').style.width=ytProgress+'%';
+    var sec=Math.floor(ytProgress*3);
+    document.getElementById('yt-time').textContent=Math.floor(sec/60)+':'+(sec%60).toString().padStart(2,'0');
+    if(ytProgress>=100){clearInterval(ytTimer);ytPlaying=false;document.getElementById('play-btn').textContent='▶';}
+  },100);
+}
+function toggleMute(){ytMuted=!ytMuted;document.getElementById('mute-btn').textContent=ytMuted?'🔇':'🔊';}
+function seekVideo(e){
+  var bar=e.currentTarget;
+  var pct=e.offsetX/bar.offsetWidth*100;
+  ytProgress=pct;
+  document.getElementById('yt-progress').style.width=pct+'%';
+}
+
+// 카카오톡 채팅 열기
+function openKakaoChat(name){
+  var list=document.getElementById('kakao-list');
+  var chat=document.getElementById('kakao-chat-open');
+  list.style.display='none';chat.style.display='block';
+  document.getElementById('kakao-chat-content').innerHTML=
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><button onclick="closeKakaoChat()" style="border:none;background:none;font-size:1.1rem;cursor:pointer">‹</button><strong>'+name+'</strong></div>'+
+    '<div style="background:#b2dfdb;border-radius:12px;padding:14px;min-height:100px;font-size:.85rem;color:#444;text-align:center">'+
+    '<p style="margin-bottom:8px">'+name+'와의 대화방이에요.</p>'+
+    '<p>실제 카카오톡에서는 사진, 동영상, 음성메시지도 주고받을 수 있어요 😊</p>'+
+    '</div>';
+}
+function closeKakaoChat(){
+  document.getElementById('kakao-list').style.display='block';
+  document.getElementById('kakao-chat-open').style.display='none';
+}
+
+// 사기 결과
+var scamResults={
+  safe1:'✅ 맞아요! 공식 앱이나 직접 접속한 사이트에서 오는 알림은 보통 안전해요. 단, 링크는 항상 주소를 확인하세요.',
+  danger1:'🚨 이건 사기예요! bit.ly 같은 알 수 없는 단축 링크는 절대 누르지 마세요. 개인정보를 빼가는 가짜 사이트로 연결돼요.',
+  danger2:'🚨 이건 사기예요! 가족을 사칭하는 대화 사기(메신저 피싱)예요. 돈을 보내기 전에 반드시 전화로 직접 확인하세요!'
+};
+function showScamResult(k){
+  var r=document.getElementById('scam-result');
+  r.style.display='block';r.textContent=scamResults[k];
+  r.style.color=k==='safe1'?'#276749':'#c53030';
+  r.style.background=k==='safe1'?'#f0fff4':'#fff5f5';
+}
+</script>
+</body>
+</html>

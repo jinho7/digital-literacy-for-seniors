@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>1강 · 스마트폰 기초 | 디지털 배움터</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Noto Sans KR','맑은 고딕',sans-serif;background:#f0f4f8;color:#1a202c;padding:20px 18px 80px;max-width:560px;margin:0 auto;font-size:1.08rem;line-height:1.75}
+    a.back{display:inline-flex;align-items:center;gap:6px;color:#3182ce;font-size:1.1rem;font-weight:700;text-decoration:none;margin-bottom:22px}
+    .hero{background:#3182ce;color:#fff;border-radius:22px;padding:28px 24px 22px;margin-bottom:24px}
+    .badge{font-size:.8rem;background:rgba(255,255,255,.22);border-radius:999px;padding:3px 12px;display:inline-block;margin-bottom:12px;font-weight:800}
+    .hero h1{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+    .hero p{font-size:1rem;opacity:.9;line-height:1.6}
+    .section-label{font-size:.78rem;font-weight:800;letter-spacing:.08em;color:#718096;margin:28px 0 10px;padding-left:4px}
+    .chapter{background:#fff;border-radius:20px;padding:26px 22px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+    .ch-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .ch-num{width:38px;height:38px;border-radius:50%;background:#3182ce;color:#fff;font-weight:800;font-size:1.05rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ch-title{font-size:1.25rem;font-weight:800}
+    .ch-body p{color:#2d3748;margin-bottom:14px}
+    .demo{background:#f7fafc;border:2px solid #e2e8f0;border-radius:16px;padding:18px;margin:18px 0}
+    .demo-label{font-size:.78rem;font-weight:800;color:#718096;letter-spacing:.06em;margin-bottom:14px;text-align:center}
+    .keypoint{background:#ebf8ff;border-left:4px solid #4299e1;border-radius:10px;padding:13px 15px;margin-top:16px;font-size:.95rem;color:#2a4365;font-weight:600;line-height:1.5}
+    .myth{background:#fff5f5;border-left:4px solid #fc8181;border-radius:10px;padding:13px 15px;margin-top:12px;font-size:.92rem;color:#63171b;line-height:1.55}
+    .myth strong{display:block;font-size:.78rem;color:#c53030;font-weight:800;margin-bottom:5px}
+    .tip{background:#f0fff4;border-left:4px solid #68d391;border-radius:10px;padding:13px 15px;margin-top:12px;font-size:.92rem;color:#22543d;line-height:1.55}
+    .tip strong{display:block;font-size:.78rem;color:#276749;font-weight:800;margin-bottom:5px}
+
+    /* 폰 프레임 */
+    .phone-frame{width:200px;background:#1c1c1e;border-radius:34px;padding:12px 8px;box-shadow:0 0 0 2px #3a3a3c,0 20px 40px rgba(0,0,0,.4);margin:0 auto}
+    .phone-screen{background:#fff;border-radius:24px;overflow:hidden;min-height:300px}
+    .phone-statusbar{background:#1c1c1e;color:#fff;font-size:.65rem;display:flex;justify-content:space-between;padding:5px 12px;font-weight:600}
+
+    /* 제스처 연습 */
+    .gesture-area{width:100%;height:180px;background:linear-gradient(135deg,#e8f4fd,#dbeafe);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#2b6cb0;font-weight:700;cursor:pointer;user-select:none;position:relative;overflow:hidden;border:2px dashed #90cdf4;touch-action:none}
+    .gesture-area .hint{text-align:center;line-height:1.7;pointer-events:none}
+    .gesture-area .hint .big{font-size:2rem;display:block;margin-bottom:6px}
+    .ripple{position:absolute;border-radius:50%;background:rgba(49,130,206,.3);animation:rippleAnim .6s ease-out forwards;pointer-events:none}
+    @keyframes rippleAnim{from{transform:scale(0);opacity:1}to{transform:scale(4);opacity:0}}
+    .gesture-result{min-height:36px;text-align:center;font-size:.92rem;font-weight:600;color:#2b6cb0;margin-top:8px;padding:8px;background:#fff;border-radius:10px}
+
+    /* 제스처 종류 버튼 */
+    .gesture-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+    .gtab{padding:8px 12px;border-radius:10px;border:2px solid #e2e8f0;background:#fff;font-size:.85rem;font-weight:700;cursor:pointer;color:#4a5568;transition:.15s;font-family:inherit}
+    .gtab.on{background:#3182ce;color:#fff;border-color:#3182ce}
+
+    /* 화면 밝기 슬라이더 */
+    .brightness-demo{display:flex;align-items:center;gap:12px;margin:10px 0}
+    .brightness-demo .sun{font-size:1.3rem}
+    .brightness-slider{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;background:#e2e8f0;outline:none}
+    .brightness-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#3182ce;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+    .brightness-preview{width:80px;height:80px;border-radius:12px;background:#000;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto}
+
+    /* 볼륨 */
+    .volume-demo{display:flex;align-items:center;gap:10px;margin:10px 0}
+    .vol-btn{width:44px;height:44px;border-radius:50%;border:2px solid #3182ce;background:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit}
+    .vol-bar{flex:1;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden}
+    .vol-fill{height:100%;background:#3182ce;border-radius:4px;transition:.2s}
+
+    /* 전화 다이얼러 */
+    .dialer{max-width:240px;margin:0 auto}
+    .dial-display{background:#1c1c1e;color:#fff;border-radius:14px;padding:14px;text-align:center;font-size:1.4rem;font-weight:700;min-height:52px;margin-bottom:10px;letter-spacing:.1em}
+    .dial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+    .dial-btn{height:54px;border-radius:12px;border:none;background:#f7fafc;font-size:1.2rem;font-weight:800;cursor:pointer;font-family:inherit;color:#1a202c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;transition:.1s;box-shadow:0 2px 4px rgba(0,0,0,.08)}
+    .dial-btn:active{transform:scale(.94);background:#e2e8f0}
+    .dial-btn .sub{font-size:.55rem;color:#718096;font-weight:600;letter-spacing:.04em}
+    .dial-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+    .dial-del{height:54px;border-radius:12px;border:2px solid #e2e8f0;background:#fff;font-size:1.2rem;cursor:pointer;font-family:inherit;color:#718096}
+    .dial-call{height:54px;border-radius:12px;border:none;background:#34c759;color:#fff;font-size:1.5rem;cursor:pointer;font-family:inherit;font-weight:800}
+    .dial-end{height:54px;border-radius:12px;border:none;background:#ff3b30;color:#fff;font-size:1.5rem;cursor:pointer;font-family:inherit;font-weight:800;display:none}
+    .dial-state{text-align:center;font-size:.88rem;font-weight:600;margin-top:8px;color:#2d3748;min-height:22px}
+
+    /* 문자 데모 */
+    .msg-demo{background:#f7fafc;border-radius:14px;overflow:hidden;border:2px solid #e2e8f0}
+    .msg-header{background:#3182ce;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px}
+    .msg-avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+    .msg-header-name{font-weight:700;font-size:.95rem}
+    .msg-bubbles{padding:14px;min-height:120px;display:flex;flex-direction:column;gap:8px}
+    .bubble{max-width:75%;padding:10px 13px;border-radius:18px;font-size:.88rem;line-height:1.5}
+    .bubble.recv{background:#e2e8f0;color:#1a202c;align-self:flex-start;border-bottom-left-radius:4px}
+    .bubble.sent{background:#3182ce;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+    .msg-input-row{display:flex;gap:8px;padding:10px 12px;background:#fff;border-top:1px solid #e2e8f0}
+    .msg-input{flex:1;border:2px solid #e2e8f0;border-radius:20px;padding:9px 14px;font-size:.9rem;font-family:inherit;outline:none}
+    .msg-input:focus{border-color:#3182ce}
+    .msg-send{width:40px;height:40px;border-radius:50%;background:#3182ce;border:none;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="back">← 처음으로</a>
+
+<div class="hero">
+  <span class="badge">1강</span>
+  <h1>📱 스마트폰 기초</h1>
+  <p>전화·문자·사진까지<br>천천히 하나씩 배워봐요.</p>
+</div>
+
+<!-- ─────────────── 화면 켜고 끄기 ─────────────── -->
+<p class="section-label">기초 1 — 화면 켜기·끄기·잠금 해제</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">1</div>
+    <div class="ch-title">화면을 켜고 끄는 법</div>
+  </div>
+  <div class="ch-body">
+    <p>스마트폰 옆면이나 위쪽에 길쭉한 버튼이 있어요. 이게 <strong>전원 버튼(잠금 버튼)</strong>이에요. 한 번 짧게 누르면 화면이 켜지고, 한 번 더 누르면 꺼져요.</p>
+    <p>화면이 꺼지는 건 고장이 아니에요. 배터리를 아끼기 위해 일정 시간 안 쓰면 자동으로 꺼지게 설정되어 있어요. 전원 버튼을 누르거나 화면을 한 번 누르면 다시 켜져요.</p>
+    <p>화면이 켜지면 잠금 화면이 나와요. 비밀번호(숫자 6자리), 지문, 또는 얼굴인식으로 잠금을 해제해야 내 폰으로 들어갈 수 있어요. 마치 현관문 비밀번호를 누르는 것과 같아요.</p>
+
+    <div class="demo">
+      <div class="demo-label">💡 화면 밝기도 조절할 수 있어요</div>
+      <div class="brightness-demo">
+        <span class="sun">🌙</span>
+        <input class="brightness-slider" type="range" min="10" max="100" value="70" oninput="setBrightness(this.value)"/>
+        <span class="sun">☀️</span>
+      </div>
+      <div class="brightness-preview" id="bp-preview" style="background:rgba(0,0,0,.3)">📱</div>
+      <p style="text-align:center;font-size:.8rem;color:#718096;margin-top:8px">슬라이더를 드래그해서 밝기를 조절해보세요</p>
+    </div>
+
+    <div class="tip"><strong>💡 화면이 너무 빨리 꺼진다면?</strong>설정 → 화면(디스플레이) → 화면 자동 꺼짐 시간을 늘려보세요. 1분 또는 2분으로 설정하면 더 오래 켜져 있어요.</div>
+    <div class="keypoint">💡 전원 버튼 한 번 = 화면 켜기/끄기. 길게 누르면 = 전원 완전히 끄기. 자주 쓰는 건 짧게 누르기예요.</div>
+  </div>
+</div>
+
+<!-- ─────────────── 터치 제스처 ─────────────── -->
+<p class="section-label">기초 2 — 터치 방법</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">2</div>
+    <div class="ch-title">화면 만지는 방법 (제스처)</div>
+  </div>
+  <div class="ch-body">
+    <p>스마트폰 화면은 손가락의 움직임을 읽어요. 마우스나 키보드 없이 손가락만으로 모든 것을 할 수 있어요. 방법은 딱 네 가지만 기억하면 돼요.</p>
+    <p><strong>탭(누르기)</strong> — 손가락으로 한 번 가볍게 눌렀다 떼요. 마우스 클릭과 같아요. 앱 열기, 버튼 누르기에 써요.</p>
+    <p><strong>스와이프(쓸기)</strong> — 손가락을 화면에 댄 채로 한 방향으로 쭉 밀어요. 화면 넘기기, 스크롤에 써요.</p>
+    <p><strong>핀치(두 손가락 모으기/벌리기)</strong> — 두 손가락을 동시에 사용해요. 사진이나 지도를 크게/작게 할 때 써요.</p>
+    <p><strong>길게 누르기</strong> — 손가락을 떼지 않고 1~2초 꾹 눌러요. 추가 메뉴가 나오거나 선택 모드가 돼요.</p>
+
+    <div class="demo">
+      <div class="demo-label">✋ 제스처를 선택하고 아래 영역에서 연습해보세요</div>
+      <div class="gesture-tabs">
+        <button class="gtab on" onclick="setGesture('tap',this)">👆 탭 (누르기)</button>
+        <button class="gtab" onclick="setGesture('swipe',this)">👉 스와이프 (밀기)</button>
+        <button class="gtab" onclick="setGesture('pinch',this)">🤌 핀치 (줌)</button>
+        <button class="gtab" onclick="setGesture('hold',this)">✊ 길게 누르기</button>
+      </div>
+      <div class="gesture-area" id="gesture-area"
+           onclick="handleGesture(event)"
+           onmousemove="if(isDragging)handleSwipe(event)"
+           onmousedown="startDrag(event)"
+           onmouseup="endDrag(event)"
+           ontouchstart="startDrag(event)"
+           ontouchmove="handleSwipe(event)"
+           ontouchend="endDrag(event)">
+        <div class="hint">
+          <span class="big" id="g-icon">👆</span>
+          <span id="g-hint">이 영역을 손가락으로 눌러보세요</span>
+        </div>
+      </div>
+      <div class="gesture-result" id="gesture-result">여기에 결과가 나와요</div>
+    </div>
+
+    <div class="tip"><strong>💡 글씨가 너무 작아요!</strong>두 손가락을 화면 위에 대고 벌리면(핀치 아웃) 화면이 커져요. 반대로 모으면(핀치 인) 작아져요. 사진, 지도, 웹사이트 모두 가능해요.</div>
+    <div class="keypoint">💡 탭 = 클릭 / 스와이프 = 넘기기 / 핀치 = 확대·축소 / 길게 누르기 = 추가 메뉴. 이 4가지가 전부예요.</div>
+  </div>
+</div>
+
+<!-- ─────────────── 볼륨 ─────────────── -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">3</div>
+    <div class="ch-title">소리 크기 조절하기</div>
+  </div>
+  <div class="ch-body">
+    <p>폰 왼쪽 옆면에 긴 버튼 두 개가 있어요. 위쪽이 <strong>볼륨 크게(+)</strong>, 아래쪽이 <strong>볼륨 작게(–)</strong>예요. 눌를 때마다 소리가 단계적으로 변해요.</p>
+    <p>소리가 전혀 안 나는데 전화가 왔다면? 진동 모드나 무음 모드일 가능성이 높아요. 볼륨 버튼을 위로 눌러보거나, 화면 상단에서 아래로 쓸어내려서 설정을 확인해보세요.</p>
+
+    <div class="demo">
+      <div class="demo-label">🔊 버튼을 눌러서 볼륨을 조절해보세요</div>
+      <div class="volume-demo">
+        <button class="vol-btn" onclick="changeVol(-10)">🔉</button>
+        <div class="vol-bar"><div class="vol-fill" id="vol-fill" style="width:60%"></div></div>
+        <button class="vol-btn" onclick="changeVol(10)">🔊</button>
+      </div>
+      <div style="text-align:center;font-size:.9rem;font-weight:700;color:#2d3748" id="vol-label">볼륨: 6 / 10</div>
+    </div>
+
+    <div class="keypoint">💡 전화·알림 소리가 갑자기 없어졌다면 볼륨(+) 버튼을 몇 번 눌러보세요. 진동→소리 순서로 전환돼요.</div>
+  </div>
+</div>
+
+<!-- ─────────────── 전화 ─────────────── -->
+<p class="section-label">기초 3 — 전화 걸기·받기</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">4</div>
+    <div class="ch-title">전화 걸기</div>
+  </div>
+  <div class="ch-body">
+    <p>전화를 걸려면 초록색 <strong>📞 전화 앱</strong>을 눌러요. 그러면 다이얼 화면이 나와요. 번호를 누르고 초록 버튼을 누르면 전화가 걸려요.</p>
+    <p>연락처에 이미 저장된 번호는 숫자 대신 이름을 검색해서 바로 전화할 수 있어요. 자주 쓰는 번호는 연락처에 저장해두면 편해요.</p>
+    <p>전화 중에 소리가 안 들리면 귀에 대는 부분(스피커)이 올바른 위치인지 확인해보세요. 또는 볼륨(+) 버튼을 눌러 통화 볼륨을 높여보세요.</p>
+
+    <div class="demo">
+      <div class="demo-label">📞 번호를 누르고 통화 버튼을 눌러보세요</div>
+      <div class="dialer">
+        <div class="dial-display" id="dial-num">&nbsp;</div>
+        <div class="dial-grid">
+          <button class="dial-btn" onclick="dialPress('1')">1<span class="sub">&nbsp;</span></button>
+          <button class="dial-btn" onclick="dialPress('2')">2<span class="sub">ABC</span></button>
+          <button class="dial-btn" onclick="dialPress('3')">3<span class="sub">DEF</span></button>
+          <button class="dial-btn" onclick="dialPress('4')">4<span class="sub">GHI</span></button>
+          <button class="dial-btn" onclick="dialPress('5')">5<span class="sub">JKL</span></button>
+          <button class="dial-btn" onclick="dialPress('6')">6<span class="sub">MNO</span></button>
+          <button class="dial-btn" onclick="dialPress('7')">7<span class="sub">PQRS</span></button>
+          <button class="dial-btn" onclick="dialPress('8')">8<span class="sub">TUV</span></button>
+          <button class="dial-btn" onclick="dialPress('9')">9<span class="sub">WXYZ</span></button>
+          <button class="dial-btn" onclick="dialPress('*')">*</button>
+          <button class="dial-btn" onclick="dialPress('0')">0<span class="sub">+</span></button>
+          <button class="dial-btn" onclick="dialPress('#')">#</button>
+        </div>
+        <div class="dial-actions">
+          <button class="dial-del" onclick="dialDel()">⌫</button>
+          <button class="dial-call" id="dial-call-btn" onclick="dialCall()">📞</button>
+          <button class="dial-end" id="dial-end-btn" onclick="dialEnd()">📵</button>
+          <div></div>
+        </div>
+        <div class="dial-state" id="dial-state"></div>
+      </div>
+    </div>
+
+    <div class="tip"><strong>💡 전화 받는 법</strong>전화가 오면 화면에 발신자 이름·번호가 표시돼요. 초록 📞 버튼을 위로 밀면 받고, 빨간 📵 버튼으로 밀면 거절해요. 버튼을 탭하는 폰도 있어요.</div>
+    <div class="keypoint">💡 모르는 번호로 전화가 와도 받기 전에 번호를 보고 판단하세요. 이상하면 안 받아도 돼요. 중요한 연락이면 문자나 다시 전화 올 거예요.</div>
+  </div>
+</div>
+
+<!-- ─────────────── 문자 ─────────────── -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">5</div>
+    <div class="ch-title">문자 메시지 보내기</div>
+  </div>
+  <div class="ch-body">
+    <p>문자는 전화 앱 옆의 <strong>💬 메시지 앱</strong>으로 보내요. 또는 카카오톡을 쓰신다면 카카오톡으로 보내셔도 돼요. 카카오톡이 더 편하고 사진도 무료로 보낼 수 있어요.</p>
+    <p>문자 앱을 열면 지금까지 주고받은 대화 목록이 보여요. 받고 싶은 사람 이름을 누르면 대화창이 열리고, 아래 입력창에 글자를 쓰고 보내기 버튼을 누르면 돼요.</p>
+    <p>글자 입력이 어려우시면 <strong>음성 입력</strong>을 써보세요. 키보드 위에 🎤 마이크 아이콘을 누르고 말하면 글자로 변환돼요. "안녕하세요 잘 지내고 계세요?" 이렇게요.</p>
+
+    <div class="demo">
+      <div class="demo-label">💬 메시지 창이 이렇게 생겼어요 — 직접 입력해보세요</div>
+      <div class="msg-demo">
+        <div class="msg-header">
+          <div class="msg-avatar">👤</div>
+          <div>
+            <div class="msg-header-name">자녀 (홍길동)</div>
+            <div style="font-size:.75rem;opacity:.8">010-1234-5678</div>
+          </div>
+        </div>
+        <div class="msg-bubbles" id="msg-bubbles">
+          <div class="bubble recv">엄마, 오늘 저녁 드셨어요? 😊</div>
+          <div class="bubble sent">응, 잘 먹었어. 너는?</div>
+          <div class="bubble recv">저도 먹었어요~ 주말에 놀러 갈게요!</div>
+        </div>
+        <div class="msg-input-row">
+          <input class="msg-input" id="msg-input" placeholder="메시지를 입력하세요…" onkeydown="if(event.key==='Enter')sendMsg()" />
+          <button class="msg-send" onclick="sendMsg()">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="myth"><strong>❌ 흔한 오해</strong>"문자를 잘못 보내면 어떡하죠?" → 이미 보낸 문자는 취소가 어려워요. 보내기 전에 받는 사람을 한 번 더 확인하는 습관이 중요해요.</div>
+    <div class="keypoint">💡 카카오톡이 더 편해요 — 무료, 사진 전송 가능, 읽었는지 확인 가능. 카카오톡을 쓸 수 있다면 일반 문자보다 카카오톡을 권장해요.</div>
+  </div>
+</div>
+
+<!-- ─────────────── 사진 ─────────────── -->
+<p class="section-label">기초 4 — 사진 찍기</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">6</div>
+    <div class="ch-title">사진 찍는 법</div>
+  </div>
+  <div class="ch-body">
+    <p>스마트폰 카메라는 매우 좋아요. 복잡한 설정 없이도 자동으로 예쁘게 찍어줘요. 📷 카메라 앱을 열고, 화면에 보이는 장면을 잡은 뒤 <strong>큰 흰색 동그라미 버튼(셔터)</strong>을 누르면 돼요.</p>
+    <p>내 얼굴을 찍고 싶다면(셀카) 카메라 앱 안에서 <strong>화면 전환 버튼</strong>(🔄 모양)을 누르면 앞 카메라로 바뀌어요. 혼자서도 얼굴 사진을 찍을 수 있어요.</p>
+    <p>찍은 사진은 <strong>갤러리(또는 사진 앱)</strong>에 자동으로 저장돼요. 나중에 갤러리를 열면 찍었던 사진들이 날짜순으로 정리되어 있어요.</p>
+
+    <div class="demo">
+      <div class="demo-label">📸 이 버튼을 눌러서 '사진'을 찍어보세요</div>
+      <div style="position:relative;background:linear-gradient(160deg,#1a237e,#283593);border-radius:14px;overflow:hidden;min-height:200px;display:flex;align-items:center;justify-content:center">
+        <div id="cam-preview" style="text-align:center;color:rgba(255,255,255,.7);font-size:.9rem">
+          <span style="font-size:3rem;display:block;margin-bottom:8px">🌅</span>
+          카메라 화면이에요<br>아래 버튼을 눌러보세요
+        </div>
+        <div id="cam-flash" style="position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;transition:opacity .1s"></div>
+      </div>
+      <div style="background:#1c1c1e;padding:14px;border-radius:0 0 14px 14px;display:flex;align-items:center;justify-content:space-between">
+        <div style="width:36px;height:36px;border-radius:8px;background:#333;display:flex;align-items:center;justify-content:center" id="thumb-last">📷</div>
+        <button onclick="takePhoto()" style="width:60px;height:60px;border-radius:50%;border:4px solid #fff;background:#fff;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center">📸</button>
+        <div style="width:36px;height:36px;border-radius:8px;background:#333;display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer" onclick="toggleCam()">🔄</div>
+      </div>
+      <div style="text-align:center;font-size:.85rem;color:#718096;margin-top:8px" id="photo-count">찍은 사진: 0장</div>
+    </div>
+
+    <div class="tip"><strong>💡 사진이 흔들려요</strong>셔터 버튼을 너무 세게 누르면 흔들려요. 가볍게 툭 건드리듯이 누르면 덜 흔들려요. 또는 볼륨(+) 버튼을 셔터로 사용해도 돼요.</div>
+    <div class="keypoint">💡 잘못 찍어도 괜찮아요. 갤러리에서 마음에 안 드는 사진을 골라 삭제할 수 있어요. 여러 번 찍고 가장 잘 나온 것만 남기세요.</div>
+  </div>
+</div>
+
+<div style="background:#3182ce;color:#fff;border-radius:20px;padding:24px;text-align:center;margin-top:8px">
+  <h3 style="font-size:1.2rem;font-weight:800;margin-bottom:10px">📱 잘 하셨어요!</h3>
+  <p style="font-size:.95rem;opacity:.9;line-height:1.65">전화·문자·사진까지 배웠어요.<br>이제 인터넷 사용법도 배워볼까요?</p>
+  <a href="internet.html" style="display:inline-block;margin-top:14px;background:#fff;color:#3182ce;font-weight:800;padding:12px 24px;border-radius:12px;text-decoration:none;font-size:.95rem">인터넷 사용법 배우기 →</a>
+</div>
+
+<script>
+// 밝기 조절
+function setBrightness(v){
+  var a=v/100;
+  document.getElementById('bp-preview').style.background='rgba(0,0,0,'+(1-a*.9)+')';
+}
+
+// 제스처 데모
+var currentGesture='tap', isDragging=false, dragStartX=0, dragStartY=0, holdTimer=null;
+var gestureConfig={
+  tap:{icon:'👆',hint:'이 영역을 손가락으로 한 번 눌러보세요',result:'✅ 탭! 가볍게 눌렀다 떼면 돼요. 앱 열기, 버튼 누르기에 써요.'},
+  swipe:{icon:'👉',hint:'손가락을 대고 한 방향으로 쭉 밀어보세요',result:'✅ 스와이프! 화면 넘기기, 스크롤할 때 이렇게 해요.'},
+  pinch:{icon:'🤌',hint:'두 손가락을 대고 벌리거나 모아보세요',result:'✅ 핀치! 사진·지도를 크게/작게 할 때 이렇게 해요.'},
+  hold:{icon:'✊',hint:'손가락을 대고 1~2초 꾹 눌러보세요',result:'✅ 길게 누르기! 추가 메뉴가 나올 때 이렇게 해요.'}
+};
+function setGesture(g,btn){
+  currentGesture=g;
+  document.querySelectorAll('.gtab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('g-icon').textContent=gestureConfig[g].icon;
+  document.getElementById('g-hint').textContent=gestureConfig[g].hint;
+  document.getElementById('gesture-result').textContent='여기에 결과가 나와요';
+}
+function handleGesture(e){
+  if(currentGesture!=='tap')return;
+  var r=e.currentTarget.getBoundingClientRect();
+  var x=(e.clientX||e.touches[0].clientX)-r.left;
+  var y=(e.clientY||e.touches[0].clientY)-r.top;
+  var rpl=document.createElement('div');
+  rpl.className='ripple';
+  rpl.style.cssText='width:60px;height:60px;left:'+(x-30)+'px;top:'+(y-30)+'px;';
+  e.currentTarget.appendChild(rpl);
+  setTimeout(()=>rpl.remove(),700);
+  document.getElementById('gesture-result').textContent=gestureConfig.tap.result;
+}
+function startDrag(e){
+  if(currentGesture==='hold'){
+    holdTimer=setTimeout(()=>{document.getElementById('gesture-result').textContent=gestureConfig.hold.result;},1000);
+  }
+  isDragging=true;
+  var p=e.touches?e.touches[0]:e;
+  dragStartX=p.clientX;dragStartY=p.clientY;
+}
+function handleSwipe(e){
+  if(!isDragging||currentGesture!=='swipe')return;
+  var p=e.touches?e.touches[0]:e;
+  var dx=p.clientX-dragStartX, dy=p.clientY-dragStartY;
+  if(Math.abs(dx)>30||Math.abs(dy)>30){
+    document.getElementById('gesture-result').textContent=gestureConfig.swipe.result;
+    isDragging=false;
+  }
+}
+function endDrag(){
+  isDragging=false;
+  if(holdTimer){clearTimeout(holdTimer);holdTimer=null;}
+  if(currentGesture==='pinch')document.getElementById('gesture-result').textContent=gestureConfig.pinch.result;
+}
+
+// 볼륨 조절
+var vol=6;
+function changeVol(d){
+  vol=Math.max(0,Math.min(10,vol+d));
+  document.getElementById('vol-fill').style.width=(vol*10)+'%';
+  document.getElementById('vol-label').textContent='볼륨: '+vol+' / 10'+(vol===0?' 🔇':vol<=3?' 🔈':vol<=7?' 🔉':' 🔊');
+}
+
+// 다이얼러
+var dialNum='',calling=false;
+function dialPress(d){if(!calling&&dialNum.length<13){dialNum+=d;document.getElementById('dial-num').textContent=dialNum;}}
+function dialDel(){if(!calling){dialNum=dialNum.slice(0,-1);document.getElementById('dial-num').textContent=dialNum||' ';}}
+function dialCall(){
+  if(!dialNum){document.getElementById('dial-state').textContent='번호를 먼저 입력하세요';return;}
+  calling=true;
+  document.getElementById('dial-call-btn').style.display='none';
+  document.getElementById('dial-end-btn').style.display='block';
+  document.getElementById('dial-state').textContent='📞 연결 중... '+dialNum;
+  setTimeout(()=>{if(calling)document.getElementById('dial-state').textContent='📞 통화 중... '+dialNum;},1500);
+}
+function dialEnd(){
+  calling=false;
+  document.getElementById('dial-end-btn').style.display='none';
+  document.getElementById('dial-call-btn').style.display='block';
+  document.getElementById('dial-state').textContent='통화 종료';
+  setTimeout(()=>{document.getElementById('dial-state').textContent='';},2000);
+}
+
+// 문자 데모
+function sendMsg(){
+  var inp=document.getElementById('msg-input');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  var b=document.createElement('div');
+  b.className='bubble sent';
+  b.textContent=txt;
+  document.getElementById('msg-bubbles').appendChild(b);
+  inp.value='';
+  b.scrollIntoView({behavior:'smooth'});
+  // 자동 답장
+  setTimeout(()=>{
+    var replies=['넵! 알겠어요 😊','오~ 그렇군요!','ㅋㅋㅋ 맞아요!','감사해요 ❤️'];
+    var rb=document.createElement('div');
+    rb.className='bubble recv';
+    rb.textContent=replies[Math.floor(Math.random()*replies.length)];
+    document.getElementById('msg-bubbles').appendChild(rb);
+    rb.scrollIntoView({behavior:'smooth'});
+  },1200);
+}
+
+// 카메라 데모
+var photoCount=0,camFront=false;
+var scenes=['🌅','🌳','🏠','🌸','🌊','🐶','☁️','🏔️'];
+function takePhoto(){
+  var flash=document.getElementById('cam-flash');
+  flash.style.opacity=1;
+  setTimeout(()=>flash.style.opacity=0,120);
+  photoCount++;
+  document.getElementById('photo-count').textContent='찍은 사진: '+photoCount+'장';
+  document.getElementById('thumb-last').textContent=scenes[photoCount%scenes.length];
+}
+function toggleCam(){
+  camFront=!camFront;
+  document.getElementById('cam-preview').innerHTML='<span style="font-size:3rem;display:block;margin-bottom:8px">'+(camFront?'🤳':'🌅')+'</span>'+(camFront?'셀카 카메라예요<br>자신의 얼굴이 보여요':'뒷면 카메라예요<br>아래 버튼을 눌러보세요');
+}
+</script>
+</body>
+</html>

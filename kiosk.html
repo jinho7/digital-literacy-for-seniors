@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3강 · 키오스크 사용법 | 디지털 배움터</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Noto Sans KR','맑은 고딕',sans-serif;background:#f0f4f8;color:#1a202c;padding:20px 18px 80px;max-width:560px;margin:0 auto;font-size:1.08rem;line-height:1.75}
+    a.back{display:inline-flex;align-items:center;gap:6px;color:#d69e2e;font-size:1.1rem;font-weight:700;text-decoration:none;margin-bottom:22px}
+    .hero{background:linear-gradient(135deg,#d69e2e,#975a16);color:#fff;border-radius:22px;padding:28px 24px 22px;margin-bottom:24px}
+    .badge{font-size:.8rem;background:rgba(255,255,255,.22);border-radius:999px;padding:3px 12px;display:inline-block;margin-bottom:12px;font-weight:800}
+    .hero h1{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+    .hero p{font-size:1rem;opacity:.9;line-height:1.6}
+    .section-label{font-size:.78rem;font-weight:800;letter-spacing:.08em;color:#718096;margin:28px 0 10px;padding-left:4px}
+    .chapter{background:#fff;border-radius:20px;padding:26px 22px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+    .ch-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .ch-num{width:38px;height:38px;border-radius:50%;background:#d69e2e;color:#fff;font-weight:800;font-size:1.05rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ch-title{font-size:1.25rem;font-weight:800}
+    .ch-body p{color:#2d3748;margin-bottom:14px}
+    .demo{background:#f7fafc;border:2px solid #e2e8f0;border-radius:16px;padding:18px;margin:18px 0}
+    .demo-label{font-size:.78rem;font-weight:800;color:#718096;letter-spacing:.06em;margin-bottom:14px;text-align:center}
+    .keypoint{background:#fffaf0;border-left:4px solid #f6ad55;border-radius:10px;padding:13px 15px;margin-top:16px;font-size:.95rem;color:#7b341e;font-weight:600;line-height:1.5}
+    .myth{background:#fff5f5;border-left:4px solid #fc8181;border-radius:10px;padding:13px 15px;margin-top:12px;font-size:.92rem;color:#63171b;line-height:1.55}
+    .myth strong{display:block;font-size:.78rem;color:#c53030;font-weight:800;margin-bottom:5px}
+    .tip{background:#ebf8ff;border-left:4px solid #63b3ed;border-radius:10px;padding:13px 15px;margin-top:12px;font-size:.92rem;color:#2a4365;line-height:1.55}
+    .tip strong{display:block;font-size:.78rem;color:#2b6cb0;font-weight:800;margin-bottom:5px}
+
+    /* 키오스크 공통 */
+    .kiosk-shell{background:#1a1a2e;border-radius:18px;overflow:hidden;border:3px solid #444;position:relative;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+    .kiosk-top-bar{background:#0f3460;padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
+    .kiosk-brand{color:#e94560;font-weight:800;font-size:1rem}
+    .kiosk-time{color:#aaa;font-size:.78rem}
+    .kiosk-screen{background:#fff;min-height:360px;position:relative}
+
+    /* 맥도날드 스타일 */
+    .mc-header{background:#da291c;padding:14px 16px;display:flex;align-items:center;gap:10px}
+    .mc-logo{color:#ffbc0d;font-size:1.6rem;font-weight:900}
+    .mc-title{color:#fff;font-weight:800;font-size:1.1rem}
+    .mc-progress{display:flex;gap:0;margin:0}
+    .mc-prog-step{flex:1;padding:8px 4px;text-align:center;font-size:.7rem;font-weight:700;color:#999;border-bottom:3px solid #e2e8f0;transition:.2s}
+    .mc-prog-step.active{color:#da291c;border-color:#da291c}
+    .mc-prog-step.done{color:#38a169;border-color:#38a169}
+    .mc-content{padding:14px}
+    .mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+    .mc-item{border:2px solid #e2e8f0;border-radius:12px;padding:10px 8px;text-align:center;cursor:pointer;transition:.15s;background:#fff}
+    .mc-item:hover,.mc-item:active{border-color:#da291c;background:#fff5f5}
+    .mc-item.selected{border-color:#da291c;background:#fff5f5}
+    .mc-item-icon{font-size:1.8rem;margin-bottom:4px}
+    .mc-item-name{font-size:.82rem;font-weight:700;margin-bottom:2px;line-height:1.2}
+    .mc-item-price{font-size:.75rem;color:#718096}
+    .mc-cart{background:#f7fafc;border-radius:10px;padding:10px 12px;margin-bottom:10px;min-height:50px}
+    .mc-cart-item{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;margin-bottom:4px}
+    .mc-cart-empty{font-size:.83rem;color:#a0aec0;text-align:center;padding:6px}
+    .mc-total{font-size:.95rem;font-weight:800;border-top:2px solid #e2e8f0;padding-top:8px;margin-top:4px;display:flex;justify-content:space-between}
+    .mc-btn-row{display:flex;gap:8px}
+    .mc-btn{flex:1;padding:13px;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;transition:.15s}
+    .mc-btn:active{transform:scale(.96)}
+    .mc-btn-primary{background:#da291c;color:#fff}
+    .mc-btn-secondary{background:#e2e8f0;color:#444}
+    .mc-btn-success{background:#38a169;color:#fff}
+    .mc-btn-pay{background:#ffbc0d;color:#1a1a1a}
+
+    /* 결제 화면 */
+    .pay-method{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+    .pay-card{border:2px solid #e2e8f0;border-radius:12px;padding:16px 10px;text-align:center;cursor:pointer;transition:.15s}
+    .pay-card:hover{border-color:#d69e2e;background:#fffaf0}
+    .pay-card-icon{font-size:2rem;margin-bottom:6px}
+    .pay-card-name{font-size:.85rem;font-weight:800}
+
+    /* 영수증 */
+    .receipt{background:#fff;border-radius:12px;border:2px dashed #e2e8f0;padding:16px;font-size:.82rem}
+    .receipt-header{text-align:center;margin-bottom:12px}
+    .receipt-row{display:flex;justify-content:space-between;margin-bottom:4px}
+    .receipt-total{font-weight:800;font-size:.95rem;border-top:1px dashed #e2e8f0;padding-top:8px;margin-top:8px}
+    .receipt-num{font-size:2.5rem;font-weight:900;color:#da291c;text-align:center;margin:12px 0 4px}
+
+    /* 지하철 발권 */
+    .subway-header{background:#003087;padding:12px 16px;display:flex;align-items:center;gap:10px}
+    .subway-logo{color:#fff;font-weight:800;font-size:1rem}
+    .subway-btn{border:none;border-radius:10px;padding:11px 14px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px;width:100%;text-align:left;display:flex;align-items:center;gap:10px;transition:.15s}
+    .subway-btn:hover,.subway-btn:active{filter:brightness(.92)}
+    .station-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+    .station-btn{border:2px solid #e2e8f0;border-radius:10px;padding:10px 6px;font-size:.78rem;font-weight:700;text-align:center;cursor:pointer;background:#fff;transition:.15s}
+    .station-btn:hover{border-color:#003087;background:#e8eef8}
+    .station-btn.sel{border-color:#003087;background:#003087;color:#fff}
+    .subway-numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}
+    .numpad-btn{border:2px solid #e2e8f0;border-radius:10px;padding:14px 0;font-size:1.15rem;font-weight:700;text-align:center;cursor:pointer;background:#fff;transition:.15s}
+    .numpad-btn:hover{background:#f0f4f8}
+    .numpad-btn:active{background:#e2e8f0;transform:scale(.95)}
+
+    /* ATM */
+    .atm-header{background:#003893;padding:12px 16px}
+    .atm-title{color:#fff;font-weight:800;font-size:1rem}
+    .atm-btn{border:none;border-radius:12px;padding:14px 16px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px;width:100%;text-align:left;display:flex;align-items:center;gap:10px;transition:.15s}
+    .atm-btn:active{transform:scale(.97)}
+
+    /* 단계 공통 */
+    .step-indicator{font-size:.72rem;color:#718096;margin-bottom:12px;text-align:right}
+    .back-link{display:inline-flex;align-items:center;gap:4px;color:#718096;font-size:.8rem;cursor:pointer;margin-bottom:12px;border:none;background:none;font-family:inherit}
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="back">← 처음으로</a>
+
+<div class="hero">
+  <span class="badge">3강</span>
+  <h1>🏧 키오스크 사용법</h1>
+  <p>패스트푸드·지하철·ATM<br>직접 눌러보며 배워요.</p>
+</div>
+
+<!-- ─────────── 키오스크란 ─────────── -->
+<p class="section-label">기초 1 — 키오스크가 뭔가요?</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">1</div>
+    <div class="ch-title">키오스크가 뭔지 알아봐요</div>
+  </div>
+  <div class="ch-body">
+    <p>키오스크(Kiosk)는 사람 직원 없이 혼자 주문하거나 결제할 수 있는 터치 화면 기계예요. 요즘 맥도날드·버거킹·롯데리아 같은 패스트푸드점이나 카페, 지하철역, 병원 접수창구 등 곳곳에 있어요.</p>
+    <p>처음 보면 뭘 눌러야 할지 막막하죠. 하지만 걱정 마세요 — 어떤 키오스크든 흐름은 거의 똑같아요. <strong>① 뭘 살지 고른다 → ② 담는다 → ③ 결제한다</strong>. 이 세 단계만 기억하면 돼요.</p>
+    <p>글자가 작아도 화면을 늘리거나 크게 할 수 없어요. 대신 대부분의 키오스크에는 화면 밝기 조절이나 보조 기능 버튼이 있어요. 모르겠으면 주변 직원에게 도움을 요청해도 괜찮아요 — 부끄러운 일이 아니에요.</p>
+    <div class="keypoint">💡 잘못 눌렀어도 걱정 마세요! 처음 화면으로 돌아가는 '취소' 또는 '처음으로' 버튼이 항상 있어요. 결제 전이면 언제든 취소할 수 있어요.</div>
+  </div>
+</div>
+
+<!-- ─────────── 맥도날드 주문 ─────────── -->
+<p class="section-label">실습 1 — 패스트푸드 주문해보기</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">2</div>
+    <div class="ch-title">맥도날드 키오스크로 주문해봐요</div>
+  </div>
+  <div class="ch-body">
+    <p>패스트푸드 키오스크에서 주문하는 과정을 직접 눌러보며 익혀봐요. 실수해도 언제든 처음으로 돌아갈 수 있어요.</p>
+
+    <div class="demo">
+      <div class="demo-label">🍔 직접 주문해보세요 — 아래 화면을 눌러서 진행하세요</div>
+      <div class="kiosk-shell">
+        <div class="kiosk-top-bar">
+          <span class="kiosk-brand">M McDonald's</span>
+          <span class="kiosk-time" id="mc-clock">--:--</span>
+        </div>
+        <div class="kiosk-screen" id="mc-screen">
+          <!-- Step 0: 환영 -->
+          <div id="mc-step-0">
+            <div class="mc-header">
+              <div class="mc-logo">M</div>
+              <div class="mc-title">맥도날드에 오신 것을<br>환영합니다!</div>
+            </div>
+            <div style="padding:30px 20px;text-align:center">
+              <div style="font-size:3rem;margin-bottom:16px">🍔</div>
+              <p style="color:#444;margin-bottom:24px;font-size:.95rem;line-height:1.6">화면을 눌러서<br>주문을 시작하세요</p>
+              <button class="mc-btn mc-btn-primary" style="width:100%;font-size:1.05rem;padding:16px" onclick="mcStep(1)">주문 시작하기 →</button>
+              <div style="margin-top:12px">
+                <div style="display:flex;gap:8px;justify-content:center">
+                  <span style="font-size:.78rem;background:#f0f4f8;padding:6px 12px;border-radius:20px;color:#444">🏠 매장에서 먹기</span>
+                  <span style="font-size:.78rem;background:#f0f4f8;padding:6px 12px;border-radius:20px;color:#444">🥡 가져가기</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 1: 메뉴 선택 -->
+          <div id="mc-step-1" style="display:none">
+            <div class="mc-header"><div class="mc-logo">M</div><div class="mc-title">메뉴 선택</div></div>
+            <div class="mc-progress">
+              <div class="mc-prog-step active">① 메뉴 선택</div>
+              <div class="mc-prog-step">② 확인</div>
+              <div class="mc-prog-step">③ 결제</div>
+            </div>
+            <div class="mc-content">
+              <div style="font-size:.85rem;font-weight:700;margin-bottom:10px;color:#444">🍔 버거류</div>
+              <div class="mc-grid">
+                <div class="mc-item" id="mc-it-0" onclick="mcSelect(0)">
+                  <div class="mc-item-icon">🍔</div>
+                  <div class="mc-item-name">빅맥</div>
+                  <div class="mc-item-price">5,700원</div>
+                </div>
+                <div class="mc-item" id="mc-it-1" onclick="mcSelect(1)">
+                  <div class="mc-item-icon">🍗</div>
+                  <div class="mc-item-name">맥스파이시 상하이</div>
+                  <div class="mc-item-price">5,900원</div>
+                </div>
+                <div class="mc-item" id="mc-it-2" onclick="mcSelect(2)">
+                  <div class="mc-item-icon">🥓</div>
+                  <div class="mc-item-name">불고기버거</div>
+                  <div class="mc-item-price">4,200원</div>
+                </div>
+                <div class="mc-item" id="mc-it-3" onclick="mcSelect(3)">
+                  <div class="mc-item-icon">🐟</div>
+                  <div class="mc-item-name">필레오피쉬</div>
+                  <div class="mc-item-price">4,700원</div>
+                </div>
+              </div>
+              <div style="font-size:.85rem;font-weight:700;margin-bottom:10px;color:#444">🥤 음료·사이드</div>
+              <div class="mc-grid">
+                <div class="mc-item" id="mc-it-4" onclick="mcSelect(4)">
+                  <div class="mc-item-icon">🍟</div>
+                  <div class="mc-item-name">감자튀김(M)</div>
+                  <div class="mc-item-price">2,300원</div>
+                </div>
+                <div class="mc-item" id="mc-it-5" onclick="mcSelect(5)">
+                  <div class="mc-item-icon">☕</div>
+                  <div class="mc-item-name">아메리카노</div>
+                  <div class="mc-item-price">2,000원</div>
+                </div>
+              </div>
+
+              <!-- 장바구니 -->
+              <div class="mc-cart" id="mc-cart">
+                <div class="mc-cart-empty" id="mc-cart-empty">아직 담은 메뉴가 없어요. 위에서 눌러보세요!</div>
+              </div>
+
+              <div class="mc-btn-row">
+                <button class="mc-btn mc-btn-secondary" onclick="mcStep(0)">← 처음으로</button>
+                <button class="mc-btn mc-btn-primary" id="mc-next-btn" onclick="mcStep(2)" disabled style="opacity:.4">다음 →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: 주문 확인 -->
+          <div id="mc-step-2" style="display:none">
+            <div class="mc-header"><div class="mc-logo">M</div><div class="mc-title">주문 확인</div></div>
+            <div class="mc-progress">
+              <div class="mc-prog-step done">① 메뉴 선택</div>
+              <div class="mc-prog-step active">② 확인</div>
+              <div class="mc-prog-step">③ 결제</div>
+            </div>
+            <div class="mc-content">
+              <div style="font-size:.85rem;font-weight:700;margin-bottom:10px;color:#444">주문 내역을 확인해주세요</div>
+              <div id="mc-review" class="mc-cart" style="min-height:80px"></div>
+              <div class="mc-btn-row" style="margin-top:4px">
+                <button class="mc-btn mc-btn-secondary" onclick="mcStep(1)">← 다시 담기</button>
+                <button class="mc-btn mc-btn-primary" onclick="mcStep(3)">결제하기 →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: 결제 선택 -->
+          <div id="mc-step-3" style="display:none">
+            <div class="mc-header"><div class="mc-logo">M</div><div class="mc-title">결제 방법 선택</div></div>
+            <div class="mc-progress">
+              <div class="mc-prog-step done">① 메뉴 선택</div>
+              <div class="mc-prog-step done">② 확인</div>
+              <div class="mc-prog-step active">③ 결제</div>
+            </div>
+            <div class="mc-content">
+              <div style="font-size:.85rem;color:#444;margin-bottom:12px">어떻게 결제하시겠어요?</div>
+              <div class="pay-method">
+                <div class="pay-card" onclick="mcPay('카드')">
+                  <div class="pay-card-icon">💳</div>
+                  <div class="pay-card-name">신용·체크카드</div>
+                </div>
+                <div class="pay-card" onclick="mcPay('현금')">
+                  <div class="pay-card-icon">💵</div>
+                  <div class="pay-card-name">현금</div>
+                </div>
+                <div class="pay-card" onclick="mcPay('카카오페이')">
+                  <div class="pay-card-icon">💛</div>
+                  <div class="pay-card-name">카카오페이</div>
+                </div>
+                <div class="pay-card" onclick="mcPay('삼성페이')">
+                  <div class="pay-card-icon">📱</div>
+                  <div class="pay-card-name">삼성페이</div>
+                </div>
+              </div>
+              <button class="mc-btn mc-btn-secondary" onclick="mcStep(2)">← 뒤로</button>
+            </div>
+          </div>
+
+          <!-- Step 4: 완료 -->
+          <div id="mc-step-4" style="display:none">
+            <div class="mc-header" style="background:#38a169"><div class="mc-logo" style="color:#fff;font-size:1.2rem">✓</div><div class="mc-title">주문 완료!</div></div>
+            <div class="mc-content">
+              <div class="receipt">
+                <div class="receipt-header">
+                  <div style="font-weight:800;font-size:1rem;margin-bottom:4px">M McDonald's</div>
+                  <div style="font-size:.72rem;color:#718096" id="receipt-time"></div>
+                </div>
+                <div id="receipt-items"></div>
+                <div class="receipt-total">
+                  <span>합계</span>
+                  <span id="receipt-total-price"></span>
+                </div>
+                <div class="receipt-num" id="receipt-num"></div>
+                <div style="text-align:center;font-size:.78rem;color:#718096">위 번호가 호출되면 받아가세요 🎉</div>
+              </div>
+              <button class="mc-btn mc-btn-primary" style="width:100%;margin-top:12px" onclick="mcReset()">다시 연습하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip"><strong>💡 세트 메뉴가 뭔가요?</strong>버거 + 감자튀김 + 음료를 묶어서 파는 게 세트예요. 개별로 사는 것보다 보통 1,000~2,000원 싸요. 키오스크에 "세트" 탭이 따로 있어요.</div>
+    <div class="myth"><strong>❌ 흔한 오해</strong>"잘못 눌렀으면 끝인가요?" → 아니에요! 결제를 누르기 전까지는 언제든 취소하거나 수정할 수 있어요. '← 뒤로' 또는 '취소' 버튼을 찾아보세요.</div>
+    <div class="keypoint">💡 줄이 길면 혼자 연습하기 어렵죠. 이 페이지에서 미리 눌러보고 순서를 외워두면 실제에서 훨씬 쉬워요!</div>
+  </div>
+</div>
+
+<!-- ─────────── 지하철 발권 ─────────── -->
+<p class="section-label">실습 2 — 지하철 승차권 끊기</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">3</div>
+    <div class="ch-title">지하철 자동발매기 사용하기</div>
+  </div>
+  <div class="ch-body">
+    <p>지하철역에 있는 자동발매기는 교통카드 충전, 1회용 승차권 구매, 분실 카드 재발급 등을 할 수 있어요. 교통카드가 있으면 굳이 발매기를 쓸 필요는 없지만, 충전이 필요하거나 1회용 승차권을 끊어야 할 때 써야 해요.</p>
+    <p>지하철 발매기는 키오스크 중에서 가장 많이 쓰는 편이에요. <strong>① 목적지 역 선택 → ② 인원 수 선택 → ③ 결제</strong> 순서예요.</p>
+
+    <div class="demo">
+      <div class="demo-label">🚇 1회용 승차권을 끊어보세요</div>
+      <div class="kiosk-shell">
+        <div class="kiosk-top-bar">
+          <span class="kiosk-brand">🚇 서울교통공사</span>
+          <span class="kiosk-time" id="sw-clock">--:--</span>
+        </div>
+        <div class="kiosk-screen">
+          <!-- 지하철 0단계 -->
+          <div id="sw-step-0">
+            <div class="subway-header">
+              <span class="subway-logo">🚇 1회용 교통카드 구매</span>
+            </div>
+            <div style="padding:14px">
+              <button class="subway-btn" style="background:#003087;color:#fff" onclick="swStep(1)">🎫 승차권 구매 (1회용)</button>
+              <button class="subway-btn" style="background:#e2e8f0;color:#444" onclick="swStep('charge')">💳 교통카드 충전</button>
+              <button class="subway-btn" style="background:#e2e8f0;color:#444">ℹ️ 노선도 보기</button>
+              <div style="margin-top:10px;background:#fffaf0;border-radius:10px;padding:10px 12px;font-size:.8rem;color:#7b341e">
+                <strong>💡 교통카드가 있으면:</strong><br>충전 버튼을 누르고 카드를 올려놓으면 돼요.
+              </div>
+            </div>
+          </div>
+
+          <!-- 지하철 1단계: 도착역 선택 -->
+          <div id="sw-step-1" style="display:none">
+            <div class="subway-header"><span class="subway-logo">도착역을 선택하세요</span></div>
+            <div style="padding:14px">
+              <button class="back-link" onclick="swStep(0)">← 뒤로</button>
+              <div class="step-indicator">1단계 / 3단계</div>
+              <div style="font-size:.83rem;color:#444;margin-bottom:10px">자주 가는 역을 눌러보세요</div>
+              <div class="station-grid">
+                <div class="station-btn" onclick="swSelectDest('강남')">강남</div>
+                <div class="station-btn" onclick="swSelectDest('홍대입구')">홍대입구</div>
+                <div class="station-btn" onclick="swSelectDest('종로3가')">종로3가</div>
+                <div class="station-btn" onclick="swSelectDest('신촌')">신촌</div>
+                <div class="station-btn" onclick="swSelectDest('잠실')">잠실</div>
+                <div class="station-btn" onclick="swSelectDest('서울역')">서울역</div>
+                <div class="station-btn" onclick="swSelectDest('인천공항')">인천공항</div>
+                <div class="station-btn" onclick="swSelectDest('수원')">수원</div>
+                <div class="station-btn" onclick="swSelectDest('의정부')">의정부</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 지하철 2단계: 인원 선택 -->
+          <div id="sw-step-2" style="display:none">
+            <div class="subway-header"><span class="subway-logo">인원을 선택하세요</span></div>
+            <div style="padding:14px">
+              <button class="back-link" onclick="swStep(1)">← 뒤로</button>
+              <div class="step-indicator">2단계 / 3단계</div>
+              <div style="background:#e8eef8;border-radius:10px;padding:10px 12px;font-size:.85rem;margin-bottom:12px">
+                목적지: <strong id="sw-dest-show">--</strong>
+              </div>
+              <div style="font-size:.83rem;font-weight:700;margin-bottom:10px">인원 수 (1회용 승차권)</div>
+              <div class="subway-numpad" id="sw-numpad">
+                <div class="numpad-btn" onclick="swSetCount(1)">1명</div>
+                <div class="numpad-btn" onclick="swSetCount(2)">2명</div>
+                <div class="numpad-btn" onclick="swSetCount(3)">3명</div>
+                <div class="numpad-btn" onclick="swSetCount(4)">4명</div>
+                <div class="numpad-btn" onclick="swSetCount(5)">5명</div>
+                <div class="numpad-btn" onclick="swSetCount(6)">6명</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 지하철 3단계: 결제 -->
+          <div id="sw-step-3" style="display:none">
+            <div class="subway-header"><span class="subway-logo">결제해주세요</span></div>
+            <div style="padding:14px">
+              <button class="back-link" onclick="swStep(2)">← 뒤로</button>
+              <div class="step-indicator">3단계 / 3단계</div>
+              <div style="background:#e8eef8;border-radius:10px;padding:12px;font-size:.85rem;margin-bottom:14px;line-height:1.7">
+                목적지: <strong id="sw-dest-final">--</strong><br>
+                인원: <strong id="sw-count-final">--</strong>명<br>
+                금액: <strong id="sw-price-final" style="color:#003087;font-size:1.05rem">--</strong>
+              </div>
+              <div class="pay-method">
+                <div class="pay-card" onclick="swPay()"><div class="pay-card-icon">💳</div><div class="pay-card-name">카드</div></div>
+                <div class="pay-card" onclick="swPay()"><div class="pay-card-icon">💵</div><div class="pay-card-name">현금</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 지하철 완료 -->
+          <div id="sw-step-done" style="display:none">
+            <div class="subway-header" style="background:#38a169"><span class="subway-logo" style="color:#fff">✓ 발권 완료!</span></div>
+            <div style="padding:14px">
+              <div style="background:#f0fff4;border-radius:12px;padding:16px;text-align:center;margin-bottom:12px">
+                <div style="font-size:.82rem;color:#276749;margin-bottom:8px">아래 카드를 개찰구에 대주세요</div>
+                <div style="background:#003087;border-radius:10px;padding:14px;color:#fff;margin:0 auto;max-width:200px">
+                  <div style="font-size:.72rem;opacity:.8;margin-bottom:4px">1회용 교통카드</div>
+                  <div style="font-weight:800;font-size:1rem" id="sw-ticket-dest">--</div>
+                  <div style="font-size:.72rem;opacity:.8;margin-top:4px" id="sw-ticket-count">--</div>
+                </div>
+                <div style="margin-top:10px;font-size:.78rem;color:#444">반드시 출구에서도 태그하세요!<br>안 하면 보증금 500원을 돌려받지 못해요.</div>
+              </div>
+              <button class="mc-btn mc-btn-primary" style="background:#003087;color:#fff;width:100%" onclick="swReset()">다시 연습하기</button>
+            </div>
+          </div>
+
+          <!-- 지하철 충전 -->
+          <div id="sw-step-charge" style="display:none">
+            <div class="subway-header"><span class="subway-logo">💳 교통카드 충전</span></div>
+            <div style="padding:14px">
+              <button class="back-link" onclick="swStep(0)">← 뒤로</button>
+              <div style="background:#fffaf0;border-radius:10px;padding:12px;font-size:.85rem;margin-bottom:12px;line-height:1.6">
+                <strong>충전 방법:</strong><br>
+                1️⃣ 카드를 기기 위에 올려놓으세요<br>
+                2️⃣ 충전 금액을 선택하세요<br>
+                3️⃣ 현금이나 카드로 결제하세요
+              </div>
+              <div style="font-size:.85rem;font-weight:700;margin-bottom:8px">충전 금액 선택</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="charge-grid">
+                <div class="numpad-btn" style="padding:12px" onclick="chargeSelect(5000)">5,000원</div>
+                <div class="numpad-btn" style="padding:12px" onclick="chargeSelect(10000)">10,000원</div>
+                <div class="numpad-btn" style="padding:12px" onclick="chargeSelect(20000)">20,000원</div>
+                <div class="numpad-btn" style="padding:12px" onclick="chargeSelect(30000)">30,000원</div>
+              </div>
+              <div id="charge-done" style="display:none;background:#f0fff4;border-radius:10px;padding:14px;text-align:center;margin-top:12px">
+                <div style="font-size:1.5rem;margin-bottom:6px">✅</div>
+                <div style="font-weight:800;color:#276749" id="charge-msg"></div>
+                <div style="font-size:.78rem;color:#718096;margin-top:4px">카드를 빼주세요</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip"><strong>💡 교통카드 vs 1회용 승차권</strong>자주 지하철을 탄다면 교통카드(티머니 등)가 훨씬 편해요. 한 번 충전해두면 번번이 발매기에 줄 설 필요 없어요.</div>
+    <div class="keypoint">💡 1회용 승차권은 도착역 개찰구를 나올 때 반드시 투입구에 넣어야 해요. 보증금 500원을 돌려받는 곳도 있어요.</div>
+  </div>
+</div>
+
+<!-- ─────────── ATM ─────────── -->
+<p class="section-label">실습 3 — ATM에서 돈 찾기</p>
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">4</div>
+    <div class="ch-title">ATM 기계로 돈 찾기</div>
+  </div>
+  <div class="ch-body">
+    <p>ATM(현금자동입출금기)은 은행 카드를 넣어서 돈을 찾거나 넣는 기계예요. 은행 영업시간 외에도 24시간 쓸 수 있어요. 주로 편의점이나 은행 입구에 있어요.</p>
+    <p>ATM을 쓸 때는 항상 혼자 조용히 쓰세요. 뒤에서 어깨 너머로 보는 사람이 있으면 비밀번호를 누르기 전에 주변을 확인하세요. 비밀번호는 절대 다른 사람에게 알려주지 마세요.</p>
+
+    <div class="demo">
+      <div class="demo-label">🏧 ATM으로 돈을 찾아보세요 (시뮬레이션)</div>
+      <div class="kiosk-shell">
+        <div class="kiosk-top-bar">
+          <span class="kiosk-brand">🏧 우리은행 ATM</span>
+          <span class="kiosk-time" id="atm-clock">--:--</span>
+        </div>
+        <div class="kiosk-screen">
+          <div id="atm-step-0">
+            <div class="atm-header"><div class="atm-title">카드를 넣어주세요</div></div>
+            <div style="padding:16px;text-align:center">
+              <div style="font-size:3.5rem;margin:16px 0">💳</div>
+              <p style="font-size:.88rem;color:#444;line-height:1.65;margin-bottom:20px">카드를 넣으면 자동으로 읽혀요.<br>카드 방향: ▶ 화살표 방향으로 넣으세요</p>
+              <button class="mc-btn mc-btn-primary" style="background:#003893;width:100%" onclick="atmStep(1)">카드 넣기 (시뮬레이션) →</button>
+            </div>
+          </div>
+
+          <div id="atm-step-1" style="display:none">
+            <div class="atm-header"><div class="atm-title">비밀번호를 눌러주세요</div></div>
+            <div style="padding:14px">
+              <div style="background:#f7fafc;border-radius:10px;padding:12px;text-align:center;margin-bottom:14px">
+                <div style="font-size:.82rem;color:#444;margin-bottom:6px">비밀번호 4자리</div>
+                <div id="atm-pin-display" style="letter-spacing:.3em;font-size:1.4rem;font-weight:800;color:#1a202c">_ _ _ _</div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px" id="atm-numpad">
+                <div class="numpad-btn" onclick="atmPin(1)">1</div>
+                <div class="numpad-btn" onclick="atmPin(2)">2</div>
+                <div class="numpad-btn" onclick="atmPin(3)">3</div>
+                <div class="numpad-btn" onclick="atmPin(4)">4</div>
+                <div class="numpad-btn" onclick="atmPin(5)">5</div>
+                <div class="numpad-btn" onclick="atmPin(6)">6</div>
+                <div class="numpad-btn" onclick="atmPin(7)">7</div>
+                <div class="numpad-btn" onclick="atmPin(8)">8</div>
+                <div class="numpad-btn" onclick="atmPin(9)">9</div>
+                <div class="numpad-btn" style="background:#fff5f5;font-size:.82rem" onclick="atmClear()">지우기</div>
+                <div class="numpad-btn" onclick="atmPin(0)">0</div>
+                <div class="numpad-btn" style="background:#003893;color:#fff;font-size:.82rem" onclick="atmConfirm()">확인</div>
+              </div>
+              <div style="margin-top:10px;font-size:.75rem;color:#718096;text-align:center">비밀번호가 틀리면 3회 초과 시 카드가 잠겨요</div>
+            </div>
+          </div>
+
+          <div id="atm-step-2" style="display:none">
+            <div class="atm-header"><div class="atm-title">거래를 선택하세요</div></div>
+            <div style="padding:14px">
+              <button class="atm-btn" style="background:#003893;color:#fff" onclick="atmStep(3)">💸 현금 출금</button>
+              <button class="atm-btn" style="background:#e2e8f0;color:#444">💰 현금 입금</button>
+              <button class="atm-btn" style="background:#e2e8f0;color:#444">🔄 계좌 이체</button>
+              <button class="atm-btn" style="background:#e2e8f0;color:#444">📋 잔액 조회</button>
+            </div>
+          </div>
+
+          <div id="atm-step-3" style="display:none">
+            <div class="atm-header"><div class="atm-title">출금 금액 선택</div></div>
+            <div style="padding:14px">
+              <button class="back-link" onclick="atmStep(2)">← 뒤로</button>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+                <div class="numpad-btn" style="padding:13px" onclick="atmWithdraw(10000)">10,000원</div>
+                <div class="numpad-btn" style="padding:13px" onclick="atmWithdraw(30000)">30,000원</div>
+                <div class="numpad-btn" style="padding:13px" onclick="atmWithdraw(50000)">50,000원</div>
+                <div class="numpad-btn" style="padding:13px" onclick="atmWithdraw(100000)">100,000원</div>
+              </div>
+              <div style="font-size:.78rem;color:#718096;text-align:center">직접 금액을 입력할 수도 있어요</div>
+            </div>
+          </div>
+
+          <div id="atm-step-done" style="display:none">
+            <div class="atm-header" style="background:#38a169"><div class="atm-title">출금 완료!</div></div>
+            <div style="padding:16px;text-align:center">
+              <div style="font-size:2.5rem;margin-bottom:10px">💵</div>
+              <div style="font-size:1.4rem;font-weight:800;color:#276749;margin-bottom:6px" id="atm-done-amount"></div>
+              <div style="font-size:.85rem;color:#444;line-height:1.65;margin-bottom:16px">돈과 카드를 챙겨가세요.<br>영수증이 필요하면 '영수증 출력'을 누르세요.</div>
+              <button class="mc-btn" style="background:#003893;color:#fff;width:100%" onclick="atmReset()">처음으로</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="myth"><strong>❌ 흔한 오해</strong>"ATM 수수료가 항상 있나요?" → 같은 은행 카드를 그 은행 ATM에서 쓰면 수수료가 없어요. 다른 은행 ATM을 쓰면 보통 500~1,000원이 나가요.</div>
+    <div class="tip"><strong>💡 보이스피싱 주의!</strong>전화로 "ATM에 가서 돈을 이체해달라"는 건 100% 사기예요. 경찰·검찰·금감원은 절대 이런 요청을 하지 않아요.</div>
+    <div class="keypoint">💡 비밀번호를 누를 때는 다른 손으로 키패드를 가리세요. 내 뒤에 아무도 없는지 확인하는 습관을 들여요.</div>
+  </div>
+</div>
+
+<div style="background:linear-gradient(135deg,#d69e2e,#975a16);color:#fff;border-radius:20px;padding:24px;text-align:center;margin-top:8px">
+  <h3 style="font-size:1.2rem;font-weight:800;margin-bottom:10px">🎉 모든 강의를 마쳤어요!</h3>
+  <p style="font-size:.95rem;opacity:.9;line-height:1.65">디지털 지도부터 키오스크까지<br>정말 열심히 배우셨어요. 수고하셨습니다!</p>
+  <a href="index.html" style="display:inline-block;margin-top:14px;background:#fff;color:#975a16;font-weight:800;padding:12px 24px;border-radius:12px;text-decoration:none;font-size:.95rem">처음 화면으로 →</a>
+</div>
+
+<script>
+// 시계
+function updateClocks(){
+  var now=new Date();
+  var t=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  ['mc-clock','sw-clock','atm-clock'].forEach(id=>{var el=document.getElementById(id);if(el)el.textContent=t;});
+}
+updateClocks();setInterval(updateClocks,10000);
+
+// ───── 맥도날드 ─────
+var mcMenu=[
+  {icon:'🍔',name:'빅맥',price:5700},
+  {icon:'🍗',name:'맥스파이시 상하이',price:5900},
+  {icon:'🥓',name:'불고기버거',price:4200},
+  {icon:'🐟',name:'필레오피쉬',price:4700},
+  {icon:'🍟',name:'감자튀김(M)',price:2300},
+  {icon:'☕',name:'아메리카노',price:2000}
+];
+var mcCart=[];
+function mcStep(n){
+  [0,1,2,3,4].forEach(i=>{
+    var el=document.getElementById('mc-step-'+i);
+    if(el)el.style.display=i===n?'block':'none';
+  });
+  if(n===2){
+    var rev=document.getElementById('mc-review');
+    rev.innerHTML=renderCart()+renderTotal();
+  }
+  if(n===3){/* just show */}
+  if(n===0){mcCart=[];renderCartEl();}
+}
+function mcSelect(idx){
+  var existing=mcCart.find(c=>c.idx===idx);
+  if(existing){existing.qty++;} else {mcCart.push({idx:idx,qty:1});}
+  renderCartEl();
+  document.getElementById('mc-next-btn').disabled=false;
+  document.getElementById('mc-next-btn').style.opacity='1';
+  document.getElementById('mc-it-'+idx).classList.add('selected');
+}
+function renderCart(){
+  if(!mcCart.length)return '<div class="mc-cart-empty">담은 메뉴 없음</div>';
+  return mcCart.map(c=>'<div class="mc-cart-item"><span>'+mcMenu[c.idx].icon+' '+mcMenu[c.idx].name+(c.qty>1?' x'+c.qty:'')+'</span><span>'+(mcMenu[c.idx].price*c.qty).toLocaleString()+'원</span></div>').join('');
+}
+function renderTotal(){
+  var total=mcCart.reduce((s,c)=>s+mcMenu[c.idx].price*c.qty,0);
+  return '<div class="mc-total"><span>합계</span><span>'+total.toLocaleString()+'원</span></div>';
+}
+function renderCartEl(){
+  var cart=document.getElementById('mc-cart');
+  var empty=document.getElementById('mc-cart-empty');
+  if(!cart)return;
+  if(!mcCart.length){
+    cart.innerHTML='<div class="mc-cart-empty" id="mc-cart-empty">아직 담은 메뉴가 없어요. 위에서 눌러보세요!</div>';
+    return;
+  }
+  cart.innerHTML=renderCart()+renderTotal();
+}
+function mcPay(method){
+  mcStep(4);
+  var now=new Date();
+  document.getElementById('receipt-time').textContent=now.getFullYear()+'.'+(now.getMonth()+1).toString().padStart(2,'0')+'.'+now.getDate().toString().padStart(2,'0')+' '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')+' · '+method+' 결제';
+  document.getElementById('receipt-items').innerHTML=mcCart.map(c=>'<div class="receipt-row"><span>'+mcMenu[c.idx].name+(c.qty>1?' x'+c.qty:'')+'</span><span>'+(mcMenu[c.idx].price*c.qty).toLocaleString()+'원</span></div>').join('');
+  var total=mcCart.reduce((s,c)=>s+mcMenu[c.idx].price*c.qty,0);
+  document.getElementById('receipt-total-price').textContent=total.toLocaleString()+'원';
+  document.getElementById('receipt-num').textContent='No. '+(Math.floor(Math.random()*90)+10);
+}
+function mcReset(){
+  mcCart=[];
+  [0,1,2,3,4,5].forEach(i=>{var el=document.getElementById('mc-it-'+i);if(el)el.classList.remove('selected');});
+  mcStep(0);
+}
+
+// ───── 지하철 ─────
+var swDest='', swCount=0;
+var swFares={강남:1400,홍대입구:1400,종로3가:1400,신촌:1400,잠실:1500,서울역:1400,인천공항:4150,수원:2100,의정부:1700};
+function swStep(n){
+  var ids=['sw-step-0','sw-step-1','sw-step-2','sw-step-3','sw-step-done','sw-step-charge'];
+  ids.forEach(id=>{var el=document.getElementById(id);if(el)el.style.display='none';});
+  var target=n==='charge'?'sw-step-charge':n==='done'?'sw-step-done':'sw-step-'+n;
+  var el=document.getElementById(target);
+  if(el)el.style.display='block';
+}
+function swSelectDest(dest){
+  swDest=dest;
+  document.querySelectorAll('.station-btn').forEach(b=>{b.classList.remove('sel');if(b.textContent===dest)b.classList.add('sel');});
+  setTimeout(()=>swStep(2),200);
+  document.getElementById('sw-dest-show').textContent=dest;
+}
+function swSetCount(n){
+  swCount=n;
+  document.querySelectorAll('#sw-numpad .numpad-btn').forEach((b,i)=>{b.style.background=i===n-1?'#003087':'#fff';b.style.color=i===n-1?'#fff':'#1a202c';});
+  var fare=(swFares[swDest]||1400)*n;
+  document.getElementById('sw-dest-final').textContent=swDest;
+  document.getElementById('sw-count-final').textContent=n;
+  document.getElementById('sw-price-final').textContent=fare.toLocaleString()+'원';
+  setTimeout(()=>swStep(3),300);
+}
+function swPay(){
+  document.getElementById('sw-ticket-dest').textContent='→ '+swDest;
+  document.getElementById('sw-ticket-count').textContent=swCount+'매 | '+(swFares[swDest]||1400)*swCount+'원';
+  swStep('done');
+}
+function swReset(){swDest='';swCount=0;swStep(0);}
+function chargeSelect(amt){
+  document.getElementById('charge-grid').style.display='none';
+  var done=document.getElementById('charge-done');
+  done.style.display='block';
+  document.getElementById('charge-msg').textContent=amt.toLocaleString()+'원 충전 완료!';
+}
+
+// ───── ATM ─────
+var atmPin='';
+function atmStep(n){
+  ['atm-step-0','atm-step-1','atm-step-2','atm-step-3','atm-step-done'].forEach(id=>{
+    var el=document.getElementById(id);if(el)el.style.display='none';
+  });
+  var el=document.getElementById('atm-step-'+n);
+  if(el)el.style.display='block';
+  if(n===1){atmPin='';updatePinDisplay();}
+}
+function atmPin2(d){
+  if(atmPin.length>=4)return;
+  atmPin+=d;
+  updatePinDisplay();
+}
+function updatePinDisplay(){
+  var disp=document.getElementById('atm-pin-display');
+  if(!disp)return;
+  var dots='●'.repeat(atmPin.length)+'_'.repeat(4-atmPin.length);
+  disp.textContent=dots.split('').join(' ');
+}
+function atmClear(){atmPin=atmPin.slice(0,-1);updatePinDisplay();}
+function atmConfirm(){if(atmPin.length===4)atmStep(2);}
+function atmWithdraw(amt){
+  document.getElementById('atm-done-amount').textContent=amt.toLocaleString()+'원 출금 완료';
+  var el=document.getElementById('atm-step-done');
+  ['atm-step-0','atm-step-1','atm-step-2','atm-step-3'].forEach(id=>{var e=document.getElementById(id);if(e)e.style.display='none';});
+  if(el)el.style.display='block';
+}
+function atmReset(){atmPin='';atmStep(0);}
+
+// atmPin 함수명 충돌 방지
+document.querySelectorAll('#atm-numpad .numpad-btn').forEach(btn=>{
+  // handled via onclick in HTML
+});
+// override to use correct function
+function atmPin(d){atmPin2(d);}
+</script>
+</body>
+</html>

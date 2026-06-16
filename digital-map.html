@@ -5,775 +5,717 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>0강 · 디지털 지도 | 디지털 배움터</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Noto Sans KR','맑은 고딕',sans-serif;background:#f0f4f8;color:#1a202c;padding:20px 18px 80px;max-width:560px;margin:0 auto;font-size:1.08rem;line-height:1.75}
+    a.back{display:inline-flex;align-items:center;gap:6px;color:#4B5FA8;font-size:1.1rem;font-weight:700;text-decoration:none;margin-bottom:22px}
 
-    body {
-      font-family: 'Noto Sans KR', '맑은 고딕', sans-serif;
-      background: #f0f4f8;
-      color: #1a202c;
-      padding: 20px 18px 72px;
-      max-width: 540px;
-      margin: 0 auto;
-      font-size: 1.05rem;
-      line-height: 1.6;
-    }
+    /* 히어로 */
+    .hero{background:#4B5FA8;color:#fff;border-radius:22px;padding:28px 24px 22px;margin-bottom:24px}
+    .badge{font-size:.8rem;background:rgba(255,255,255,.2);border-radius:999px;padding:3px 12px;display:inline-block;margin-bottom:12px;font-weight:800}
+    .hero h1{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+    .hero p{font-size:1rem;opacity:.9;line-height:1.6}
 
-    /* ── 뒤로가기 ── */
-    .back {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: #4B5FA8;
-      font-size: 1.1rem;
-      font-weight: 600;
-      text-decoration: none;
-      margin-bottom: 24px;
-    }
+    /* 공감 박스 */
+    .relate{background:#fff8e1;border-left:5px solid #f6c90e;border-radius:14px;padding:18px 20px;margin-bottom:24px}
+    .relate p{font-size:1rem;color:#4a3c00;line-height:1.75}
+    .relate strong{color:#b7791f}
 
-    /* ── 히어로 ── */
-    .hero {
-      background: #4B5FA8;
-      color: #fff;
-      border-radius: 22px;
-      padding: 28px 24px 24px;
-      margin-bottom: 28px;
-    }
-    .hero .badge {
-      font-size: 0.8rem;
-      background: rgba(255,255,255,0.2);
-      border-radius: 999px;
-      padding: 3px 12px;
-      display: inline-block;
-      margin-bottom: 14px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-    .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
-    .hero p  { font-size: 1.05rem; opacity: 0.9; line-height: 1.6; }
+    /* 아파트 다이어그램 */
+    .apt-wrap{background:#fff;border-radius:20px;padding:22px 18px;margin-bottom:28px;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+    .apt-wrap h3{text-align:center;font-size:1rem;font-weight:800;color:#2d3748;margin-bottom:16px}
+    .apt{border:3px solid #4B5FA8;border-radius:16px;overflow:hidden}
+    .apt-roof{background:#4B5FA8;color:#fff;text-align:center;padding:10px;font-weight:800;font-size:1rem}
+    .apt-row{display:flex;border-top:2px solid #c3cdf5}
+    .apt-cell{flex:1;padding:12px 6px;text-align:center;background:#eef1fb;border-right:2px solid #c3cdf5;font-size:.85rem;font-weight:700;line-height:1.4}
+    .apt-cell:last-child{border-right:none}
+    .apt-cell .ei{font-size:1.5rem;display:block;margin-bottom:3px}
+    .apt-cell .sub{font-size:.72rem;color:#718096;font-weight:500}
+    .apt-ground{background:#e2e8f0;border-top:2px solid #c3cdf5;padding:10px;text-align:center;font-size:.85rem;color:#4a5568;font-weight:600}
+    .road-arrow{text-align:center;font-size:1.4rem;padding:5px 0;color:#a0aec0}
+    .road{background:#2d3748;color:#fff;border-radius:12px;padding:11px;text-align:center;font-weight:700;font-size:.92rem}
+    .road-sub{font-size:.78rem;opacity:.7;margin-top:3px}
 
-    /* ── 공감 박스 ── */
-    .relate {
-      background: #fff8e1;
-      border-left: 5px solid #f6c90e;
-      border-radius: 14px;
-      padding: 18px 20px;
-      margin-bottom: 28px;
-    }
-    .relate p { font-size: 1rem; color: #4a3c00; line-height: 1.7; }
-    .relate strong { color: #b7791f; }
+    /* 챕터 */
+    .chapter{background:#fff;border-radius:20px;padding:26px 22px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+    .ch-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .ch-num{width:38px;height:38px;border-radius:50%;background:#4B5FA8;color:#fff;font-weight:800;font-size:1.05rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ch-title{font-size:1.3rem;font-weight:800;color:#1a202c}
+    .ch-body p{color:#2d3748;margin-bottom:14px}
+    .ch-body p:last-child{margin-bottom:0}
 
-    /* ── 섹션 제목 ── */
-    .section-label {
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #718096;
-      margin-bottom: 12px;
-      margin-top: 32px;
-      padding-left: 4px;
-    }
+    /* 데모 박스 공통 */
+    .demo{background:#f7fafc;border:2px solid #e2e8f0;border-radius:16px;padding:18px;margin:18px 0}
+    .demo-label{font-size:.78rem;font-weight:800;color:#718096;letter-spacing:.06em;margin-bottom:12px;text-align:center}
 
-    /* ── 아파트 다이어그램 ── */
-    .building {
-      background: #fff;
-      border-radius: 20px;
-      padding: 22px 20px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-    }
-    .building-title {
-      font-size: 1rem;
-      font-weight: 800;
-      color: #2d3748;
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    .apt {
-      border: 3px solid #4B5FA8;
-      border-radius: 16px;
-      overflow: hidden;
-      font-size: 0.97rem;
-    }
-    .apt-roof {
-      background: #4B5FA8;
-      color: #fff;
-      text-align: center;
-      padding: 10px;
-      font-weight: 800;
-      font-size: 1.05rem;
-    }
-    .apt-floor {
-      display: flex;
-      border-top: 2px solid #c3cdf5;
-    }
-    .apt-cell {
-      flex: 1;
-      padding: 12px 8px;
-      text-align: center;
-      font-size: 0.9rem;
-      font-weight: 700;
-      border-right: 2px solid #c3cdf5;
-      background: #eef1fb;
-      line-height: 1.4;
-    }
-    .apt-cell:last-child { border-right: none; }
-    .apt-cell .emoji { font-size: 1.5rem; display: block; margin-bottom: 3px; }
-    .apt-cell .label { color: #4B5FA8; }
-    .apt-cell .sub   { font-size: 0.75rem; color: #718096; font-weight: 500; }
-    .apt-ground {
-      background: #e2e8f0;
-      border-top: 2px solid #c3cdf5;
-      padding: 10px;
-      text-align: center;
-      font-size: 0.88rem;
-      color: #4a5568;
-      font-weight: 600;
-    }
-    .road-arrow {
-      text-align: center;
-      font-size: 1.5rem;
-      margin: 6px 0;
-      color: #718096;
-    }
-    .road {
-      background: #2d3748;
-      color: #fff;
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 0.95rem;
-    }
-    .road .sub { font-size: 0.8rem; opacity: 0.7; margin-top: 3px; }
+    /* 핵심 포인트 */
+    .keypoint{background:#ebf8ff;border-left:4px solid #4299e1;border-radius:10px;padding:13px 15px;margin-top:16px;font-size:.95rem;color:#2a4365;font-weight:600;line-height:1.5}
 
-    /* ── Accordion 그룹 ── */
-    .group {
-      background: #fff;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-      margin-bottom: 14px;
-    }
-    .group-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 20px 20px;
-      background: var(--g-color);
-      color: #fff;
-    }
-    .group-icon { font-size: 2rem; flex-shrink: 0; }
-    .group-header h2 { font-size: 1.25rem; font-weight: 800; }
-    .group-header p  { font-size: 0.9rem; opacity: 0.88; margin-top: 2px; }
+    /* 오해 박스 */
+    .myth{background:#fff5f5;border-left:4px solid #fc8181;border-radius:10px;padding:13px 15px;margin-top:12px;font-size:.92rem;color:#63171b;line-height:1.55}
+    .myth strong{display:block;font-size:.78rem;color:#c53030;font-weight:800;margin-bottom:5px;letter-spacing:.04em}
 
-    /* ── 개별 항목 (details/summary) ── */
-    details {
-      border-top: 1px solid #edf2f7;
-    }
-    details:first-of-type { border-top: none; }
+    /* 왜? 박스 */
+    .whybox{background:#fffaf0;border-left:4px solid #f6ad55;border-radius:10px;padding:13px 15px;margin-top:12px;font-size:.92rem;color:#4a3c00;line-height:1.55}
+    .whybox strong{display:block;font-size:.78rem;color:#c05621;font-weight:800;margin-bottom:5px;letter-spacing:.04em}
 
-    summary {
-      list-style: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 20px;
-      cursor: pointer;
-      gap: 12px;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    summary::-webkit-details-marker { display: none; }
+    /* ══ 데모: 폰 홈 화면 ══ */
+    .phone-frame{width:200px;background:#1c1c1e;border-radius:34px;padding:12px 8px;box-shadow:0 0 0 2px #3a3a3c,0 20px 40px rgba(0,0,0,.4);margin:0 auto}
+    .phone-screen{background:#fff;border-radius:24px;overflow:hidden;min-height:320px}
+    .phone-statusbar{background:#1c1c1e;color:#fff;font-size:.7rem;display:flex;justify-content:space-between;padding:6px 14px;font-weight:600}
+    .phone-home{background:linear-gradient(160deg,#1a237e 0%,#4a148c 100%);padding:12px;min-height:280px}
+    .app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+    .app-icon{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border-radius:8px;padding:4px}
+    .app-icon:active{opacity:.7}
+    .app-icon .ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+    .app-icon .lbl{font-size:.55rem;color:#fff;font-weight:600;text-align:center}
+    .phone-msg{background:rgba(255,255,255,.15);border-radius:10px;margin:10px 4px 0;padding:8px 10px;font-size:.72rem;color:#fff;text-align:center;min-height:24px}
 
-    .sum-left { display: flex; align-items: center; gap: 12px; }
-    .sum-icon {
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      background: var(--g-bg);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-    .sum-text strong { display: block; font-size: 1.05rem; font-weight: 700; color: #1a202c; }
-    .sum-text span   { font-size: 0.88rem; color: #718096; }
+    /* ══ 데모: 안드로이드 vs 아이폰 ══ */
+    .two-phones{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .mini-phone{background:#1c1c1e;border-radius:24px;padding:8px 6px;box-shadow:0 0 0 2px #3a3a3c}
+    .mini-screen{background:#fff;border-radius:18px;overflow:hidden;min-height:200px}
+    .mini-bar{font-size:.6rem;background:#1c1c1e;color:#fff;padding:4px 10px;display:flex;justify-content:space-between}
+    .mini-home{padding:8px 6px}
+    .mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+    .mini-ico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin:0 auto}
+    .mini-label{font-size:.5rem;text-align:center;margin-top:1px;color:#1a202c;font-weight:600}
+    .os-label{text-align:center;font-size:.85rem;font-weight:800;margin-top:8px}
 
-    .chevron {
-      font-size: 1.1rem;
-      color: #a0aec0;
-      transition: transform 0.25s;
-      flex-shrink: 0;
-    }
-    details[open] .chevron { transform: rotate(180deg); }
+    /* ══ 데모: 앱 vs 웹 토글 ══ */
+    .toggle-tabs{display:flex;gap:0;border-radius:12px;overflow:hidden;border:2px solid #4B5FA8;margin-bottom:14px}
+    .ttab{flex:1;padding:10px;text-align:center;font-size:.9rem;font-weight:700;cursor:pointer;background:#fff;color:#4B5FA8;border:none;transition:.2s}
+    .ttab.on{background:#4B5FA8;color:#fff}
+    .demo-phone{width:180px;margin:0 auto;background:#1c1c1e;border-radius:30px;padding:10px 7px;box-shadow:0 0 0 2px #3a3a3c,0 12px 30px rgba(0,0,0,.35)}
+    .demo-phone-screen{background:#fff;border-radius:22px;overflow:hidden;min-height:280px}
+    /* 앱 뷰 */
+    .app-view-bar{background:#03c75a;padding:10px 14px;display:flex;align-items:center;gap:8px}
+    .app-view-bar .logo{color:#fff;font-weight:800;font-size:1rem}
+    .app-body{padding:14px}
+    .app-search{background:#f5f5f5;border-radius:20px;padding:9px 14px;font-size:.8rem;color:#999;border:1px solid #ddd;margin-bottom:12px}
+    .app-menu{display:flex;gap:6px;flex-wrap:wrap}
+    .app-menu span{font-size:.72rem;background:#e8f5e9;color:#2e7d32;padding:4px 8px;border-radius:6px;font-weight:600}
+    /* 브라우저 뷰 */
+    .browser-topbar{background:#f1f3f4;padding:8px 10px;display:flex;align-items:center;gap:6px;border-bottom:1px solid #ddd}
+    .browser-dots{display:flex;gap:4px}
+    .browser-dots span{width:8px;height:8px;border-radius:50%;display:inline-block}
+    .browser-urlbar{flex:1;background:#fff;border:1px solid #ddd;border-radius:16px;padding:4px 10px;font-size:.7rem;color:#444;display:flex;align-items:center;gap:4px}
+    .browser-urlbar .lock{color:#0a0}
+    .browser-body{padding:14px}
 
-    /* ── 펼쳐진 내용 ── */
-    .detail-body {
-      padding: 0 20px 22px;
-    }
+    /* ══ 데모: URL 분해 ══ */
+    .url-display{font-family:monospace;font-size:.95rem;display:flex;flex-wrap:wrap;gap:0;margin-bottom:14px;justify-content:center}
+    .url-part{padding:6px 8px;cursor:pointer;border-radius:6px;font-weight:700;transition:.15s;border:2px solid transparent;line-height:1}
+    .url-part:hover,.url-part.picked{border-color:currentColor;background:rgba(0,0,0,.06)}
+    .up-scheme{color:#6200ea}
+    .up-sub{color:#0277bd}
+    .up-domain{color:#e65100}
+    .up-tld{color:#2e7d32}
+    .up-path{color:#ad1457}
+    .url-desc{min-height:60px;background:#fff;border-radius:10px;padding:12px 14px;font-size:.9rem;color:#2d3748;border:2px solid #e2e8f0;line-height:1.55}
 
-    /* 비유 카드 */
-    .analogy-card {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      background: #f7fafc;
-      border-radius: 14px;
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-    .analogy-side {
-      flex: 1;
-      padding: 16px 14px;
-      text-align: center;
-    }
-    .analogy-side .big   { font-size: 2.2rem; margin-bottom: 4px; }
-    .analogy-side .name  { font-size: 0.95rem; font-weight: 800; color: #2d3748; }
-    .analogy-side .desc  { font-size: 0.8rem; color: #718096; margin-top: 2px; }
-    .analogy-eq {
-      font-size: 1.5rem;
-      color: #a0aec0;
-      font-weight: 300;
-      padding: 0 4px;
-    }
-    .analogy-side.real { background: #eef1fb; }
+    /* ══ 데모: 로그인 폼 ══ */
+    .login-form{max-width:280px;margin:0 auto}
+    .login-form input{width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:1rem;margin-bottom:10px;color:#1a202c;font-family:inherit;outline:none;transition:.2s}
+    .login-form input:focus{border-color:#4B5FA8}
+    .login-btn{width:100%;padding:13px;background:#4B5FA8;color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+    .login-btn:active{opacity:.85}
+    .login-result{margin-top:10px;padding:12px 14px;border-radius:10px;font-size:.92rem;font-weight:600;text-align:center;min-height:40px;transition:.3s}
 
-    /* 왜? 설명 */
-    .why-box {
-      background: #fffaf0;
-      border-left: 4px solid #f6ad55;
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-    }
-    .why-box .why-label {
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: #c05621;
-      margin-bottom: 6px;
-      letter-spacing: 0.04em;
-    }
-    .why-box p { font-size: 0.95rem; color: #4a3c00; }
+    /* ══ 데모: 업데이트 ══ */
+    .update-demo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .update-card{border-radius:12px;padding:14px;font-size:.82rem;line-height:1.5}
+    .update-before{background:#fff3cd;border:2px solid #ffc107}
+    .update-after{background:#d4edda;border:2px solid #28a745}
+    .update-card h4{font-size:.82rem;font-weight:800;margin-bottom:8px}
+    .update-card ul{padding-left:14px;color:#444}
+    .update-card li{margin-bottom:4px}
+    .update-notif{background:#1c1c1e;border-radius:14px;padding:14px;color:#fff;margin-bottom:12px;font-size:.85rem;display:flex;gap:10px;align-items:center}
+    .update-notif .icon{font-size:1.8rem}
+    .update-notif-text{flex:1}
+    .update-notif-text strong{display:block;margin-bottom:3px}
+    .update-notif-text span{opacity:.75;font-size:.78rem}
+    .update-bar{display:flex;gap:8px;margin-top:8px}
+    .update-bar button{flex:1;padding:7px;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit}
+    .upd-later{background:rgba(255,255,255,.15);color:#fff}
+    .upd-now{background:#4B5FA8;color:#fff}
+    .update-result{margin-top:10px;font-size:.88rem;font-weight:600;text-align:center;color:#2d3748;min-height:24px}
 
-    /* 오해 바로잡기 */
-    .myth-box {
-      background: #fff5f5;
-      border-left: 4px solid #fc8181;
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-    }
-    .myth-box .myth-label {
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: #c53030;
-      margin-bottom: 6px;
-      letter-spacing: 0.04em;
-    }
-    .myth-box p { font-size: 0.95rem; color: #63171b; }
+    /* 섹션 레이블 */
+    .section-label{font-size:.78rem;font-weight:800;letter-spacing:.08em;color:#718096;margin:28px 0 10px;padding-left:4px}
 
-    /* 핵심 정리 */
-    .key-box {
-      background: #ebf8ff;
-      border-left: 4px solid #4299e1;
-      border-radius: 10px;
-      padding: 14px 16px;
-    }
-    .key-box p { font-size: 0.95rem; color: #2a4365; font-weight: 600; }
-
-    /* 색상 테마 변수 */
-    .group--building { --g-color: #4B5FA8; --g-bg: #eef1fb; }
-    .group--store    { --g-color: #2f855a; --g-bg: #e6fffa; }
-    .group--road     { --g-color: #b7791f; --g-bg: #fffbeb; }
-    .group--safe     { --g-color: #6b46c1; --g-bg: #faf5ff; }
+    /* 마무리 */
+    .outro{background:#4B5FA8;color:#fff;border-radius:20px;padding:24px;text-align:center;margin-top:8px}
+    .outro h3{font-size:1.2rem;font-weight:800;margin-bottom:10px}
+    .outro p{font-size:.95rem;opacity:.9;line-height:1.65}
+    .outro a{display:inline-block;margin-top:14px;background:#fff;color:#4B5FA8;font-weight:800;padding:12px 24px;border-radius:12px;text-decoration:none;font-size:.95rem}
   </style>
 </head>
 <body>
 
-  <a href="index.html" class="back">← 처음으로</a>
+<a href="index.html" class="back">← 처음으로</a>
 
-  <!-- 히어로 -->
-  <div class="hero">
-    <span class="badge">0강 · 먼저 보기</span>
-    <h1>🧭 디지털 지도</h1>
-    <p>앱·카카오·인터넷·네이버…<br>뭐가 뭔지 헷갈리셨죠?<br>딱 한 가지 비유로 정리해 드릴게요.</p>
-  </div>
+<!-- 히어로 -->
+<div class="hero">
+  <span class="badge">0강 · 먼저 보기</span>
+  <h1>🧭 디지털 지도</h1>
+  <p>앱, 카카오, 인터넷, 네이버…<br>뭐가 뭔지 헷갈리셨죠?<br>딱 하나의 비유로 전부 풀어드릴게요.</p>
+</div>
 
-  <!-- 공감 -->
-  <div class="relate">
-    <p>
-      많은 분들이 이렇게 생각하세요.<br>
-      <strong>"카카오톡 = 인터넷"</strong>,
-      <strong>"네이버 = 휴대폰 회사"</strong>,
-      <strong>"앱 = 휴대폰 자체 기능"</strong>…<br><br>
-      틀린 게 아니에요. 그냥 아직 지도가 없으셨던 거예요.
-      지금부터 딱 하나의 비유로 전부 설명할게요.
-    </p>
-  </div>
-
-  <!-- 아파트 다이어그램 -->
-  <p class="section-label">핵심 비유 — 한눈에 보기</p>
-
-  <div class="building">
-    <p class="building-title">📱 스마트폰 = 아파트 건물</p>
-    <div class="apt">
-      <div class="apt-roof">🏢 내 스마트폰 (아파트 건물)</div>
-      <div class="apt-floor">
-        <div class="apt-cell">
-          <span class="emoji">⚙️</span>
-          <span class="label">관리실</span><br>
-          <span class="sub">(OS: 안드로이드 / iOS)</span>
-        </div>
-      </div>
-      <div class="apt-floor">
-        <div class="apt-cell">
-          <span class="emoji">💬</span>
-          <span class="label">카카오톡</span><br>
-          <span class="sub">입점 가게</span>
-        </div>
-        <div class="apt-cell">
-          <span class="emoji">🔍</span>
-          <span class="label">네이버</span><br>
-          <span class="sub">입점 가게</span>
-        </div>
-        <div class="apt-cell">
-          <span class="emoji">📦</span>
-          <span class="label">기타 앱</span><br>
-          <span class="sub">입점 가게들</span>
-        </div>
-      </div>
-      <div class="apt-ground">🚪 출입구: 브라우저 (자동차를 타고 나갈 수 있어요)</div>
-    </div>
-    <div class="road-arrow">⬆️⬇️</div>
-    <div class="road">
-      🛣️ 인터넷 (도로)<br>
-      <div class="sub">전 세계 모든 웹사이트로 연결됩니다</div>
-    </div>
-  </div>
-
-  <p style="text-align:center; color:#718096; font-size:0.9rem; margin-bottom:28px;">
-    아래 항목을 눌러서 하나씩 자세히 알아보세요 👇
+<!-- 공감 -->
+<div class="relate">
+  <p>
+    많은 분들이 이렇게 생각하세요.<br>
+    <strong>"카카오톡 = 인터넷"</strong>,
+    <strong>"네이버 = 휴대폰 회사"</strong>,
+    <strong>"앱 = 원래 깔려있는 것"</strong>…<br><br>
+    이건 틀린 게 아니에요. 그냥 <strong>아직 지도가 없으셨던 거예요.</strong><br>
+    지금부터 딱 하나의 비유로 이 모든 걸 정리해 드릴게요.
   </p>
+</div>
 
-  <!-- ═══════════════════════════════════
-       그룹 1: 내 손 안의 건물
-  ════════════════════════════════════ -->
-  <p class="section-label">1단계 — 내 손 안의 건물</p>
+<!-- 전체 지도 -->
+<p class="section-label">먼저 — 전체 그림 한눈에 보기</p>
+<div class="apt-wrap">
+  <h3>📱 스마트폰 = 아파트 건물</h3>
+  <div class="apt">
+    <div class="apt-roof">🏢 내 스마트폰 (아파트 건물)</div>
+    <div class="apt-row">
+      <div class="apt-cell"><span class="ei">⚙️</span>관리실<br><span class="sub">OS (안드로이드·iOS)</span></div>
+    </div>
+    <div class="apt-row">
+      <div class="apt-cell"><span class="ei">💬</span>카카오톡<br><span class="sub">입점 가게</span></div>
+      <div class="apt-cell"><span class="ei">🔍</span>네이버<br><span class="sub">입점 가게</span></div>
+      <div class="apt-cell"><span class="ei">📦</span>기타 앱<br><span class="sub">입점 가게들</span></div>
+    </div>
+    <div class="apt-ground">🚪 출입구 : 브라우저 (자동차를 타고 밖으로 나갈 수 있어요)</div>
+  </div>
+  <div class="road-arrow">⬆️⬇️</div>
+  <div class="road">🛣️ 인터넷 (도로)<div class="road-sub">전 세계 모든 웹사이트로 연결됩니다</div></div>
+</div>
+<p style="text-align:center;color:#718096;font-size:.92rem;margin-bottom:28px">아래 내용을 천천히 읽으며 내려가세요 👇</p>
 
-  <div class="group group--building">
-    <div class="group-header">
-      <span class="group-icon">🏢</span>
-      <div>
-        <h2>스마트폰과 OS</h2>
-        <p>건물과 관리실의 관계예요</p>
+<!-- ─────────────────────────────────── -->
+<p class="section-label">1단계 — 내 손 안의 건물</p>
+
+<!-- Ch1: 스마트폰 -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">1</div>
+    <div class="ch-title">스마트폰이란?</div>
+  </div>
+  <div class="ch-body">
+    <p>스마트폰은 손 안의 작은 컴퓨터예요. 예전의 핸드폰은 전화와 문자만 됐지만, 지금의 스마트폰은 사진 찍기, 동영상 보기, 지도 찾기, 쇼핑, 은행 업무까지 다 돼요.</p>
+    <p>처음 스마트폰을 받으셨을 때 "뭐가 이렇게 많아?" 하고 놀라셨죠? 그게 당연해요. 스마트폰은 편의점, 우체국, 은행, 사진관이 모두 한 건물 안에 모여있는 것과 같거든요.</p>
+    <p>중요한 건 <strong>스마트폰 자체는 그냥 '빈 건물'</strong>이라는 거예요. 카카오톡, 유튜브, 네이버 같은 것들이 그 건물에 들어온 가게들이에요. 아이콘을 누르면 그 가게로 들어가는 거예요.</p>
+
+    <div class="demo">
+      <div class="demo-label">📱 직접 눌러보세요 — 아이콘을 탭하면 뭔지 알려줘요</div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="phone-statusbar"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="phone-home">
+            <div class="app-grid">
+              <div class="app-icon" onclick="showApp('📞 전화 — 전화를 걸고 받는 기본 기능이에요')">
+                <div class="ico" style="background:#34c759">📞</div><div class="lbl">전화</div>
+              </div>
+              <div class="app-icon" onclick="showApp('💬 카카오톡 — 메시지와 영상통화 전문 가게예요')">
+                <div class="ico" style="background:#fee500">💬</div><div class="lbl">카카오톡</div>
+              </div>
+              <div class="app-icon" onclick="showApp('🔍 네이버 — 검색·뉴스·지도 전문 가게예요')">
+                <div class="ico" style="background:#03c75a">🔍</div><div class="lbl">네이버</div>
+              </div>
+              <div class="app-icon" onclick="showApp('📷 카메라 — 사진과 영상을 찍는 기능이에요')">
+                <div class="ico" style="background:#1c1c1e">📷</div><div class="lbl">카메라</div>
+              </div>
+              <div class="app-icon" onclick="showApp('▶️ 유튜브 — 영상을 보는 전용 가게예요')">
+                <div class="ico" style="background:#ff0000">▶️</div><div class="lbl">유튜브</div>
+              </div>
+              <div class="app-icon" onclick="showApp('🗺️ 지도 — 길 찾기·교통 안내 가게예요')">
+                <div class="ico" style="background:#4285f4">🗺️</div><div class="lbl">지도</div>
+              </div>
+              <div class="app-icon" onclick="showApp('🏦 은행 앱 — 잔액 확인·송금 전문 가게예요')">
+                <div class="ico" style="background:#0d47a1">🏦</div><div class="lbl">은행</div>
+              </div>
+              <div class="app-icon" onclick="showApp('🌐 인터넷(브라우저) — 도로를 타고 어디든 갈 수 있는 자동차예요')">
+                <div class="ico" style="background:#4B5FA8">🌐</div><div class="lbl">인터넷</div>
+              </div>
+            </div>
+            <div class="phone-msg" id="app-msg">↑ 아이콘을 눌러보세요</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <details>
-      <summary>
-        <div class="sum-left">
-          <div class="sum-icon">📱</div>
-          <div class="sum-text">
-            <strong>스마트폰이란?</strong>
-            <span>손 안의 작은 아파트 건물</span>
-          </div>
-        </div>
-        <span class="chevron">▼</span>
-      </summary>
-      <div class="detail-body">
-        <div class="analogy-card">
-          <div class="analogy-side">
-            <div class="big">📱</div>
-            <div class="name">스마트폰</div>
-            <div class="desc">디지털 세상</div>
-          </div>
-          <div class="analogy-eq">=</div>
-          <div class="analogy-side real">
-            <div class="big">🏢</div>
-            <div class="name">아파트 건물</div>
-            <div class="desc">현실 세상</div>
-          </div>
-        </div>
-        <div class="why-box">
-          <div class="why-label">📌 왜 이런 비유인가요?</div>
-          <p>아파트 건물 안에 여러 가게가 들어올 수 있듯이, 스마트폰 안에도 카카오톡·네이버·유튜브 같은 앱들이 들어와 있어요. 건물 자체가 없으면 가게도 없는 것처럼, 스마트폰이 없으면 앱도 쓸 수 없어요.</p>
-        </div>
-        <div class="key-box">
-          <p>💡 스마트폰 = 모든 것을 담는 그릇. 카카오톡도, 네이버도, 유튜브도 이 안에 들어있어요.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <div class="sum-left">
-          <div class="sum-icon">⚙️</div>
-          <div class="sum-text">
-            <strong>OS(운영체제)란?</strong>
-            <span>안드로이드 vs 아이폰이 다른 이유</span>
-          </div>
-        </div>
-        <span class="chevron">▼</span>
-      </summary>
-      <div class="detail-body">
-        <div class="analogy-card">
-          <div class="analogy-side">
-            <div class="big">⚙️</div>
-            <div class="name">OS</div>
-            <div class="desc">안드로이드 / iOS</div>
-          </div>
-          <div class="analogy-eq">=</div>
-          <div class="analogy-side real">
-            <div class="big">🏠</div>
-            <div class="name">건물 관리실</div>
-            <div class="desc">GS건설 / 현대건설</div>
-          </div>
-        </div>
-        <div class="why-box">
-          <div class="why-label">📌 왜 안드로이드폰과 아이폰이 다른가요?</div>
-          <p>GS건설이 지은 아파트와 현대건설이 지은 아파트는 구조가 조금 달라요. 그것처럼 삼성(안드로이드)과 애플(iOS)은 건물 관리 방식이 달라서, 같은 앱도 두 버전이 필요해요.</p>
-        </div>
-        <div class="myth-box">
-          <div class="myth-label">❌ 흔한 오해</div>
-          <p>"안드로이드폰에서 쓰던 앱이 아이폰에 없는 것 같아요" → 있긴 한데, 아이폰용으로 따로 설치해야 해요. 건물이 달라졌으니 이사 들어온 가게를 새로 찾아야 하는 것처럼요.</p>
-        </div>
-      </div>
-    </details>
+    <div class="keypoint">💡 스마트폰은 빈 건물. 앱들은 그 안에 들어온 가게들이에요. 아이콘을 누른다 = 그 가게 문을 여는 거예요.</div>
   </div>
+</div>
 
+<!-- Ch2: OS -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">2</div>
+    <div class="ch-title">OS(운영체제)란?</div>
+  </div>
+  <div class="ch-body">
+    <p>스마트폰 안에는 눈에 보이지 않는 '관리 시스템'이 있어요. 이걸 OS, 또는 운영체제라고 해요. 아파트 건물로 치면 <strong>건물 관리실</strong>이에요.</p>
+    <p>삼성·LG 같은 안드로이드폰과 애플 아이폰의 생김새가 다른 이유가 바로 이거예요. 두 건물이 다른 회사에서 지어졌기 때문이에요. 안드로이드는 구글이 만들었고, iOS는 애플이 만들었어요.</p>
+    <p>그래서 <strong>같은 앱도 두 종류가 존재해요</strong> — 안드로이드용과 아이폰용. 아이폰 쓰다가 갤럭시로 바꾸면 앱을 새로 설치해야 하는 이유예요. 건물이 바뀌었으니까요.</p>
 
-  <!-- ═══════════════════════════════════
-       그룹 2: 건물 안의 가게들
-  ════════════════════════════════════ -->
-  <p class="section-label">2단계 — 건물 안의 가게들</p>
-
-  <div class="group group--store">
-    <div class="group-header">
-      <span class="group-icon">🏪</span>
-      <div>
-        <h2>앱 · 웹 · 카카오 · 네이버</h2>
-        <p>뭐가 다른지 이제 구분해요</p>
+    <div class="demo">
+      <div class="demo-label">👀 같은 앱인데 생김새가 조금 달라요</div>
+      <div class="two-phones">
+        <div>
+          <div class="mini-phone">
+            <div class="mini-screen">
+              <div class="mini-bar"><span>9:41</span><span>▓▓ 🔋</span></div>
+              <div class="mini-home" style="background:linear-gradient(160deg,#1565c0,#1a237e);padding:10px 6px">
+                <div class="mini-grid">
+                  <div><div class="mini-ico" style="background:#34c759">📞</div><div class="mini-label" style="color:#fff">전화</div></div>
+                  <div><div class="mini-ico" style="background:#fee500">💬</div><div class="mini-label" style="color:#fff">카톡</div></div>
+                  <div><div class="mini-ico" style="background:#03c75a">🔍</div><div class="mini-label" style="color:#fff">네이버</div></div>
+                  <div><div class="mini-ico" style="background:#ff0000">▶️</div><div class="mini-label" style="color:#fff">유튜브</div></div>
+                  <div><div class="mini-ico" style="background:#4285f4">🗺️</div><div class="mini-label" style="color:#fff">지도</div></div>
+                  <div><div class="mini-ico" style="background:#1c1c1e">📷</div><div class="mini-label" style="color:#fff">카메라</div></div>
+                  <div><div class="mini-ico" style="background:#4B5FA8">🌐</div><div class="mini-label" style="color:#fff">인터넷</div></div>
+                  <div><div class="mini-ico" style="background:#ff6f00">📦</div><div class="mini-label" style="color:#fff">설정</div></div>
+                </div>
+                <div style="background:rgba(255,255,255,.2);border-radius:20px;padding:6px 10px;margin-top:8px;display:flex;gap:4px">
+                  <div style="flex:1;background:rgba(255,255,255,.15);border-radius:10px;height:24px"></div>
+                  <div style="width:24px;height:24px;background:rgba(255,255,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem">🎙️</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="os-label" style="color:#1565c0">🤖 안드로이드<br><span style="font-size:.72rem;font-weight:500;color:#718096">(삼성·LG 등)</span></div>
+        </div>
+        <div>
+          <div class="mini-phone" style="background:#f5f5f7;box-shadow:0 0 0 2px #d1d1d6">
+            <div class="mini-screen" style="background:#000">
+              <div class="mini-bar" style="background:#000;color:#fff;justify-content:center;font-size:.55rem;padding:6px 10px">
+                <span style="background:#fff;color:#000;border-radius:6px;padding:1px 6px">9:41</span>
+              </div>
+              <div style="background:#000;padding:8px 6px">
+                <div class="mini-grid">
+                  <div><div class="mini-ico" style="background:#34c759">📞</div><div class="mini-label" style="color:#fff">전화</div></div>
+                  <div><div class="mini-ico" style="background:#fee500">💬</div><div class="mini-label" style="color:#fff">카톡</div></div>
+                  <div><div class="mini-ico" style="background:#03c75a">🔍</div><div class="mini-label" style="color:#fff">네이버</div></div>
+                  <div><div class="mini-ico" style="background:#ff0000">▶️</div><div class="mini-label" style="color:#fff">유튜브</div></div>
+                  <div><div class="mini-ico" style="background:#4285f4">🗺️</div><div class="mini-label" style="color:#fff">지도</div></div>
+                  <div><div class="mini-ico" style="background:#1c1c1e;border:1px solid #333">📷</div><div class="mini-label" style="color:#fff">카메라</div></div>
+                  <div><div class="mini-ico" style="background:#4B5FA8">🧭</div><div class="mini-label" style="color:#fff">사파리</div></div>
+                  <div><div class="mini-ico" style="background:#636366">⚙️</div><div class="mini-label" style="color:#fff">설정</div></div>
+                </div>
+                <div style="background:rgba(255,255,255,.1);border-radius:20px;padding:6px 10px;margin-top:8px">
+                  <div style="background:rgba(255,255,255,.15);border-radius:10px;height:28px;display:flex;align-items:center;padding:0 10px">
+                    <span style="font-size:.6rem;color:rgba(255,255,255,.5)">🔍 앱 및 웹 검색</span>
+                  </div>
+                </div>
+              </div>
+              <div style="background:#000;display:flex;justify-content:space-around;padding:8px 10px;border-top:1px solid #222">
+                <div style="width:28px;height:28px;border-radius:8px;background:#1c1c1e;border:1.5px solid #333;display:flex;align-items:center;justify-content:center">📞</div>
+                <div style="width:28px;height:28px;border-radius:8px;background:#1c1c1e;border:1.5px solid #333;display:flex;align-items:center;justify-content:center">📷</div>
+                <div style="width:28px;height:28px;border-radius:8px;background:#1c1c1e;border:1.5px solid #333;display:flex;align-items:center;justify-content:center">✉️</div>
+                <div style="width:28px;height:28px;border-radius:8px;background:#1c1c1e;border:1.5px solid #333;display:flex;align-items:center;justify-content:center">🎵</div>
+              </div>
+            </div>
+          </div>
+          <div class="os-label" style="color:#555">🍎 iOS<br><span style="font-size:.72rem;font-weight:500;color:#718096">(아이폰)</span></div>
+        </div>
       </div>
     </div>
 
-    <details>
-      <summary>
-        <div class="sum-left">
-          <div class="sum-icon">📦</div>
-          <div class="sum-text">
-            <strong>앱이란?</strong>
-            <span>건물 안에 직접 입점한 가게</span>
-          </div>
-        </div>
-        <span class="chevron">▼</span>
-      </summary>
-      <div class="detail-body">
-        <div class="analogy-card">
-          <div class="analogy-side">
-            <div class="big">📦</div>
-            <div class="name">앱</div>
-            <div class="desc">설치해서 쓰는 것</div>
-          </div>
-          <div class="analogy-eq">=</div>
-          <div class="analogy-side real">
-            <div class="big">🏪</div>
-            <div class="name">입점 가게</div>
-            <div class="desc">건물 안에 있어요</div>
-          </div>
-        </div>
-        <div class="why-box">
-          <div class="why-label">📌 왜 앱은 설치해야 하나요?</div>
-          <p>가게가 건물 안으로 이사 들어오는 과정이 "설치"예요. 설치 전엔 그 가게가 내 건물에 없는 거예요. 한번 이사 오면(설치하면) 언제든 바로 들어갈 수 있어요.</p>
-        </div>
-        <div class="key-box">
-          <p>💡 카카오톡, 유튜브, 배달의민족 모두 앱이에요. 처음엔 설치가 필요해요.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <div class="sum-left">
-          <div class="sum-icon">🌐</div>
-          <div class="sum-text">
-            <strong>앱 vs 웹사이트, 뭐가 달라요?</strong>
-            <span>입점 가게 vs 도로 나가서 가는 곳</span>
-          </div>
-        </div>
-        <span class="chevron">▼</span>
-      </summary>
-      <div class="detail-body">
-        <div class="analogy-card">
-          <div class="analogy-side">
-            <div class="big">📦</div>
-            <div class="name">앱</div>
-            <div class="desc">건물 안 가게<br>(설치 필요)</div>
-          </div>
-          <div class="analogy-eq">vs</div>
-          <div class="analogy-side real">
-            <div class="big">🏬</div>
-            <div class="name">웹사이트</div>
-            <div class="desc">도로 나가서 가는 곳<br>(설치 불필요)</div>
-          </div>
-        </div>
-        <div class="why-box">
-          <div class="why-label">📌 핵심 차이</div>
-          <p>앱은 건물(내 폰) 안에 있어서 인터넷 없어도 열 수 있어요. 웹사이트는 도로(인터넷)를 타고 나가야 하기 때문에, 인터넷이 끊기면 못 가요.</p>
-        </div>
-        <div class="myth-box">
-          <div class="myth-label">❌ 흔한 오해</div>
-          <p>"네이버는 앱인가요, 웹사이트인가요?" → 둘 다예요! 네이버 앱을 설치하면 건물 안 가게고, 브라우저에서 naver.com을 치면 도로를 타고 나가는 거예요. 같은 네이버인데 가는 방법이 다른 거예요.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <div class="sum-left">
-          <div class="sum-icon">💬</div>
-          <div class="sum-text">
-            <strong>카카오톡·네이버는 뭔가요?</strong>
-            <span>건물 안에 입점한 유명 가게들</span>
-          </div>
-        </div>
-        <span class="chevron">▼</span>
-      </summary>
-      <div class="detail-body">
-        <div class="analogy-card">
-          <div class="analogy-side">
-            <div class="big">💬</div>
-            <div class="name">카카오톡</div>
-            <div class="desc">메시지 전문 가게</div>
-          </div>
-          <div class="analogy-eq">≠</div>
-          <div class="analogy-side real">
-            <div class="big">📱</div>
-            <div class="name">스마트폰</div>
-            <div class="desc">건물 자체</div>
-          </div>
-        </div>
-        <div class="myth-box">
-          <div class="myth-label">❌ "카카오톡 = 인터넷" 아닌가요?</div>
-          <p>아니에요! 카카오톡은 인터넷(도로)을 이용하긴 하지만, 인터넷 자체가 아니에요. 도로를 달리는 특정 가게라고 생각하면 돼요. 카카오톡 없어도 인터넷은 되고, 인터넷 없으면 카카오톡도 안 돼요.</p>
-        </div>
-        <div class="why-box">
-          <div class="why-label">📌 정리</div>
-          <p>카카오톡 = 메시지·통화 전문 가게<br>네이버 = 검색·뉴스·쇼핑 전문 가게<br>유튜브 = 영상 전문 가게<br>모두 각자 다른 가게예요. 건물(스마트폰)이 아니에요.</p>
-        </div>
-      </div>
-    </details>
+    <div class="myth"><strong>❌ 흔한 오해</strong>"안드로이드폰에서 쓰던 앱이 아이폰에 없어요" → 있어요! 앱스토어에서 다시 찾아서 설치해야 해요. 건물이 바뀌었으니 이사짐을 새로 옮기는 것처럼요.</div>
+    <div class="keypoint">💡 안드로이드 = 구글이 만든 관리실 / iOS = 애플이 만든 관리실. 둘 다 같은 역할을 하지만 생김새가 달라요.</div>
   </div>
+</div>
 
+<!-- ─────────────────────────────────── -->
+<p class="section-label">2단계 — 건물 안의 가게들</p>
 
-  <!-- ═══════════════════════════════════
-       그룹 3: 세상으로 나가는 길
-  ════════════════════════════════════ -->
-  <p class="section-label">3단계 — 바깥 세상으로 나가는 길</p>
+<!-- Ch3: 앱 vs 웹 -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">3</div>
+    <div class="ch-title">앱 vs 웹사이트, 뭐가 달라요?</div>
+  </div>
+  <div class="ch-body">
+    <p>"앱을 설치한다"는 말이 이상하게 느껴지셨나요? 앱 설치는 <strong>새 가게가 건물 안으로 이사 오는 것</strong>이에요. 설치(이사)하면 아이콘이 생기고, 그 아이콘을 누르면 가게 문이 열려요.</p>
+    <p>웹사이트는 달라요. 건물 밖에 있는 가게예요. 브라우저(자동차)를 타고 인터넷(도로)을 달려서 찾아가야 해요. 설치 없이 주소만 알면 바로 갈 수 있어요.</p>
+    <p><strong>눈에 보이는 가장 큰 차이:</strong> 앱으로 열면 상단에 URL 주소창이 없어요. 브라우저로 열면 맨 위에 🔒 naver.com 같은 주소창이 보여요. 이 차이 하나만 기억하셔도 돼요.</p>
 
-  <div class="group group--road">
-    <div class="group-header">
-      <span class="group-icon">🛣️</span>
-      <div>
-        <h2>인터넷 · 브라우저 · URL</h2>
-        <p>도로·자동차·주소의 관계예요</p>
+    <div class="demo">
+      <div class="demo-label">👆 버튼을 눌러서 차이를 직접 보세요</div>
+      <div class="toggle-tabs">
+        <button class="ttab on" onclick="switchView('app',this)">📱 앱으로 열 때</button>
+        <button class="ttab" onclick="switchView('web',this)">🌐 브라우저로 열 때</button>
+      </div>
+      <div class="demo-phone">
+        <div class="demo-phone-screen">
+          <!-- 앱 뷰 -->
+          <div id="v-app">
+            <div class="app-view-bar">
+              <span class="logo">NAVER</span>
+              <span style="color:#fff;font-size:.75rem;margin-left:auto">☰</span>
+            </div>
+            <div class="app-body">
+              <div class="app-search">🔍 검색어를 입력하세요</div>
+              <div style="display:flex;gap:6px;margin-bottom:10px">
+                <div style="flex:1;height:60px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#666">뉴스</div>
+                <div style="flex:1;height:60px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#666">날씨</div>
+                <div style="flex:1;height:60px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#666">지도</div>
+              </div>
+              <div class="app-menu">
+                <span>메일</span><span>카페</span><span>블로그</span><span>쇼핑</span>
+              </div>
+              <div style="margin-top:10px;font-size:.72rem;color:#888;text-align:center;padding:8px;background:#f9f9f9;border-radius:8px">📌 앱으로 열면 주소창이 없어요</div>
+            </div>
+          </div>
+          <!-- 웹 뷰 -->
+          <div id="v-web" style="display:none">
+            <div class="browser-topbar">
+              <div class="browser-dots">
+                <span style="background:#ff5f57"></span>
+                <span style="background:#ffbd2e"></span>
+                <span style="background:#28ca41"></span>
+              </div>
+              <div class="browser-urlbar"><span class="lock">🔒</span> naver.com</div>
+              <span style="font-size:.8rem">⟳</span>
+            </div>
+            <div class="browser-body">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+                <span style="background:#03c75a;color:#fff;font-weight:800;font-size:1rem;padding:2px 8px;border-radius:4px">NAVER</span>
+              </div>
+              <div class="app-search">🔍 검색어를 입력하세요</div>
+              <div style="display:flex;gap:6px;margin-bottom:10px">
+                <div style="flex:1;height:50px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#666">뉴스</div>
+                <div style="flex:1;height:50px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#666">날씨</div>
+                <div style="flex:1;height:50px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#666">지도</div>
+              </div>
+              <div style="font-size:.72rem;color:#0066cc;text-align:center;padding:8px;background:#e8f0fe;border-radius:8px">🌐 브라우저로 열면 위에 주소창이 보여요</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <details>
-      <summary>
-        <div class="sum-left">
-          <div class="sum-icon">🌐</div>
-          <div class="sum-text">
-            <strong>인터넷이란?</strong>
-            <span>전 세계를 연결하는 도로망</span>
-          </div>
-        </div>
-        <span class="chevron">▼</span>
-      </summary>
-      <div class="detail-body">
-        <div class="analogy-card">
-          <div class="analogy-side">
-            <div class="big">🌐</div>
-            <div class="name">인터넷</div>
-            <div class="desc">데이터가 다니는 길</div>
-          </div>
-          <div class="analogy-eq">=</div>
-          <div class="analogy-side real">
-            <div class="big">🛣️</div>
-            <div class="name">도로망</div>
-            <div class="desc">차가 다니는 길</div>
-          </div>
-        </div>
-        <div class="why-box">
-          <div class="why-label">📌 "인터넷이 안 된다"는 말의 뜻</div>
-          <p>도로가 막혔다는 뜻이에요. 도로가 없으면 카카오톡도, 유튜브도, 네이버도 못 써요. 반대로 도로(인터넷)만 있다고 목적지(웹사이트)가 생기는 건 아니에요.</p>
-        </div>
-        <div class="myth-box">
-          <div class="myth-label">❌ 흔한 오해</div>
-          <p>"와이파이 = 인터넷 아닌가요?" → 와이파이는 도로까지 가는 진입로예요. 와이파이로 도로에 올라타는 거예요. 데이터(LTE/5G)도 다른 진입로예요. 도로 자체는 같아요.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <div class="sum-left">
-          <div class="sum-icon">🚗</div>
-          <div class="sum-text">
-            <strong>브라우저란?</strong>
-            <span>인터넷 도로를 달리는 자동차</span>
-          </div>
-        </div>
-        <span class="chevron">▼</span>
-      </summary>
-      <div class="detail-body">
-        <div class="analogy-card">
-          <div class="analogy-side">
-            <div class="big">🚗</div>
-            <div class="name">브라우저</div>
-            <div class="desc">크롬, 사파리, 삼성인터넷</div>
-          </div>
-          <div class="analogy-eq">=</div>
-          <div class="analogy-side real">
-            <div class="big">🚘</div>
-            <div class="name">자동차</div>
-            <div class="desc">현대, 기아, BMW</div>
-          </div>
-        </div>
-        <div class="why-box">
-          <div class="why-label">📌 브라우저는 왜 여러 종류인가요?</div>
-          <p>자동차 회사가 여러 곳인 것처럼, 브라우저도 크롬(구글), 사파리(애플), 삼성인터넷 등 여러 종류가 있어요. 어떤 걸 써도 같은 도로(인터넷)를 달리고, 같은 웹사이트에 갈 수 있어요.</p>
-        </div>
-        <div class="key-box">
-          <p>💡 폰에서 인터넷 검색할 때 여는 앱이 바로 브라우저예요. "인터넷" 앱이라고 불러도 돼요.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <div class="sum-left">
-          <div class="sum-icon">📍</div>
-          <div class="sum-text">
-            <strong>URL이란?</strong>
-            <span>웹사이트의 주소</span>
-          </div>
-        </div>
-        <span class="chevron">▼</span>
-      </summary>
-      <div class="detail-body">
-        <div class="analogy-card">
-          <div class="analogy-side">
-            <div class="big">📍</div>
-            <div class="name">URL</div>
-            <div class="desc">naver.com, kakao.com</div>
-          </div>
-          <div class="analogy-eq">=</div>
-          <div class="analogy-side real">
-            <div class="big">🗺️</div>
-            <div class="name">주소</div>
-            <div class="desc">서울시 강남구 ○○로</div>
-          </div>
-        </div>
-        <div class="why-box">
-          <div class="why-label">📌 왜 www.naver.com 같은 게 필요한가요?</div>
-          <p>내비게이션에 주소를 넣어야 찾아갈 수 있듯이, 브라우저에도 가고 싶은 웹사이트의 주소(URL)를 입력해야 해요. 주소를 모르면 검색창에 이름을 치면 내비게이션이 찾아주는 것처럼 구글·네이버가 찾아줘요.</p>
-        </div>
-      </div>
-    </details>
+    <div class="keypoint">💡 같은 네이버도 두 가지로 열 수 있어요. 앱(설치)으로 열면 주소창 없음. 브라우저로 열면 주소창 있음. 내용은 비슷해요.</div>
   </div>
+</div>
 
+<!-- Ch4: 카카오·네이버 -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">4</div>
+    <div class="ch-title">카카오·네이버의 정체</div>
+  </div>
+  <div class="ch-body">
+    <p>"카카오톡 하다가 인터넷이 끊겼어요" — 이 말, 어색하지 않죠? 그런데 이 말은 사실 이렇게 고쳐야 해요: "카카오톡 하다가 와이파이가 끊겼어요."</p>
+    <p>카카오톡은 인터넷이 아니에요. <strong>인터넷(도로)을 이용하는 가게</strong>예요. 도로가 없으면 가게도 문을 열 수 없어요. 그래서 와이파이가 끊기면 카카오톡도 안 되는 거예요.</p>
+    <p>네이버도 마찬가지예요. 검색·뉴스·쇼핑을 전문으로 하는 회사가 만든 앱이에요. 인터넷 회사가 아니에요. 인터넷(도로)을 빌려서 서비스를 운영하는 거예요.</p>
 
-  <!-- ═══════════════════════════════════
-       그룹 4: 내 자리 지키기
-  ════════════════════════════════════ -->
-  <p class="section-label">4단계 — 내 자리 만들고 지키기</p>
-
-  <div class="group group--safe">
-    <div class="group-header">
-      <span class="group-icon">🔑</span>
-      <div>
-        <h2>로그인 · 업데이트</h2>
-        <p>왜 해야 하는지 이해해요</p>
+    <div class="demo">
+      <div class="demo-label">📌 세 가지를 헷갈리지 마세요</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:#fff8e1;border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+          <span style="font-size:2rem">💬</span>
+          <div>
+            <strong style="font-size:1rem;color:#1a202c">카카오톡</strong>
+            <p style="font-size:.88rem;color:#4a5568;margin-top:3px;margin-bottom:0">메시지·전화·송금 전문 <em>가게</em>. 인터넷을 이용하지만 인터넷 자체는 아니에요.</p>
+          </div>
+        </div>
+        <div style="background:#e8f5e9;border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+          <span style="font-size:2rem">🔍</span>
+          <div>
+            <strong style="font-size:1rem;color:#1a202c">네이버</strong>
+            <p style="font-size:.88rem;color:#4a5568;margin-top:3px;margin-bottom:0">검색·뉴스·쇼핑 전문 <em>가게</em>. 인터넷 회사가 아니라 인터넷을 이용하는 회사예요.</p>
+          </div>
+        </div>
+        <div style="background:#e3f2fd;border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+          <span style="font-size:2rem">🛣️</span>
+          <div>
+            <strong style="font-size:1rem;color:#1a202c">인터넷</strong>
+            <p style="font-size:.88rem;color:#4a5568;margin-top:3px;margin-bottom:0">카카오도 네이버도 모두 이 <em>도로</em> 위를 달려요. 도로 자체는 어떤 회사도 아니에요.</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <details>
-      <summary>
-        <div class="sum-left">
-          <div class="sum-icon">🪪</div>
-          <div class="sum-text">
-            <strong>로그인은 왜 하나요?</strong>
-            <span>디지털 세상의 이름표·열쇠</span>
-          </div>
-        </div>
-        <span class="chevron">▼</span>
-      </summary>
-      <div class="detail-body">
-        <div class="analogy-card">
-          <div class="analogy-side">
-            <div class="big">🪪</div>
-            <div class="name">로그인</div>
-            <div class="desc">아이디 + 비밀번호</div>
-          </div>
-          <div class="analogy-eq">=</div>
-          <div class="analogy-side real">
-            <div class="big">🏠</div>
-            <div class="name">집 열쇠 + 이름표</div>
-            <div class="desc">내 것임을 증명</div>
-          </div>
-        </div>
-        <div class="why-box">
-          <div class="why-label">📌 왜 로그인을 해야 하나요?</div>
-          <p>가게에 내 물건을 맡겨두고 다음에 다시 찾으려면, 가게 주인이 "이 물건이 당신 거 맞아요?"를 확인해야 해요. 로그인이 그 확인 과정이에요. 로그인 안 하면 내 물건(사진, 대화, 설정)을 가게가 알아볼 수 없어요.</p>
-        </div>
-        <div class="myth-box">
-          <div class="myth-label">❌ 흔한 오해</div>
-          <p>"로그인 안 해도 카카오톡 되던데요?" → 처음 설치할 때 이미 로그인했어요. 그 뒤로는 폰이 열쇠를 기억하고 있어서 매번 안 물어보는 것뿐이에요.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <div class="sum-left">
-          <div class="sum-icon">🔧</div>
-          <div class="sum-text">
-            <strong>업데이트는 왜 하나요?</strong>
-            <span>건물 보수공사·보안 점검</span>
-          </div>
-        </div>
-        <span class="chevron">▼</span>
-      </summary>
-      <div class="detail-body">
-        <div class="analogy-card">
-          <div class="analogy-side">
-            <div class="big">🔧</div>
-            <div class="name">업데이트</div>
-            <div class="desc">새 버전으로 교체</div>
-          </div>
-          <div class="analogy-eq">=</div>
-          <div class="analogy-side real">
-            <div class="big">🏗️</div>
-            <div class="name">건물 보수공사</div>
-            <div class="desc">더 안전하게 고치기</div>
-          </div>
-        </div>
-        <div class="why-box">
-          <div class="why-label">📌 왜 자꾸 업데이트 알림이 오나요?</div>
-          <p>건물에서 불편한 부분이 발견되면 고쳐야 해요. 특히 도둑이 들어올 수 있는 구멍(보안 취약점)이 발견되면 빨리 막아야 해요. 업데이트를 미루면 그 구멍이 열린 채로 있는 거예요.</p>
-        </div>
-        <div class="key-box">
-          <p>💡 "업데이트 나중에"를 너무 오래 미루지 마세요. 특히 보안 업데이트는 빨리 하는 게 좋아요.</p>
-        </div>
-      </div>
-    </details>
+    <div class="myth"><strong>❌ 흔한 오해</strong>"카카오톡은 통신사가 만든 건가요?" → 아니에요. 카카오라는 회사가 만든 앱이에요. KT·SKT·LGU+는 인터넷 도로를 깔아주는 회사고, 카카오는 그 도로 위를 달리는 가게예요.</div>
+    <div class="keypoint">💡 카카오 = 메시지 가게 / 네이버 = 검색 가게 / 인터넷 = 두 가게 모두가 달리는 도로. 셋은 완전히 달라요.</div>
   </div>
+</div>
 
-  <p style="text-align:center; color:#718096; font-size:0.95rem; margin-top:32px; line-height:1.7;">
-    🎉 이 비유를 기억하면<br>
-    QR코드, 키오스크, 온라인 쇼핑도<br>
-    다 이해할 수 있어요!
-  </p>
+<!-- ─────────────────────────────────── -->
+<p class="section-label">3단계 — 바깥 세상으로 나가는 길</p>
 
+<!-- Ch5: 인터넷 -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">5</div>
+    <div class="ch-title">인터넷이란?</div>
+  </div>
+  <div class="ch-body">
+    <p>인터넷은 <strong>전 세계 모든 컴퓨터와 스마트폰을 연결하는 보이지 않는 도로망</strong>이에요. 이 도로 위로 사진, 동영상, 메시지, 정보가 빛의 속도로 오가고 있어요.</p>
+    <p>와이파이(WiFi)와 데이터(LTE·5G)는 이 도로에 올라타는 두 가지 방법이에요. 집에서는 와이파이(집 앞 진입로), 밖에서는 데이터(이동식 진입로)로 연결해요. 어느 쪽이든 올라타면 같은 도로예요.</p>
+    <p>"인터넷이 느려요"라는 말은 도로가 막혔다는 뜻이에요. "인터넷이 안 돼요"는 도로에 아예 진입을 못 했다는 뜻이고요. 도로가 막히면 카카오톡도, 유튜브도, 네이버도 전부 안 돼요.</p>
+
+    <div class="demo">
+      <div class="demo-label">📡 내 폰이 어떻게 인터넷에 연결되나요?</div>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center">
+        <div style="text-align:center">
+          <div style="font-size:2rem;margin-bottom:4px">📱</div>
+          <div style="font-size:.8rem;font-weight:700;color:#2d3748">내 스마트폰</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:.75rem;color:#718096;margin-bottom:2px">와이파이 또는<br>LTE·5G</div>
+          <div style="font-size:1.2rem">⟶</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:2rem;margin-bottom:4px">🛣️</div>
+          <div style="font-size:.8rem;font-weight:700;color:#2d3748">인터넷(도로)</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:#e3f2fd;border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:1.5rem;margin-bottom:4px">📶</div>
+          <strong style="font-size:.85rem;color:#0d47a1">와이파이</strong>
+          <p style="font-size:.75rem;color:#1565c0;margin-top:3px">집·카페에 있는 무선 신호.<br>보통 무제한·빠름.</p>
+        </div>
+        <div style="background:#f3e5f5;border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:1.5rem;margin-bottom:4px">🗼</div>
+          <strong style="font-size:.85rem;color:#6a1b9a">데이터 (LTE·5G)</strong>
+          <p style="font-size:.75rem;color:#7b1fa2;margin-top:3px">통신사 기지국 신호.<br>어디서나 됨. 요금 주의.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="keypoint">💡 와이파이가 안 잡힐 땐 데이터로 자동 연결돼요. 상단에 📶가 없고 LTE나 5G가 보이면 데이터 쓰는 거예요.</div>
+  </div>
+</div>
+
+<!-- Ch6: 브라우저 -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">6</div>
+    <div class="ch-title">브라우저란?</div>
+  </div>
+  <div class="ch-body">
+    <p>브라우저는 <strong>인터넷 도로를 달리는 자동차</strong>예요. 자동차 없이는 도로를 달릴 수 없듯이, 브라우저 없이는 웹사이트에 갈 수 없어요.</p>
+    <p>브라우저의 종류는 여러 가지예요 — 크롬(Chrome), 사파리(Safari), 삼성인터넷, 네이버 앱의 내장 브라우저 등. 어떤 걸 써도 같은 도로(인터넷)를 달리고, 같은 웹사이트에 갈 수 있어요.</p>
+    <p>브라우저를 열면 위에 긴 주소창이 있어요. 여기에 가고 싶은 주소(naver.com)를 넣거나, 그냥 검색어("날씨", "맛집")를 써도 알아서 찾아줘요. 이게 브라우저예요.</p>
+
+    <div class="demo">
+      <div class="demo-label">🌐 실제 브라우저가 이렇게 생겼어요 — 주소창에 써보세요</div>
+      <div style="background:#fff;border-radius:14px;overflow:hidden;border:2px solid #e2e8f0;box-shadow:0 4px 16px rgba(0,0,0,.1)">
+        <div style="background:#f1f3f4;padding:10px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #ddd">
+          <span style="font-size:1rem;cursor:pointer" title="뒤로">‹</span>
+          <span style="font-size:1rem;cursor:pointer" title="앞으로">›</span>
+          <div style="flex:1;background:#fff;border:1px solid #ddd;border-radius:20px;padding:7px 12px;display:flex;align-items:center;gap:6px;font-size:.85rem">
+            <span style="color:#0a0;font-size:.75rem">🔒</span>
+            <input id="fake-url" style="border:none;outline:none;flex:1;font-size:.85rem;color:#333;font-family:inherit" value="naver.com" onkeydown="if(event.key==='Enter')navigateFake(this.value)" />
+            <span style="font-size:.78rem;color:#888;cursor:pointer" onclick="navigateFake(document.getElementById('fake-url').value)">이동</span>
+          </div>
+          <span style="font-size:.9rem;cursor:pointer">⟳</span>
+        </div>
+        <div id="browser-content" style="padding:16px;min-height:180px;background:#fff">
+          <div style="text-align:center;padding:10px 0">
+            <div style="font-size:1.5rem;font-weight:800;color:#03c75a;margin-bottom:10px">NAVER</div>
+            <div style="background:#f5f5f5;border-radius:20px;padding:10px 16px;display:flex;align-items:center;gap:8px;font-size:.85rem;color:#999;border:1px solid #ddd">
+              <span>🔍</span><span>검색어를 입력하세요</span>
+            </div>
+            <div style="display:flex;justify-content:center;gap:10px;margin-top:12px;font-size:.78rem;color:#555">
+              <span>뉴스</span><span>|</span><span>쇼핑</span><span>|</span><span>지도</span><span>|</span><span>블로그</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:.8rem;color:#718096;margin-top:8px;text-align:center">주소창에 "kakao.com" 또는 "youtube.com"을 써보세요</p>
+    </div>
+
+    <div class="keypoint">💡 삼성폰의 '인터넷' 앱, 아이폰의 '사파리' — 이름은 달라도 둘 다 브라우저예요. 같은 역할을 해요.</div>
+  </div>
+</div>
+
+<!-- Ch7: URL -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">7</div>
+    <div class="ch-title">URL이란?</div>
+  </div>
+  <div class="ch-body">
+    <p>웹사이트는 인터넷 도로 위 어딘가에 있는 건물이에요. 그 건물의 주소가 URL이에요. 예를 들어 <strong>naver.com</strong>은 네이버 웹사이트의 주소예요.</p>
+    <p>실제 URL은 <code style="background:#f7fafc;padding:2px 6px;border-radius:4px;font-size:.9rem">https://www.naver.com</code> 처럼 길게 생겼어요. 복잡해 보이지만 각 부분이 뜻하는 게 있어요. 직접 눌러서 확인해보세요.</p>
+    <p>외울 필요는 없어요. 검색창에 '네이버'라고 치면 알아서 연결해주거든요. 하지만 주소창에 어떤 주소가 있는지 볼 줄은 알아야 해요. 내가 지금 어떤 웹사이트에 있는지 알 수 있으니까요.</p>
+
+    <div class="demo">
+      <div class="demo-label">🔍 각 부분을 눌러보세요 — 무슨 뜻인지 알려줘요</div>
+      <div class="url-display">
+        <span class="url-part up-scheme" onclick="pickUrl('scheme')">https://</span>
+        <span class="url-part up-sub" onclick="pickUrl('sub')">www.</span>
+        <span class="url-part up-domain" onclick="pickUrl('domain')">naver</span>
+        <span class="url-part up-tld" onclick="pickUrl('tld')">.com</span>
+        <span class="url-part up-path" onclick="pickUrl('path'">/news</span>
+      </div>
+      <div class="url-desc" id="url-desc">👆 위의 주소 중 하나를 눌러보세요</div>
+    </div>
+
+    <div class="myth"><strong>❌ 흔한 오해</strong>"주소창에 이상한 게 뜨면 무서워요" → 주소창을 확인하는 건 아주 좋은 습관이에요! 🔒 표시가 있고 알 수 있는 이름(naver.com, kakao.com)이면 안전해요. 모르는 주소가 뜨면 닫아도 돼요.</div>
+    <div class="keypoint">💡 https:// 는 안전한 길 표시. naver는 가게 이름. .com은 가게 종류. /news는 가게 안의 코너. 이렇게 기억하세요.</div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────── -->
+<p class="section-label">4단계 — 내 자리 만들고 지키기</p>
+
+<!-- Ch8: 로그인 -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">8</div>
+    <div class="ch-title">로그인은 왜 하나요?</div>
+  </div>
+  <div class="ch-body">
+    <p>카카오톡이나 네이버를 쓸 때 "로그인하세요"라는 말이 나오죠? <strong>로그인은 '저 여기 왔어요, 저 ○○○이에요'를 알려주는 과정</strong>이에요.</p>
+    <p>로그인이 필요한 이유는 내 정보를 지키기 위해서예요. 카카오톡에 로그인해야 내 대화 내역이 보이고, 배달 앱에 로그인해야 내 주소와 카드 정보가 저장돼요. 로그인 없이는 가게 입장에서 '누군지 모르는 손님'이에요.</p>
+    <p>비밀번호를 잊어버리셨다고요? 괜찮아요. 거의 모든 앱에 '비밀번호 찾기'가 있어요. 가입 때 쓴 전화번호나 이메일로 인증하면 다시 설정할 수 있어요.</p>
+
+    <div class="demo">
+      <div class="demo-label">🔑 로그인 화면이 이렇게 생겼어요 — 직접 입력해보세요</div>
+      <div class="login-form">
+        <div style="text-align:center;margin-bottom:16px">
+          <div style="font-size:1.5rem;font-weight:800;color:#03c75a">NAVER</div>
+          <div style="font-size:.82rem;color:#718096;margin-top:4px">로그인하면 내 계정으로 이용할 수 있어요</div>
+        </div>
+        <input type="text" id="login-id" placeholder="아이디를 입력하세요" />
+        <input type="password" id="login-pw" placeholder="비밀번호를 입력하세요" />
+        <button class="login-btn" onclick="doLogin()">로그인</button>
+        <div style="display:flex;justify-content:center;gap:16px;margin-top:10px;font-size:.82rem;color:#4B5FA8">
+          <span style="cursor:pointer">아이디 찾기</span>
+          <span>|</span>
+          <span style="cursor:pointer">비밀번호 찾기</span>
+        </div>
+        <div class="login-result" id="login-result"></div>
+      </div>
+    </div>
+
+    <div class="whybox"><strong>📌 비밀번호 보안 팁</strong>생년월일(예: 1951년→ 1951)은 누구나 쉽게 추측할 수 있어요. 숫자+영문 조합이 좋아요. 기억하기 어려우면 종이에 적어서 지갑 안에 보관하는 것도 방법이에요.</div>
+    <div class="keypoint">💡 처음 설치 때 로그인 한 번만 하면 폰이 기억해요. 매번 입력 안 해도 돼요. 다만 로그아웃하면 다시 입력해야 해요.</div>
+  </div>
+</div>
+
+<!-- Ch9: 업데이트 -->
+<div class="chapter">
+  <div class="ch-header">
+    <div class="ch-num">9</div>
+    <div class="ch-title">업데이트는 왜 해야 하나요?</div>
+  </div>
+  <div class="ch-body">
+    <p>업데이트 알림이 자꾸 뜨면 귀찮게 느껴지죠. 심지어 "업데이트했더니 생김새가 바뀌어서 불편해요"라는 분도 계세요. 그 마음, 충분히 이해해요.</p>
+    <p>하지만 업데이트를 너무 미루면 위험해질 수 있어요. 이유는 두 가지예요. 첫째, <strong>더 편하고 빠르게 만들기 위해서</strong>예요. 둘째 — 이게 더 중요한데 — <strong>보안 구멍을 막기 위해서</strong>예요. 해커들이 앱이나 폰의 취약점을 노리는데, 업데이트가 그 구멍을 막아줘요.</p>
+    <p>건물로 비유하면, 비가 새는 지붕을 고치는 것(기능 개선)이기도 하고, 도둑이 들어올 수 있는 창문을 잠그는 것(보안 업데이트)이기도 해요.</p>
+
+    <div class="demo">
+      <div class="demo-label">🔔 이런 알림이 뜨면 어떻게 할까요?</div>
+      <div class="update-notif">
+        <div class="icon">⚙️</div>
+        <div class="update-notif-text">
+          <strong>소프트웨어 업데이트 가능</strong>
+          <span>보안 패치 및 새 기능이 포함되어 있습니다</span>
+          <div class="update-bar">
+            <button class="upd-later" onclick="updateChoice('later')">나중에</button>
+            <button class="upd-now" onclick="updateChoice('now')">지금 업데이트</button>
+          </div>
+        </div>
+      </div>
+      <div class="update-result" id="update-result"></div>
+      <div class="update-demo" style="margin-top:12px">
+        <div class="update-card update-before">
+          <h4>🔴 업데이트 전</h4>
+          <ul>
+            <li>보안 구멍이 열려있어요</li>
+            <li>가끔 앱이 느려요</li>
+            <li>오래된 버그가 있을 수 있어요</li>
+          </ul>
+        </div>
+        <div class="update-card update-after">
+          <h4>🟢 업데이트 후</h4>
+          <ul>
+            <li>보안 구멍이 막혀요</li>
+            <li>더 빠르게 작동해요</li>
+            <li>새 기능을 쓸 수 있어요</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="keypoint">💡 "지금 업데이트" 버튼을 눌러도 내 사진·연락처·카카오톡 대화는 사라지지 않아요. 업데이트는 앱을 고치는 것이지, 내 자료를 지우는 게 아니에요.</div>
+  </div>
+</div>
+
+<!-- 마무리 -->
+<div class="outro">
+  <h3>🎉 이제 지도가 생겼어요!</h3>
+  <p>스마트폰 = 건물<br>앱 = 가게<br>인터넷 = 도로<br>브라우저 = 자동차<br>URL = 주소<br><br>이 비유 하나로 QR코드, 키오스크,<br>온라인 쇼핑까지 다 이해할 수 있어요.</p>
+  <a href="index.html">다음 강의 보러 가기 →</a>
+</div>
+
+<script>
+// 홈 화면 데모
+function showApp(msg){document.getElementById('app-msg').textContent=msg}
+
+// 앱 vs 웹 토글
+function switchView(mode,btn){
+  document.querySelectorAll('.ttab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('v-app').style.display=mode==='app'?'block':'none';
+  document.getElementById('v-web').style.display=mode==='web'?'block':'none';
+}
+
+// 브라우저 데모
+function navigateFake(url){
+  var content=document.getElementById('browser-content');
+  var u=url.toLowerCase().replace('https://','').replace('http://','').replace('www.','');
+  var pages={
+    'naver.com':'<div style="text-align:center;padding:10px 0"><div style="font-size:1.5rem;font-weight:800;color:#03c75a;margin-bottom:10px">NAVER</div><div style="background:#f5f5f5;border-radius:20px;padding:10px 16px;font-size:.85rem;color:#999;border:1px solid #ddd">🔍 검색어를 입력하세요</div><div style="display:flex;justify-content:center;gap:10px;margin-top:12px;font-size:.78rem;color:#555"><span>뉴스</span><span>|</span><span>쇼핑</span><span>|</span><span>지도</span><span>|</span><span>블로그</span></div></div>',
+    'kakao.com':'<div style="text-align:center;padding:16px 0"><div style="font-size:1.5rem;font-weight:800;color:#3c1e1e;background:#fee500;display:inline-block;padding:4px 12px;border-radius:8px;margin-bottom:12px">kakao</div><p style="font-size:.85rem;color:#555">카카오 서비스 모음<br>카카오톡 · 카카오맵 · 카카오페이</p></div>',
+    'youtube.com':'<div style="text-align:center;padding:16px 0"><div style="font-size:1.4rem;font-weight:800;color:#ff0000;margin-bottom:10px">▶ YouTube</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="background:#f5f5f5;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#666">영상 추천</div><div style="background:#f5f5f5;border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#666">영상 추천</div></div></div>'
+  };
+  var html=pages[u]||'<div style="padding:20px;text-align:center;color:#666;font-size:.9rem">🌐 <strong>'+url+'</strong><br>페이지를 로드하는 중...</div>';
+  content.innerHTML=html;
+  document.getElementById('fake-url').value=u;
+}
+
+// URL 분해
+var urlInfo={
+  scheme:{color:'#6200ea',text:'<strong style="color:#6200ea">https://</strong> — 보안 연결을 뜻해요. 자물쇠가 잠긴 안전한 도로예요. http:// (s 없음)는 보안이 없는 도로예요. 개인정보 입력 전 꼭 확인하세요.'},
+  sub:{color:'#0277bd',text:'<strong style="color:#0277bd">www.</strong> — "World Wide Web"의 약자예요. 웹사이트라는 표시인데, 요즘은 없어도 잘 접속돼요.'},
+  domain:{color:'#e65100',text:'<strong style="color:#e65100">naver</strong> — 가게(웹사이트) 이름이에요. google, kakao, daum 등 회사마다 고유한 이름을 가져요.'},
+  tld:{color:'#2e7d32',text:'<strong style="color:#2e7d32">.com</strong> — 가게의 종류예요. .com은 국제 일반 기업, .co.kr은 한국 기업, .org는 단체, .go.kr은 한국 정부기관이에요.'},
+  path:{color:'#ad1457',text:'<strong style="color:#ad1457">/news</strong> — 가게 안의 코너예요. /news는 뉴스 코너, /shopping은 쇼핑 코너로 이동하는 길이에요.'}
+};
+function pickUrl(k){
+  document.querySelectorAll('.url-part').forEach(el=>el.classList.remove('picked'));
+  event.target.classList.add('picked');
+  document.getElementById('url-desc').innerHTML=urlInfo[k].text;
+}
+
+// 로그인 데모
+function doLogin(){
+  var id=document.getElementById('login-id').value.trim();
+  var pw=document.getElementById('login-pw').value.trim();
+  var r=document.getElementById('login-result');
+  if(!id&&!pw){r.style.background='#fff5f5';r.style.color='#c53030';r.textContent='⚠️ 아이디와 비밀번호를 모두 입력해주세요.';return}
+  if(!id){r.style.background='#fff5f5';r.style.color='#c53030';r.textContent='⚠️ 아이디를 입력해주세요.';return}
+  if(!pw){r.style.background='#fff5f5';r.style.color='#c53030';r.textContent='⚠️ 비밀번호를 입력해주세요.';return}
+  r.style.background='#f0fff4';r.style.color='#276749';
+  r.textContent='✅ 로그인 성공! 이제 '+id+'님의 계정으로 들어왔어요.';
+}
+
+// 업데이트 선택
+function updateChoice(ch){
+  var r=document.getElementById('update-result');
+  if(ch==='now'){r.textContent='✅ 좋은 선택이에요! 업데이트 중에는 폰을 잠깐 두세요. 완료되면 자동으로 재시작돼요.';r.style.color='#276749'}
+  else{r.textContent='⏰ 나중에 꼭 업데이트해주세요! 너무 오래 미루면 보안에 취약해질 수 있어요.';r.style.color='#c05621'}
+}
+</script>
 </body>
 </html>
