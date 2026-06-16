@@ -14,7 +14,11 @@ html,body{height:100%;font-family:'Noto Sans KR','맑은 고딕',sans-serif;back
 
 /* LEFT */
 .lpanel{background:#161b27;border-right:1px solid #21262d;overflow-y:auto;display:flex;flex-direction:column}
-.lp-hd{padding:14px 16px 10px;border-bottom:1px solid #21262d;font-size:.8rem;font-weight:800;color:#8b949e;letter-spacing:.04em;flex-shrink:0}
+.lp-hd{padding:14px 16px 12px;border-bottom:1px solid #21262d;font-size:.95rem;font-weight:800;color:#e2e8f0;letter-spacing:.01em;flex-shrink:0}
+.lp-sub{font-size:.74rem;font-weight:500;color:#8b949e;margin-top:6px;line-height:1.5}
+.grp-hd{display:flex;align-items:center;gap:9px;padding:13px 16px 7px;user-select:none}
+.grp-title{font-size:.9rem;font-weight:800;color:#79c0ff;letter-spacing:.02em}
+.grp-count{font-size:.72rem;font-weight:700;color:#6e7681;margin-left:auto}
 .phase{margin-bottom:6px}
 .phase-hd{display:flex;align-items:center;gap:10px;padding:12px 16px 7px;user-select:none}
 .pbadge{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:900;flex-shrink:0}
@@ -294,7 +298,7 @@ html,body{height:100%;font-family:'Noto Sans KR','맑은 고딕',sans-serif;back
 
 <!-- LEFT PANEL -->
 <div class="lpanel">
-  <div class="lp-hd">체험 순서 체크리스트</div>
+  <div class="lp-hd">📋 해볼 수 있는 기능<div class="lp-sub">순서 상관없이 자유롭게 눌러보세요. 해본 것은 ✓ 표시돼요.</div></div>
   <div id="phase-list"></div>
 </div>
 
@@ -630,49 +634,49 @@ function startClock(){
   tick();setInterval(tick,15000);
 }
 
-// ════════ PHASE CHECKLIST ════════
+// ════════ FEATURE LIST (no gating — free exploration) ════════
 function renderPhases(){
-  var firstIncomplete=PHASES.find(function(p){return !p.items.every(function(i){return done.has(i.id);});});
-  var activePhaseId=firstIncomplete?firstIncomplete.id:0;
   var html='';
   PHASES.forEach(function(ph){
-    var phDone=ph.items.every(function(i){return done.has(i.id);});
-    var phActive=ph.id===activePhaseId;
-    var phLocked=!phDone && !phActive;
-    // Completed phases collapse into a small "done" chip — items disappear
-    if(phDone){
-      html+='<div class="phase"><div class="phase-done-chip">✅ '+ph.emoji+' '+ph.title+' 완료!</div></div>';
-      return;
-    }
     var doneCount=ph.items.filter(function(i){return done.has(i.id);}).length;
-    var pct=Math.round(doneCount/ph.items.length*100);
-    var cls=phActive?'ph-active':'ph-locked';
-    html+='<div class="phase"><div class="phase-hd '+cls+'"><div class="pbadge">'+ph.id+'</div><span class="ptitle">'+ph.emoji+' '+ph.title+'</span>'+(phLocked?'<span class="plock">🔒</span>':'')+'</div>';
-    if(!phLocked){
-      html+='<div class="phase-prog"><div class="phase-prog-fill" style="width:'+pct+'%"></div></div>';
-      ph.items.forEach(function(it){
-        var isDone=done.has(it.id);
-        var isTip=it.type==='tip';
-        var cls2='ci'+(isDone?' ci-done':isTip?' ci-tip':'');
-        var boxIcon=isDone?'✓':isTip?'💡':'';
-        html+='<div class="'+cls2+'" onclick="ciClick(\''+it.id+'\')">'
-          +'<div class="ci-box">'+boxIcon+'</div>'
-          +'<div class="ci-lbl">'+it.lbl+'</div></div>';
-      });
-    }
+    html+='<div class="phase"><div class="grp-hd"><span class="grp-title">'+ph.emoji+' '+ph.title+'</span><span class="grp-count">'+doneCount+'/'+ph.items.length+'</span></div>';
+    ph.items.forEach(function(it){
+      var isDone=done.has(it.id);
+      var isTip=it.type==='tip';
+      var cls2='ci'+(isDone?' ci-done':isTip?' ci-tip':'');
+      var boxIcon=isDone?'✓':isTip?'💡':'';
+      html+='<div class="'+cls2+'" onclick="ciClick(\''+it.id+'\')">'
+        +'<div class="ci-box">'+boxIcon+'</div>'
+        +'<div class="ci-lbl">'+it.lbl+'</div></div>';
+    });
     html+='</div>';
   });
   document.getElementById('phase-list').innerHTML=html;
 }
+// Hints shown when an ACTION item is tapped (guides where the real button is)
+var ACTION_HINTS={
+  power:'오른쪽 옆면 전원 버튼(파란 불빛)을 꾹 누르면 켜고 끌 수 있어요.',
+  boot:'전원을 켜면 SAMSUNG 로고가 뜨며 자동으로 부팅돼요.',
+  unlock:'잠금화면에서 화면을 아래에서 위로 밀어 올려보세요.',
+  shade:'화면 맨 위(상태표시줄)를 손가락으로 잡고 아래로 끌어내려 보세요.',
+  'wifi-tog':'빠른 설정창을 내린 뒤 "Wi-Fi" 타일을 눌러 켜고 꺼보세요.',
+  'vol-adj':'왼쪽 옆면 볼륨 버튼을 누르거나, 빠른 설정창의 음량 막대를 움직여보세요.',
+  'bright-adj':'빠른 설정창의 밝기(🔅) 막대를 좌우로 움직여보세요.',
+  settings:'홈 화면에서 ⚙️ 설정 앱을 눌러 들어가보세요.',
+  'store-open':'홈 화면에서 ▶️ Play 스토어를 눌러보세요.',
+  'kakao-inst':'Play 스토어에서 카카오톡 옆 "설치" 버튼을 눌러보세요.',
+  'yt-inst':'Play 스토어에서 YouTube 옆 "설치" 버튼을 눌러보세요.',
+  'nv-inst':'Play 스토어에서 네이버 옆 "설치" 버튼을 눌러보세요.',
+  'kakao-login':'카카오톡을 설치한 뒤 홈에서 💛 아이콘을 눌러 로그인해보세요.'
+};
 function ciClick(id){
-  // Find item
   var item=null;
   PHASES.forEach(function(p){p.items.forEach(function(it){if(it.id===id)item=it;});});
-  if(!item||done.has(id))return;
-  // Check if phase is active
-  var phIdx=PHASES.findIndex(function(p){return p.items.some(function(i){return i.id===id;});});
-  if(phIdx>0){var prevPh=PHASES[phIdx-1];if(!prevPh.items.every(function(i){return done.has(i.id);}))return;}
-  if(item.type==='tip') showPopup(item.popup, id);
+  if(!item)return;
+  if(item.type==='tip'){ showPopup(item.popup, id); return; }
+  // Action item tapped → guide the user to the real button (re-checkable anytime)
+  var hint=ACTION_HINTS[id]||'폰에서 직접 눌러보세요!';
+  rb('tip','👉 '+item.lbl,hint+(done.has(id)?'\n\n(이미 해보셨어요 ✓ — 다시 해봐도 좋아요!)':''));
 }
 function checkItem(id,msg,det){
   if(done.has(id))return;
@@ -696,7 +700,7 @@ function showPopup(key, cbId){
   document.getElementById('pop-body').textContent=p.body;
   document.getElementById('pop-btn').textContent='✓ 알겠어요!';
   document.getElementById('pop').classList.add('on');
-  rb('tip','💡 팁: '+p.title,'왼쪽 체크리스트에서 팁 항목을 누르면 팝업으로 설명이 나와요.');
+  rb('tip','💡 '+p.title,'왼쪽 목록의 💡 항목은 언제든 다시 눌러 설명을 볼 수 있어요.');
 }
 function closePopup(){
   document.getElementById('pop').classList.remove('on');
@@ -720,16 +724,29 @@ function navBack(){
 }
 
 // ════════ HW BUTTONS ════════
+var bootedOnce=false;
 function hwPower(){
+  // Power works ANYTIME — closes any overlay first, then toggles on/off
   if(curscr==='off'){
     document.getElementById('pglow').style.display='none';
-    showScr('boot');checkItem('power','전원 버튼을 눌러 폰을 켰어요!');
-    rb('info','⏳ 부팅 중...','SAMSUNG 로고가 나왔어요. 잠시 기다려요.');
-    setTimeout(function(){showScr('lock');checkItem('boot','부팅이 완료됐어요!');
-      rb('ok','부팅 완료!','잠금화면이에요. 화면을 아래에서 위로 밀어 잠금을 해제해보세요.');},2400);
+    if(!bootedOnce){
+      // First power-on: full boot animation → lock screen
+      showScr('boot');checkItem('power','전원 버튼을 눌러 폰을 켰어요!');
+      rb('info','⏳ 부팅 중...','SAMSUNG 로고가 나왔어요. 잠시 기다려요.');
+      setTimeout(function(){bootedOnce=true;showScr('lock');checkItem('boot','부팅이 완료됐어요!');
+        rb('ok','부팅 완료!','잠금화면이에요. 화면을 아래에서 위로 밀어 잠금을 해제해보세요.');},2400);
+    } else {
+      // Already booted before: just wake the screen to lock
+      showScr('lock');checkItem('power','전원 버튼으로 화면을 다시 켰어요!');
+      rb('ok','🔆 화면 켜짐','전원 버튼을 짧게 누르면 화면이 켜지고 꺼져요. 위로 밀어 잠금을 해제하세요.');
+    }
   } else {
+    // Turn OFF from anywhere (home, app, lock, even with shade/popup open)
+    closeShade();
+    document.getElementById('pop').classList.remove('on');
     showScr('off');document.getElementById('pglow').style.display='block';
-    rb('info','화면이 꺼졌어요','전원 버튼을 다시 누르면 켜져요.');
+    checkItem('power','전원 버튼으로 화면을 껐어요!');
+    rb('info','🌙 화면이 꺼졌어요','어디서든 전원 버튼을 누르면 화면을 끌 수 있어요. 다시 누르면 켜져요.');
   }
 }
 function hwVol(d){
