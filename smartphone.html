@@ -189,6 +189,9 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
 .qse-en{flex:1;font-size:.85rem;color:#e7eaf0;font-weight:600}
 .qse-chk{width:22px;height:22px;border-radius:50%;border:2px solid #555;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;flex-shrink:0}
 .qse-eitem.on .qse-chk{background:#5a9eff;border-color:#5a9eff}
+.qse-move{display:flex;flex-direction:column;gap:1px;color:#7a8398;flex-shrink:0}
+.qmv{cursor:pointer;font-size:.7rem;line-height:1;padding:2px 5px;border-radius:5px}
+.qmv:active{background:rgba(255,255,255,.14);color:#fff}
 
 /* ════════ GENERIC APP SCREEN ════════ */
 .app-scr{background:#10131c}
@@ -357,6 +360,9 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
           <div class="set-row"><div class="set-ico" style="background:#43A047">🔄</div><div class="set-tx"><div class="set-nm">화면 자동 회전</div><div class="set-sb">폰을 돌리면 화면도 회전</div></div><div class="set-toggle on" id="set-rotate" onclick="settingToggle('rotate')"></div></div>
         </div>
         <div class="set-card">
+          <div class="set-row" onclick="openQSEditFromSettings()"><div class="set-ico" style="background:#5a9eff">⚡</div><div class="set-tx"><div class="set-nm">빠른 설정 버튼</div><div class="set-sb">버튼 순서 바꾸기 · 표시 편집</div></div><span style="color:#ccc">›</span></div>
+        </div>
+        <div class="set-card">
           <div class="set-row"><div class="set-ico" style="background:#00897B">🔋</div><div class="set-tx"><div class="set-nm">배터리</div><div class="set-sb">62% · 약 8시간 남음</div></div><span style="color:#ccc">›</span></div>
           <div class="set-row"><div class="set-ico" style="background:#E91E63">🖼️</div><div class="set-tx"><div class="set-nm">배경화면 및 스타일</div><div class="set-sb">배경화면 · 컬러</div></div><span style="color:#ccc">›</span></div>
           <div class="set-row"><div class="set-ico" style="background:#FB8C00">🔒</div><div class="set-tx"><div class="set-nm">잠금화면 및 보안</div><div class="set-sb">화면 잠금 · 지문</div></div><span style="color:#ccc">›</span></div>
@@ -421,7 +427,7 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
           </div>
         </div>
         <div class="qse-editor" id="qse-editor">
-          <div class="qse-eh">표시할 버튼을 선택하세요 (눌러서 켜고 끄기)</div>
+          <div class="qse-eh">▲▼ 로 순서 바꾸기 · 이름을 눌러 켜고 끄기</div>
           <div id="qse-editor-list"></div>
         </div>
         <div class="qse-row"><div><div class="qse-rt">빠른 설정창 바로 열기</div></div><div class="set-toggle" onclick="this.classList.toggle('on')"></div></div>
@@ -729,15 +735,25 @@ function toggleEye(){OS.eye=!OS.eye;
   flashToast('편안하게 화면 보기 '+(OS.eye?'켜짐 (블루라이트 감소)':'꺼짐'));}
 // ── edit screen ──
 function openQSEdit(){closeShade();OS.appStack.push('qsedit');showScr('qsedit');document.getElementById('qse-editor').classList.remove('on');}
+// reached from the Settings app → open edit screen with the arrange editor already shown
+function openQSEditFromSettings(){OS.appStack.push('qsedit');showScr('qsedit');showQSEditor();}
 function showQSEditor(){var ed=document.getElementById('qse-editor');ed.classList.add('on');renderQSEditor();ed.scrollIntoView({behavior:'smooth'});}
 function renderQSEditor(){
-  document.getElementById('qse-editor-list').innerHTML=QSTILES.map(function(t){
-    return '<div class="qse-eitem'+(t.vis?' on':'')+'" onclick="qsEditToggle(\''+t.k+'\')"><span class="qse-eic">'+t.ico+'</span><span class="qse-en">'+t.nm+'</span><span class="qse-chk">✓</span></div>';
+  document.getElementById('qse-editor-list').innerHTML=QSTILES.map(function(t,i){
+    return '<div class="qse-eitem'+(t.vis?' on':'')+'">'
+      +'<span class="qse-move"><span class="qmv" onclick="qsMove('+i+',-1)">▲</span><span class="qmv" onclick="qsMove('+i+',1)">▼</span></span>'
+      +'<span class="qse-eic">'+t.ico+'</span>'
+      +'<span class="qse-en" onclick="qsEditToggle(\''+t.k+'\')">'+t.nm+'</span>'
+      +'<span class="qse-chk" onclick="qsEditToggle(\''+t.k+'\')">✓</span></div>';
   }).join('');
 }
 function qsEditToggle(k){var vis=QSTILES.filter(function(t){return t.vis;}).length;
   QSTILES.forEach(function(t){if(t.k===k){ if(t.vis&&vis<=1){flashToast('최소 1개는 있어야 해요');return;} t.vis=!t.vis; }});
   renderQSEditor();renderQSTiles();}
+// reorder a tile (▲ up / ▼ down) — changes the order in the shade too
+function qsMove(i,dir){var j=i+dir;if(j<0||j>=QSTILES.length)return;
+  var t=QSTILES.splice(i,1)[0];QSTILES.splice(j,0,t);
+  renderQSEditor();renderQSTiles();flashToast('순서를 바꿨어요');}
 function renderQS(){
   Object.keys(OS.q).forEach(function(k){
     document.querySelectorAll('[data-qs="'+k+'"]').forEach(function(el){el.classList.toggle('on',OS.q[k]);});
