@@ -36,21 +36,89 @@
     @keyframes pulseB{0%,100%{box-shadow:0 0 0 0 rgba(56,139,253,.5)}50%{box-shadow:0 0 0 6px rgba(56,139,253,0)}}
     /* CENTER */
     .ppanel{display:flex;align-items:center;justify-content:center;background:#0d1117}
-    .phone{width:264px;height:530px;background:linear-gradient(160deg,#2c2c2e,#1c1c1e);border-radius:48px;position:relative;flex-shrink:0;box-shadow:0 0 0 1px #3a3a3c,0 0 0 3px #1c1c1e,0 30px 80px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.07)}
-    .hwb{position:absolute;border-radius:3px;cursor:pointer;transition:.1s}
-    .hwb:active{filter:brightness(1.8);transform:scale(.9)}
-    .bsilent{left:-4px;top:100px;width:4px;height:26px;background:linear-gradient(to right,#3a3a3c,#2c2c2e)}
-    .bvup{left:-4px;top:140px;width:4px;height:40px;background:linear-gradient(to right,#3a3a3c,#2c2c2e)}
-    .bvdown{left:-4px;top:192px;width:4px;height:40px;background:linear-gradient(to right,#3a3a3c,#2c2c2e)}
-    .bpower{right:-4px;top:155px;width:4px;height:56px;background:linear-gradient(to left,#3a3a3c,#2c2c2e)}
-    .pglow{position:absolute;right:-1px;top:170px;width:8px;height:8px;border-radius:50%;background:rgba(56,139,253,.5);box-shadow:0 0 10px 4px rgba(56,139,253,.3);animation:gPulse 2s infinite;pointer-events:none}
+
+    /* ═══ PHONE FRAME (Galaxy style) ═══ */
+    .phone{width:268px;height:534px;
+      background:linear-gradient(145deg,#1a1a2a 0%,#0e0e18 40%,#1c1c2c 70%,#0a0a14 100%);
+      border-radius:50px;position:relative;flex-shrink:0;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.07),
+        0 0 0 1.5px #0a0a14,
+        inset 0 0 0 1px rgba(255,255,255,.04),
+        0 0 40px 8px rgba(10,10,20,.6),
+        0 30px 80px rgba(0,0,0,.9)}
+    /* Galaxy subtle shimmer on edge */
+    .phone::before{content:'';position:absolute;inset:0;border-radius:50px;background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 40%,transparent 60%,rgba(255,255,255,.03) 100%);pointer-events:none}
+    /* HW buttons — slimmer, Galaxy-like */
+    .hwb{position:absolute;cursor:pointer;transition:.1s;border-radius:2px}
+    .hwb:active{filter:brightness(2);transform:scaleY(.96)}
+    .bvup{left:-3px;top:136px;width:3px;height:44px;background:linear-gradient(to right,rgba(255,255,255,.15),rgba(255,255,255,.05));border-radius:2px 0 0 2px}
+    .bvdown{left:-3px;top:192px;width:3px;height:44px;background:linear-gradient(to right,rgba(255,255,255,.15),rgba(255,255,255,.05));border-radius:2px 0 0 2px}
+    .bpower{right:-3px;top:158px;width:3px;height:64px;background:linear-gradient(to left,rgba(255,255,255,.15),rgba(255,255,255,.05));border-radius:0 2px 2px 0}
+    /* Power glow */
+    .pglow{position:absolute;right:-1px;top:175px;width:7px;height:7px;border-radius:50%;background:rgba(56,139,253,.6);box-shadow:0 0 8px 3px rgba(56,139,253,.4);animation:gPulse 2s infinite;pointer-events:none}
     @keyframes gPulse{0%,100%{opacity:.3}50%{opacity:1}}
-    .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:110px;height:30px;background:#1c1c1e;border-radius:0 0 20px 20px;z-index:20;display:flex;align-items:center;justify-content:center;gap:6px}
-    .cdot{width:10px;height:10px;border-radius:50%;background:#0a0a0a;border:2px solid #2a2a2a}
-    .pscreen{position:absolute;top:8px;left:7px;right:7px;bottom:8px;border-radius:40px;overflow:hidden;background:#000}
-    .homebar{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:90px;height:4px;background:rgba(255,255,255,.28);border-radius:2px;z-index:100}
-    .sbar{height:32px;padding:8px 16px 0;display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:700;color:#fff;position:absolute;top:0;left:0;right:0;z-index:50;pointer-events:none}
-    .sicons{display:flex;align-items:center;gap:3px}
+    /* Galaxy punch-hole camera — single dot, top center */
+    .phole{position:absolute;top:16px;left:50%;transform:translateX(-50%);width:11px;height:11px;border-radius:50%;background:#000;border:1.5px solid #1a1a2a;z-index:60;box-shadow:0 0 0 1.5px rgba(255,255,255,.04),inset 0 0 3px rgba(0,0,0,.8)}
+    /* Screen */
+    .pscreen{position:absolute;top:7px;left:6px;right:6px;bottom:7px;border-radius:44px;overflow:hidden;background:#000}
+    /* Home indicator */
+    .homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:88px;height:4px;background:rgba(255,255,255,.25);border-radius:2px;z-index:300}
+
+    /* Status bar */
+    .sbar{height:34px;padding:10px 18px 0;display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:700;color:#fff;position:absolute;top:0;left:0;right:0;z-index:50;cursor:default}
+    .sicons{display:flex;align-items:center;gap:4px}
+    /* Battery indicator */
+    .sbatt{display:flex;align-items:center;gap:1px;font-size:9px}
+    .sbatt-bar{width:16px;height:8px;border:1.5px solid rgba(255,255,255,.7);border-radius:2px;position:relative;margin-left:2px}
+    .sbatt-bar::after{content:'';position:absolute;right:-3px;top:50%;transform:translateY(-50%);width:2px;height:4px;background:rgba(255,255,255,.7);border-radius:0 1px 1px 0}
+    .sbatt-fill{height:100%;background:#4caf50;border-radius:1px;width:70%}
+
+    /* ═══ NOTIFICATION SHADE (One UI style) ═══ */
+    .shade{position:absolute;top:0;left:0;right:0;z-index:200;
+      background:rgba(18,18,28,.96);
+      backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+      border-radius:0 0 26px 26px;
+      transform:translateY(-105%);
+      transition:transform .38s cubic-bezier(.4,0,.2,1);
+      overflow:hidden}
+    .shade.open{transform:translateY(0)}
+    .shade-handle{width:36px;height:4px;background:rgba(255,255,255,.25);border-radius:2px;margin:8px auto 10px}
+    /* Shade top row */
+    .shade-top{display:flex;justify-content:space-between;align-items:flex-start;padding:0 18px 10px}
+    .shade-time{font-size:2.4rem;font-weight:200;color:#fff;line-height:1;letter-spacing:-.02em}
+    .shade-date-txt{font-size:.68rem;color:rgba(255,255,255,.5);margin-top:3px}
+    .shade-top-btns{display:flex;gap:10px;padding-top:4px}
+    .shade-top-btn{font-size:1.1rem;cursor:pointer;opacity:.7}
+    .shade-top-btn:hover{opacity:1}
+    /* Brightness row */
+    .shade-bright{display:flex;align-items:center;gap:8px;padding:0 16px 12px}
+    .shade-bright-ico{font-size:.85rem;opacity:.7}
+    .shade-bslider{flex:1;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:rgba(255,255,255,.25);outline:none;cursor:pointer}
+    .shade-bslider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#4fc3f7;cursor:pointer}
+    /* Quick settings grid */
+    .qs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 12px 12px}
+    .qs-tile{background:rgba(255,255,255,.07);border-radius:16px;padding:11px 8px 9px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:.15s;border:1.5px solid transparent;position:relative}
+    .qs-tile:active{transform:scale(.92)}
+    .qs-tile.on{background:rgba(79,195,247,.18);border-color:rgba(79,195,247,.45)}
+    .qs-ico{font-size:1.25rem;line-height:1}
+    .qs-lbl{font-size:.6rem;color:rgba(255,255,255,.65);font-weight:700;text-align:center}
+    .qs-tile.on .qs-lbl{color:#4fc3f7}
+    .qs-on-dot{width:5px;height:5px;border-radius:50%;background:#4fc3f7;position:absolute;top:7px;right:8px;display:none}
+    .qs-tile.on .qs-on-dot{display:block}
+    /* Notifications in shade */
+    .shade-notif-hd{font-size:.65rem;font-weight:800;color:rgba(255,255,255,.35);padding:2px 16px 7px;letter-spacing:.06em;text-transform:uppercase}
+    .shade-notifs{padding:0 10px;display:flex;flex-direction:column;gap:7px}
+    .shade-notif{background:rgba(255,255,255,.06);border-radius:16px;padding:10px 12px;display:flex;align-items:center;gap:10px}
+    .sn-ico{font-size:1.1rem}
+    .sn-app{font-size:.62rem;color:rgba(255,255,255,.45);margin-bottom:2px}
+    .sn-txt{font-size:.78rem;color:#fff;font-weight:600;line-height:1.3}
+    .shade-footer{text-align:center;padding:12px 0 6px;font-size:.62rem;color:rgba(255,255,255,.2);cursor:pointer}
+    /* Overlay to close shade */
+    .shade-overlay{position:absolute;inset:0;z-index:199;display:none}
+    .shade-overlay.on{display:block}
+
+    /* Screens */
     .scr{position:absolute;inset:0;display:none;flex-direction:column}
     .scr.on{display:flex}
     /* OFF */
@@ -60,66 +128,72 @@
     @keyframes arrA{0%,100%{opacity:.15;transform:translateX(5px)}50%{opacity:.6;transform:translateX(0)}}
     /* BOOT */
     #s-boot{background:#000;align-items:center;justify-content:center}
-    .blogos{font-size:1.8rem;font-weight:900;color:#fff;letter-spacing:.04em;opacity:0;animation:fIn .6s .3s forwards}
-    .bdots{display:flex;gap:7px;margin-top:28px;opacity:0;animation:fIn .3s .9s forwards}
+    .blogos{font-size:1.8rem;font-weight:200;color:#fff;letter-spacing:.14em;opacity:0;animation:fIn .6s .3s forwards}
+    .blogos-sub{font-size:.55rem;font-weight:400;color:rgba(255,255,255,.5);letter-spacing:.3em;margin-top:8px;opacity:0;animation:fIn .3s .6s forwards;text-transform:uppercase}
+    .bdots{display:flex;gap:7px;margin-top:32px;opacity:0;animation:fIn .3s .9s forwards}
     .bdot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.35);animation:dotB 1.2s infinite}
     .bdot:nth-child(2){animation-delay:.15s}.bdot:nth-child(3){animation-delay:.3s}
     @keyframes fIn{to{opacity:1}}
     @keyframes dotB{0%,80%,100%{transform:scale(.7);opacity:.3}40%{transform:scale(1.2);opacity:1}}
     /* LOCK */
-    #s-lock{background:linear-gradient(160deg,#1a365d,#2a4a7f 50%,#6b3a1f);overflow:hidden}
-    .ltbig{font-size:3.4rem;font-weight:200;color:#fff;text-align:center;margin-top:70px;text-shadow:0 2px 20px rgba(0,0,0,.4);letter-spacing:-.02em}
-    .ltdate{font-size:.82rem;color:rgba(255,255,255,.8);text-align:center;margin-top:5px}
-    .lnotifs{margin:22px 14px 0;display:flex;flex-direction:column;gap:8px}
-    .lnotif{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:14px;padding:11px 13px;display:flex;align-items:center;gap:9px}
+    #s-lock{background:linear-gradient(160deg,#080c1a,#0d1a35 60%,#110820);overflow:hidden}
+    /* Lock wallpaper circle decoration */
+    #s-lock::before{content:'';position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(30,60,120,.5),transparent 70%);top:-40px;right:-60px;pointer-events:none}
+    #s-lock::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(60,20,100,.4),transparent 70%);bottom:80px;left:-50px;pointer-events:none}
+    .ltbig{font-size:3.6rem;font-weight:200;color:#fff;text-align:center;margin-top:80px;text-shadow:0 2px 20px rgba(0,0,0,.4);letter-spacing:-.02em;position:relative;z-index:1}
+    .ltdate{font-size:.82rem;color:rgba(255,255,255,.7);text-align:center;margin-top:5px;position:relative;z-index:1}
+    .lnotifs{margin:24px 14px 0;display:flex;flex-direction:column;gap:8px;position:relative;z-index:1}
+    .lnotif{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);border-radius:16px;padding:11px 13px;display:flex;align-items:center;gap:9px}
     .lni{font-size:1.1rem}
-    .lna{font-size:.65rem;color:rgba(255,255,255,.65);margin-bottom:2px}
+    .lna{font-size:.65rem;color:rgba(255,255,255,.55);margin-bottom:2px}
     .lnt{font-size:.8rem;color:#fff;font-weight:600;line-height:1.3}
-    .lhint{position:absolute;bottom:44px;left:0;right:0;text-align:center}
-    .lharr{font-size:1.1rem;color:rgba(255,255,255,.7);animation:swA 1.5s infinite;display:block;margin-bottom:3px}
+    .lhint{position:absolute;bottom:42px;left:0;right:0;text-align:center;z-index:1}
+    .lharr{font-size:1.1rem;color:rgba(255,255,255,.6);animation:swA 1.5s infinite;display:block;margin-bottom:3px}
     @keyframes swA{0%,100%{transform:translateY(5px);opacity:.4}50%{transform:translateY(-3px);opacity:1}}
-    .lhtxt{font-size:.72rem;color:rgba(255,255,255,.6)}
-    /* HOME */
-    #s-home{background:linear-gradient(160deg,#1a365d,#2a4a7f 50%,#6b3a1f)}
-    .hgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 6px;padding:44px 12px 10px}
+    .lhtxt{font-size:.72rem;color:rgba(255,255,255,.5)}
+    /* HOME — Galaxy wallpaper */
+    #s-home{background:linear-gradient(135deg,#080c1a 0%,#0d1a3a 35%,#1a0d35 70%,#060812 100%)}
+    #s-home::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(40,80,200,.3),transparent 65%);top:-60px;left:-80px;pointer-events:none}
+    #s-home::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(100,30,180,.25),transparent 65%);bottom:100px;right:-60px;pointer-events:none}
+    .hgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 6px;padding:46px 12px 10px;position:relative;z-index:1}
     .aiwrap{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
-    .ai{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 3px 12px rgba(0,0,0,.4);transition:transform .1s}
+    .ai{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 3px 12px rgba(0,0,0,.5);transition:transform .1s}
     .aiwrap:active .ai{transform:scale(.86)}
-    .albl{font-size:.58rem;color:#fff;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.7);font-weight:600;max-width:50px}
-    .dock{position:absolute;bottom:18px;left:10px;right:10px;background:rgba(255,255,255,.18);backdrop-filter:blur(20px);border-radius:22px;padding:10px 6px;display:flex;justify-content:space-around}
+    .albl{font-size:.58rem;color:rgba(255,255,255,.9);text-align:center;text-shadow:0 1px 5px rgba(0,0,0,.8);font-weight:600;max-width:50px}
+    .dock{position:absolute;bottom:18px;left:10px;right:10px;background:rgba(255,255,255,.12);backdrop-filter:blur(24px);border-radius:24px;padding:10px 6px;display:flex;justify-content:space-around;z-index:1}
     /* LESSON */
-    .lhd{background:rgba(0,0,0,.85);backdrop-filter:blur(8px);padding:34px 13px 10px;display:flex;align-items:center;gap:9px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+    .lhd{background:rgba(0,0,0,.88);backdrop-filter:blur(10px);padding:34px 13px 10px;display:flex;align-items:center;gap:9px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
     .lback{color:#58a6ff;font-size:1rem;cursor:pointer;padding:2px 4px;background:none;border:none;font-family:inherit}
     .lname{color:#fff;font-size:.9rem;font-weight:700}
     .lbody{flex:1;overflow-y:auto;display:flex;flex-direction:column;min-height:0}
     /* GESTURE */
-    #s-gesture{background:#111}
+    #s-gesture{background:#0a0a14}
     .gtabs{display:flex;flex-shrink:0}
-    .gtab{flex:1;padding:9px 2px;font-size:.65rem;font-weight:800;text-align:center;color:#8b949e;border-bottom:2.5px solid transparent;cursor:pointer;background:#111;transition:.15s}
-    .gtab.on{color:#58a6ff;border-color:#58a6ff;background:#0d1b2a}
-    .gzone{margin:12px;border:2px dashed rgba(88,166,255,.35);border-radius:14px;flex:1;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.35);font-size:.8rem;text-align:center;position:relative;overflow:hidden;cursor:crosshair;min-height:130px;user-select:none;-webkit-user-select:none}
-    .gzone.ready{border-color:rgba(88,166,255,.8);background:rgba(88,166,255,.04)}
-    .ripple{position:absolute;border-radius:50%;background:rgba(88,166,255,.5);width:16px;height:16px;transform:translate(-50%,-50%) scale(0);animation:ripO .55s forwards;pointer-events:none}
+    .gtab{flex:1;padding:9px 2px;font-size:.65rem;font-weight:800;text-align:center;color:#8b949e;border-bottom:2.5px solid transparent;cursor:pointer;background:#0a0a14;transition:.15s}
+    .gtab.on{color:#4fc3f7;border-color:#4fc3f7;background:#081820}
+    .gzone{margin:12px;border:2px dashed rgba(79,195,247,.3);border-radius:14px;flex:1;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3);font-size:.8rem;text-align:center;position:relative;overflow:hidden;cursor:crosshair;min-height:130px;user-select:none;-webkit-user-select:none}
+    .gzone.ready{border-color:rgba(79,195,247,.75);background:rgba(79,195,247,.04)}
+    .ripple{position:absolute;border-radius:50%;background:rgba(79,195,247,.5);width:16px;height:16px;transform:translate(-50%,-50%) scale(0);animation:ripO .55s forwards;pointer-events:none}
     @keyframes ripO{to{transform:translate(-50%,-50%) scale(14);opacity:0}}
-    .gstat{margin:0 12px 8px;padding:9px 12px;background:#0d1b2a;border-radius:9px;font-size:.78rem;color:#58a6ff;text-align:center;min-height:34px;flex-shrink:0}
+    .gstat{margin:0 12px 8px;padding:9px 12px;background:#081820;border-radius:9px;font-size:.78rem;color:#4fc3f7;text-align:center;min-height:34px;flex-shrink:0}
     .gexp{margin:0 12px 10px;font-size:.72rem;color:#6e7681;line-height:1.6;flex-shrink:0}
     /* DIALER */
-    #s-dialer{background:#0d1117}
+    #s-dialer{background:#0a0a14}
     .ddisplay{margin:10px 12px;background:rgba(255,255,255,.05);border-radius:12px;padding:12px;text-align:center;flex-shrink:0}
     .dnum{font-size:1.5rem;color:#fff;font-weight:300;letter-spacing:.1em;min-height:38px}
     .dsub{font-size:.65rem;color:#6e7681;margin-top:3px}
     .dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:7px 12px;flex-shrink:0}
-    .dk{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.15rem;font-weight:300;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:inherit;margin:0 auto;transition:.1s}
-    .dk sub{font-size:.45rem;color:rgba(255,255,255,.45);margin-top:-2px;font-style:normal}
-    .dk:active{background:rgba(255,255,255,.28);transform:scale(.9)}
+    .dk{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:1.15rem;font-weight:300;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:inherit;margin:0 auto;transition:.1s}
+    .dk sub{font-size:.45rem;color:rgba(255,255,255,.4);margin-top:-2px;font-style:normal}
+    .dk:active{background:rgba(255,255,255,.25);transform:scale(.9)}
     .dactions{display:flex;justify-content:center;align-items:center;gap:34px;padding:8px 12px 12px;flex-shrink:0}
     .dkcall{background:#2ea043;width:58px;height:58px;font-size:1.4rem}
     .dkdel{background:rgba(255,255,255,.06);width:50px;height:50px;font-size:1rem}
-    .callscr{display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;background:#0d1117}
+    .callscr{display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;background:#0a0a14}
     .callscr.on{display:flex}
     .cname{color:#fff;font-size:1.05rem;font-weight:700;margin:12px 0 4px}
     .cstate{color:#8b949e;font-size:.8rem;margin-bottom:28px}
-    .ctimer{color:#388bfd;font-size:1.3rem;font-weight:300;margin-bottom:36px}
+    .ctimer{color:#4fc3f7;font-size:1.3rem;font-weight:300;margin-bottom:36px}
     .dkend{background:#da3633;width:60px;height:60px;font-size:1.4rem}
     /* MESSAGES */
     #s-msg{background:#e5ddd5}
@@ -138,29 +212,29 @@
     .msend{width:34px;height:34px;border-radius:50%;background:#25d366;border:none;color:#fff;font-size:.95rem;cursor:pointer}
     /* CAMERA */
     #s-cam{background:#000}
-    .cvf{flex:1;background:#111;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:0}
+    .cvf{flex:1;background:#0a0a0a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:0}
     .cscene{font-size:4rem;opacity:.35;transition:.3s}
-    .cgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:33.33% 33.33%}
+    .cgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:33.33% 33.33%}
     .cflash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;transition:opacity .06s}
     .cmodes{display:flex;justify-content:center;gap:16px;padding:6px;background:#000;flex-shrink:0}
-    .cmode{font-size:.65rem;color:rgba(255,255,255,.5);cursor:pointer;padding:3px 6px}
+    .cmode{font-size:.65rem;color:rgba(255,255,255,.4);cursor:pointer;padding:3px 6px}
     .cmode.on{color:#ffbc0d;font-weight:700;border-bottom:2px solid #ffbc0d}
     .cctrl{padding:8px 16px 10px;display:flex;align-items:center;justify-content:space-around;background:#000;flex-shrink:0}
     .cflip{font-size:1.3rem;cursor:pointer;color:#fff}
-    .cshutter{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.92);border:4px solid rgba(255,255,255,.35);cursor:pointer;transition:.1s}
+    .cshutter{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.9);border:4px solid rgba(255,255,255,.3);cursor:pointer;transition:.1s}
     .cshutter:active{transform:scale(.88)}
-    .cthumb{width:40px;height:40px;border-radius:7px;background:#222;display:flex;align-items:center;justify-content:center;font-size:1.2rem;border:2px solid rgba(255,255,255,.25)}
-    .cback{background:none;border:none;color:rgba(255,255,255,.5);font-size:.7rem;text-align:center;width:100%;padding:3px 0 8px;cursor:pointer;font-family:inherit;flex-shrink:0}
+    .cthumb{width:40px;height:40px;border-radius:7px;background:#1a1a2a;display:flex;align-items:center;justify-content:center;font-size:1.2rem;border:2px solid rgba(255,255,255,.2)}
+    .cback{background:none;border:none;color:rgba(255,255,255,.4);font-size:.7rem;text-align:center;width:100%;padding:3px 0 8px;cursor:pointer;font-family:inherit;flex-shrink:0}
     /* SETTINGS */
-    #s-settings{background:#f2f2f7}
-    #s-settings .lhd{background:#1c1c1e}
-    .ssec{font-size:.65rem;font-weight:700;color:#6c6c70;padding:10px 15px 4px;text-transform:uppercase;letter-spacing:.06em;background:#f2f2f7;flex-shrink:0}
-    .srow{background:#fff;padding:11px 15px;display:flex;align-items:center;gap:11px;border-bottom:1px solid #f2f2f7;flex-shrink:0}
+    #s-settings{background:#f0f0f5}
+    #s-settings .lhd{background:#1a1a2a}
+    .ssec{font-size:.65rem;font-weight:700;color:#6c6c70;padding:10px 15px 4px;text-transform:uppercase;letter-spacing:.06em;background:#f0f0f5;flex-shrink:0}
+    .srow{background:#fff;padding:11px 15px;display:flex;align-items:center;gap:11px;border-bottom:1px solid #f0f0f5;flex-shrink:0}
     .sico{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.95rem}
     .slbl{flex:1;font-size:.85rem;color:#1c1c1e}
     .sval{font-size:.78rem;color:#6c6c70}
-    .sslide{background:#fff;padding:3px 15px 10px;border-bottom:1px solid #f2f2f7;flex-shrink:0}
-    .srange{width:100%;accent-color:#007aff}
+    .sslide{background:#fff;padding:3px 15px 10px;border-bottom:1px solid #f0f0f5;flex-shrink:0}
+    .srange{width:100%;accent-color:#4fc3f7}
     /* RIGHT */
     .rpanel{background:#161b27;border-left:1px solid #21262d;display:flex;flex-direction:column;overflow:hidden}
     .rpanel .phead{border-bottom:1px solid #21262d}
@@ -206,33 +280,94 @@
 <!-- PHONE -->
 <div class="ppanel">
   <div class="phone">
-    <div class="hwb bsilent"></div>
-    <div class="hwb bvup" onclick="hwVol(1)"></div>
-    <div class="hwb bvdown" onclick="hwVol(-1)"></div>
-    <div class="hwb bpower" onclick="hwPower()"></div>
+    <div class="hwb bvup" onclick="hwVol(1)" title="볼륨 +"></div>
+    <div class="hwb bvdown" onclick="hwVol(-1)" title="볼륨 –"></div>
+    <div class="hwb bpower" onclick="hwPower()" title="전원 버튼"></div>
     <div class="pglow" id="pglow"></div>
-    <div class="notch"><div class="cdot"></div><div class="cdot"></div></div>
-    <div class="pscreen">
+    <!-- Galaxy punch-hole camera -->
+    <div class="phole"></div>
+
+    <div class="pscreen" id="pscr">
+      <!-- Status bar -->
       <div class="sbar" id="sbar" style="display:none">
         <span id="stime">오전 10:30</span>
-        <div class="sicons"><span>📶</span><span style="font-size:.6rem">WiFi</span><span>🔋</span></div>
+        <div class="sicons">
+          <span style="font-size:9px">SKT</span>
+          <span>📶</span>
+          <div class="sbatt"><span>70%</span><div class="sbatt-bar"><div class="sbatt-fill"></div></div></div>
+        </div>
       </div>
+
+      <!-- ═══ NOTIFICATION SHADE (One UI) ═══ -->
+      <div class="shade" id="shade">
+        <div class="shade-handle"></div>
+        <div class="shade-top">
+          <div>
+            <div class="shade-time" id="shade-time">10:30</div>
+            <div class="shade-date-txt" id="shade-date">월요일, 6월 16일</div>
+          </div>
+          <div class="shade-top-btns">
+            <span class="shade-top-btn" onclick="closeShade()" title="설정">⚙️</span>
+            <span class="shade-top-btn" onclick="closeShade()" title="닫기">✕</span>
+          </div>
+        </div>
+        <div class="shade-bright">
+          <span class="shade-bright-ico">🔅</span>
+          <input type="range" class="shade-bslider" min="0" max="100" value="80" oninput="shadeBright(this.value)"/>
+          <span class="shade-bright-ico">☀️</span>
+        </div>
+        <div class="qs-grid">
+          <div class="qs-tile on" id="qt-wifi" onclick="qsTap('wifi')">
+            <div class="qs-on-dot"></div>
+            <div class="qs-ico">📶</div><div class="qs-lbl">Wi-Fi</div>
+          </div>
+          <div class="qs-tile on" id="qt-bt" onclick="qsTap('bt')">
+            <div class="qs-on-dot"></div>
+            <div class="qs-ico">🔵</div><div class="qs-lbl">블루투스</div>
+          </div>
+          <div class="qs-tile" id="qt-sound" onclick="qsTap('sound')">
+            <div class="qs-on-dot"></div>
+            <div class="qs-ico">🔇</div><div class="qs-lbl">무음</div>
+          </div>
+          <div class="qs-tile" id="qt-flash" onclick="qsTap('flash')">
+            <div class="qs-on-dot"></div>
+            <div class="qs-ico">🔦</div><div class="qs-lbl">손전등</div>
+          </div>
+          <div class="qs-tile on" id="qt-rotate" onclick="qsTap('rotate')">
+            <div class="qs-on-dot"></div>
+            <div class="qs-ico">🔄</div><div class="qs-lbl">화면 회전</div>
+          </div>
+          <div class="qs-tile on" id="qt-loc" onclick="qsTap('loc')">
+            <div class="qs-on-dot"></div>
+            <div class="qs-ico">📍</div><div class="qs-lbl">위치</div>
+          </div>
+        </div>
+        <div class="shade-notif-hd">알림</div>
+        <div class="shade-notifs">
+          <div class="shade-notif"><div class="sn-ico">💬</div><div><div class="sn-app">카카오톡 · 방금</div><div class="sn-txt">큰딸: 엄마 점심 드셨어요? 🍚</div></div></div>
+          <div class="shade-notif"><div class="sn-ico">📞</div><div><div class="sn-app">전화 · 오전 9:42</div><div class="sn-txt">아들 (철수) — 부재중 1회</div></div></div>
+        </div>
+        <div class="shade-footer" onclick="closeShade()">▲ 위로 밀어서 닫기</div>
+      </div>
+      <!-- Overlay to close shade -->
+      <div class="shade-overlay" id="shade-overlay" onclick="closeShade()"></div>
 
       <!-- OFF -->
       <div class="scr on" id="s-off">
         <div class="offhint"><span class="offarr">→</span>오른쪽 전원 버튼을<br>꾹 눌러보세요</div>
       </div>
 
-      <!-- BOOT -->
+      <!-- BOOT — Galaxy style -->
       <div class="scr" id="s-boot">
-        <div class="blogos">Galaxy</div>
+        <div class="blogos">SAMSUNG</div>
+        <div class="blogos-sub">Galaxy</div>
         <div class="bdots"><div class="bdot"></div><div class="bdot"></div><div class="bdot"></div></div>
       </div>
 
       <!-- LOCK -->
       <div class="scr" id="s-lock">
         <div style="position:absolute;top:0;left:0;right:0;height:30px;display:flex;align-items:flex-end;justify-content:space-between;padding:4px 14px;font-size:10px;color:#fff;font-weight:700;z-index:10">
-          <span id="lt-small">오전 10:30</span><span>📶 🔋</span>
+          <span id="lt-small">오전 10:30</span><span>SKT 📶 🔋</span>
         </div>
         <div class="ltbig" id="lt-big">10:30</div>
         <div class="ltdate">2026년 6월 16일 월요일</div>
@@ -246,20 +381,20 @@
       <!-- HOME -->
       <div class="scr" id="s-home">
         <div class="hgrid">
-          <div class="aiwrap" onclick="openApp('camera')"><div class="ai" style="background:#1c1c2e">📷</div><div class="albl">카메라</div></div>
-          <div class="aiwrap" onclick="openApp('msg')"><div class="ai" style="background:#075e54">💬</div><div class="albl">메시지</div></div>
-          <div class="aiwrap" onclick="openApp('settings')"><div class="ai" style="background:#48484a">⚙️</div><div class="albl">설정</div></div>
-          <div class="aiwrap" onclick="openApp('gallery')"><div class="ai" style="background:linear-gradient(135deg,#6b3a1f,#d69e2e)">🖼️</div><div class="albl">갤러리</div></div>
+          <div class="aiwrap" onclick="openApp('camera')"><div class="ai" style="background:linear-gradient(135deg,#1a1a2e,#2a2a4a)">📷</div><div class="albl">카메라</div></div>
+          <div class="aiwrap" onclick="openApp('msg')"><div class="ai" style="background:linear-gradient(135deg,#054d3f,#0a8068)">💬</div><div class="albl">메시지</div></div>
+          <div class="aiwrap" onclick="openApp('settings')"><div class="ai" style="background:linear-gradient(135deg,#2a2a3a,#3a3a4a)">⚙️</div><div class="albl">설정</div></div>
+          <div class="aiwrap" onclick="openApp('gallery')"><div class="ai" style="background:linear-gradient(135deg,#3a1a0a,#6b3a1f)">🖼️</div><div class="albl">갤러리</div></div>
           <div class="aiwrap" onclick="openApp('kakao')"><div class="ai" style="background:#fee500">💛</div><div class="albl">카카오톡</div></div>
           <div class="aiwrap" onclick="openApp('naver')"><div class="ai" style="background:#03c75a;font-size:1rem;font-weight:900;color:#fff">N</div><div class="albl">네이버</div></div>
           <div class="aiwrap" onclick="openApp('youtube')"><div class="ai" style="background:#ff0000;color:#fff;font-size:1rem">▶</div><div class="albl">유튜브</div></div>
-          <div class="aiwrap" onclick="openApp('gesture')"><div class="ai" style="background:linear-gradient(135deg,#553c9a,#1f6feb)">✋</div><div class="albl">제스처</div></div>
+          <div class="aiwrap" onclick="openApp('gesture')"><div class="ai" style="background:linear-gradient(135deg,#2a1a4a,#1a2a6a)">✋</div><div class="albl">제스처</div></div>
         </div>
         <div class="dock">
-          <div class="aiwrap" onclick="openApp('dialer')"><div class="ai" style="background:#2ea043;width:44px;height:44px">📞</div><div class="albl">전화</div></div>
-          <div class="aiwrap" onclick="openApp('msg')"><div class="ai" style="background:#1f6feb;width:44px;height:44px">💬</div><div class="albl">문자</div></div>
-          <div class="aiwrap" onclick="openApp('browser')"><div class="ai" style="background:#e8850c;width:44px;height:44px">🌐</div><div class="albl">인터넷</div></div>
-          <div class="aiwrap" onclick="openApp('camera')"><div class="ai" style="background:#1c1c2e;width:44px;height:44px">📷</div><div class="albl">카메라</div></div>
+          <div class="aiwrap" onclick="openApp('dialer')"><div class="ai" style="background:linear-gradient(135deg,#1a4a2a,#2ea043);width:44px;height:44px">📞</div><div class="albl">전화</div></div>
+          <div class="aiwrap" onclick="openApp('msg')"><div class="ai" style="background:linear-gradient(135deg,#0a2a5a,#1a4a9a);width:44px;height:44px">💬</div><div class="albl">문자</div></div>
+          <div class="aiwrap" onclick="openApp('browser')"><div class="ai" style="background:linear-gradient(135deg,#4a2a0a,#8a5020);width:44px;height:44px">🌐</div><div class="albl">인터넷</div></div>
+          <div class="aiwrap" onclick="openApp('camera')"><div class="ai" style="background:linear-gradient(135deg,#1a1a2e,#2a2a4a);width:44px;height:44px">📷</div><div class="albl">카메라</div></div>
         </div>
       </div>
 
@@ -338,7 +473,7 @@
 
       <!-- SETTINGS -->
       <div class="scr" id="s-settings">
-        <div class="lhd"><button class="lback" onclick="goHome()" style="color:#007aff">‹</button><span class="lname" style="color:#fff">⚙️ 설정</span></div>
+        <div class="lhd"><button class="lback" onclick="goHome()" style="color:#4fc3f7">‹</button><span class="lname" style="color:#fff">⚙️ 설정</span></div>
         <div class="lbody">
           <div class="ssec">소리 및 진동</div>
           <div class="srow"><div class="sico" style="background:#ff9500">🔊</div><div class="slbl">벨소리 음량</div></div>
@@ -346,15 +481,15 @@
           <div class="srow"><div class="sico" style="background:#34c759">🎵</div><div class="slbl">미디어 음량</div></div>
           <div class="sslide"><input type="range" class="srange" min="0" max="100" value="80" oninput="adjVol('미디어',this.value)"/></div>
           <div class="ssec">화면</div>
-          <div class="srow"><div class="sico" style="background:#007aff">☀️</div><div class="slbl">화면 밝기</div></div>
+          <div class="srow"><div class="sico" style="background:#4fc3f7">☀️</div><div class="slbl">화면 밝기</div></div>
           <div class="sslide"><input type="range" class="srange" min="0" max="100" value="80" oninput="adjBright(this.value)"/></div>
           <div class="srow"><div class="sico" style="background:#5856d6">🌙</div><div class="slbl">다크 모드</div><div class="sval">꺼짐</div></div>
         </div>
       </div>
 
       <div class="homebar"></div>
-    </div>
-  </div>
+    </div><!-- /pscreen -->
+  </div><!-- /phone -->
 </div>
 
 <!-- RIGHT -->
@@ -377,26 +512,33 @@
 <script>
 var STEPS=[
   {e:'🔴',t:'전원 켜기',    b:'오른쪽 옆면 버튼을 꾹(2~3초) 누르면 켜져요. 짧게 누르면 화면만 켜거나 꺼져요.',d:'오른쪽 전원 버튼을 꾹 누르세요'},
-  {e:'⏳',t:'부팅 기다리기',b:'로고가 나오면서 폰이 준비돼요. 처음 켤 때는 30초 정도 걸릴 수 있어요.',    d:'잠깐 기다려요...'},
+  {e:'⏳',t:'부팅 기다리기',b:'SAMSUNG 로고가 나오면서 폰이 준비돼요. 처음 켤 때는 30초 정도 걸릴 수 있어요.',d:'잠깐 기다려요...'},
   {e:'🔓',t:'잠금 해제',    b:'화면을 아래에서 위로 밀면 잠금이 풀려요. 주머니 속 실수 터치를 막아줘요.',d:'화면 아래서 위로 밀어 올리세요'},
-  {e:'🏠',t:'홈화면 탐색',  b:'앱 아이콘을 누르면 앱이 실행돼요. 아래 독(Dock)은 자주 쓰는 앱이에요.',   d:'아이콘을 아무거나 눌러보세요'},
-  {e:'✋',t:'제스처 배우기',b:'탭·스와이프·핀치·길게 누르기 4가지만 알면 스마트폰을 다 쓸 수 있어요.',   d:'✋ 제스처 앱을 눌러 연습해보세요'},
-  {e:'🔊',t:'소리 조절',    b:'설정 앱에서 벨소리·미디어 음량을 조절해요. 옆면 버튼으로도 빠르게 돼요.',  d:'⚙️ 설정 앱을 눌러주세요'},
+  {e:'🏠',t:'홈화면 탐색',  b:'앱 아이콘을 누르면 앱이 실행돼요. 아래 독(Dock)은 자주 쓰는 앱이에요.',d:'아이콘을 아무거나 눌러보세요'},
+  {e:'✋',t:'제스처 배우기',b:'탭·스와이프·핀치·길게 누르기 4가지만 알면 스마트폰을 다 쓸 수 있어요.',d:'✋ 제스처 앱을 눌러 연습해보세요'},
+  {e:'🔊',t:'소리 조절',    b:'설정 앱·볼륨 버튼으로 소리를 조절해요. 상단에서 내리면 빠른 설정창도 있어요.',d:'상단에서 아래로 밀거나 ⚙️ 설정 앱을 눌러주세요'},
   {e:'📞',t:'전화 걸기',    b:'번호 누르고 초록 📞 버튼 → 전화 걸기. 빨간 📵 → 끊기. 연습에선 실제 전화 안 걸려요.',d:'📞 전화 앱에서 번호를 눌러보세요'},
   {e:'💬',t:'문자 보내기',  b:'글을 쓰고 → 버튼을 누르면 전송돼요. ✓✓ 표시는 상대방이 받았다는 뜻이에요.',d:'💬 메시지 앱에서 글을 써보세요'},
   {e:'📷',t:'사진 찍기',    b:'하얀 동그라미(셔터)를 누르면 찍혀요. 🔄 버튼으로 전·후면 카메라를 바꿔요.',d:'📷 카메라 셔터를 눌러보세요'}
 ];
-var cs=0,done=new Set(),curscr='off';
+var cs=0,done=new Set(),curscr='off',shadeOpen=false;
 var dstr='',ctmr=null,csec=0;
 var autoreplies=['네 엄마! 잘 먹었어요 😊','이따 저녁에 전화할게요 📞','날씨 좋죠? 산책 나가보세요~','사랑해요 엄마! 🥰','밥은 꼭 챙겨 드세요 💕'],ridx=0;
 var scenes=['🌸','🌳','🌄','🏠','☕','🐕','🌻','🌙'],sidx=0,pcount=0;
 var gm=0,swx=0,swy=0,swdrag=false,lptmr=null,gzinit=false;
-renderSteps();setInstr(0);startClock();setTimeout(initLock,400);
+var qsState={wifi:true,bt:true,sound:false,flash:false,rotate:true,loc:true};
+var qsLabels={wifi:'Wi-Fi',bt:'블루투스',sound:'무음',flash:'손전등',rotate:'화면 회전',loc:'위치'};
+var qsInfo={wifi:'Wi-Fi가 켜져 있으면 집이나 카페에서 데이터 없이 인터넷을 쓸 수 있어요.',bt:'블루투스로 무선 이어폰·스피커를 연결해요.',sound:'진동/무음/소리 모드를 바꿔요.',flash:'카메라 옆 LED 손전등을 켜고 끄는 버튼이에요.',rotate:'켜면 폰을 옆으로 돌릴 때 화면도 같이 돌아가요.',loc:'지도 앱이나 배달 앱에서 내 위치를 알려면 켜야 해요.'};
+
+renderSteps();setInstr(0);startClock();setTimeout(initLock,400);setTimeout(initShade,600);
+
 function startClock(){
   function t(){var n=new Date(),h=n.getHours(),m=n.getMinutes().toString().padStart(2,'0'),ap=h>=12?'오후':'오전',h12=h%12||12,ts=h12+':'+m;
     var a=document.getElementById('stime');if(a)a.textContent=ap+' '+ts;
     var b=document.getElementById('lt-big');if(b)b.textContent=h12+':'+m;
-    var c=document.getElementById('lt-small');if(c)c.textContent=ap+' '+ts;}
+    var c=document.getElementById('lt-small');if(c)c.textContent=ap+' '+ts;
+    var d=document.getElementById('shade-time');if(d)d.textContent=h12+':'+m;
+    var e=document.getElementById('shade-date');if(e){var days=['일','월','화','수','목','금','토'];e.textContent=days[n.getDay()]+'요일, '+(n.getMonth()+1)+'월 '+n.getDate()+'일';}}
   t();setInterval(t,15000);}
 function renderSteps(){
   var h='';STEPS.forEach(function(s,i){var cls='si'+(i===cs?' active':'')+(done.has(i)?' done':'');
@@ -421,18 +563,65 @@ function showScr(id){document.querySelectorAll('.scr').forEach(function(e){e.cla
   var sb=document.getElementById('sbar');if(sb)sb.style.display=['off','boot','lock'].includes(id)?'none':'flex';curscr=id;}
 function goHome(){showScr('home');fb('info','홈 화면으로 돌아왔어요','앱을 닫을 때는 하단을 위로 밀거나 홈 버튼을 누르면 돼요.');}
 function hwPower(){
-  if(curscr==='off'){document.getElementById('pglow').style.display='none';showScr('boot');markDone(0,'전원 버튼을 눌렀어요! 화면이 켜지고 있어요.');fb('info','부팅 중...','Galaxy 로고가 나타났어요. 잠깐 기다려요 ⏳');
+  if(curscr==='off'){document.getElementById('pglow').style.display='none';showScr('boot');markDone(0,'전원 버튼을 눌렀어요! 화면이 켜지고 있어요.');fb('info','부팅 중...','SAMSUNG 로고가 나타났어요. 잠깐 기다려요 ⏳');
     setTimeout(function(){showScr('lock');markDone(1,'부팅 완료! 잠금화면이 나타났어요.');fb('ok','부팅 완료!','잠금화면이에요. 화면을 위로 밀어보세요.');},2200);}
   else if(curscr==='lock'){fb('tip','전원 버튼 기능','짧게 누르면 화면 켜기/끄기. 꾹 누르면 끄기·재시작 메뉴가 나와요.');}
   else{showScr('off');document.getElementById('pglow').style.display='block';fb('info','화면이 꺼졌어요','전원 버튼을 다시 누르면 켜져요.');}}
 function hwVol(dir){if(!done.has(5))markDone(5,'볼륨 버튼으로 소리를 조절했어요!');fb('ok',dir>0?'🔊 볼륨 올리기':'🔉 볼륨 줄이기',(dir>0?'소리가 커졌어요.':'소리가 작아졌어요.')+' 진동·무음으로도 바꿀 수 있어요.');}
 function initLock(){var lock=document.getElementById('s-lock'),sx,sy,drag=false;
-  function start(e){var p=e.touches?e.touches[0]:e;sx=p.clientX;sy=p.clientY;drag=true;}
+  function start(e){if(shadeOpen)return;var p=e.touches?e.touches[0]:e;sx=p.clientX;sy=p.clientY;drag=true;}
   function move(e){if(!drag)return;var p=e.touches?e.touches[0]:e;if(sy-p.clientY>38){drag=false;unlockPhone();}if(e.cancelable)e.preventDefault();}
   function end(){drag=false;}
   lock.addEventListener('touchstart',start,{passive:true});lock.addEventListener('touchmove',move,{passive:false});lock.addEventListener('touchend',end);
   lock.addEventListener('mousedown',start);window.addEventListener('mousemove',function(e){if(curscr==='lock')move(e);});window.addEventListener('mouseup',end);}
 function unlockPhone(){showScr('home');markDone(2,'잠금 해제 성공! 홈화면이 열렸어요.');fb('ok','잠금 해제!','홈화면이에요. 아이콘을 눌러서 앱을 열어보세요!');}
+
+/* ═══ NOTIFICATION SHADE ═══ */
+function initShade(){
+  var ps=document.getElementById('pscr'),startY=0,fromTop=false,drag=false;
+  function onStart(e){
+    if(['off','boot'].includes(curscr)||shadeOpen)return;
+    var t=e.touches?e.touches[0]:e;
+    var rect=ps.getBoundingClientRect();
+    fromTop=(t.clientY-rect.top)<48;
+    startY=t.clientY;drag=true;}
+  function onMove(e){
+    if(!drag||!fromTop)return;
+    var t=e.touches?e.touches[0]:e;
+    if(t.clientY-startY>32){drag=false;openShade();}
+    if(e.cancelable)e.preventDefault();}
+  function onEnd(){drag=false;}
+  ps.addEventListener('touchstart',onStart,{passive:true});
+  ps.addEventListener('touchmove',onMove,{passive:false});
+  ps.addEventListener('touchend',onEnd);
+  ps.addEventListener('mousedown',onStart);
+  window.addEventListener('mousemove',function(e){if(drag&&fromTop&&!shadeOpen&&(e.clientY-startY>32)){drag=false;openShade();}});
+  window.addEventListener('mouseup',onEnd);
+
+  // Swipe up on shade to close
+  var shade=document.getElementById('shade'),shY=0,shDrag=false;
+  shade.addEventListener('touchstart',function(e){shY=e.touches[0].clientY;shDrag=true;},{passive:true});
+  shade.addEventListener('touchmove',function(e){if(!shDrag)return;if(shY-e.touches[0].clientY>40){shDrag=false;closeShade();}},{passive:true});
+  shade.addEventListener('touchend',function(){shDrag=false;});}
+
+function openShade(){
+  if(['off','boot'].includes(curscr))return;
+  shadeOpen=true;
+  document.getElementById('shade').classList.add('open');
+  document.getElementById('shade-overlay').classList.add('on');
+  if(!done.has(5))markDone(5,'빠른 설정창을 열었어요!');
+  fb('info','🔔 알림창 열림!','상단에서 아래로 밀면 Wi-Fi·소리·손전등 같은 빠른 설정을 한 번에 볼 수 있어요.');}
+function closeShade(){
+  shadeOpen=false;
+  document.getElementById('shade').classList.remove('open');
+  document.getElementById('shade-overlay').classList.remove('on');
+  fb('info','알림창 닫힘','위로 밀거나 ✕ 버튼을 누르면 닫혀요.');}
+function qsTap(key){
+  qsState[key]=!qsState[key];
+  document.getElementById('qt-'+key).classList.toggle('on',qsState[key]);
+  fb(qsState[key]?'ok':'info',(qsState[key]?'✅ ':'⭕ ')+qsLabels[key]+' '+(qsState[key]?'켜짐':'꺼짐'),qsInfo[key]);}
+function shadeBright(v){fb('ok','밝기 조절: '+v+'%',+v<30?'어둡게 — 배터리가 절약돼요.':+v>80?'밝게 — 야외에서 잘 보여요.':'적당한 밝기예요.');}
+
 function openApp(app){var N={camera:'카메라',msg:'메시지',settings:'설정',gallery:'갤러리',kakao:'카카오톡',naver:'네이버',youtube:'유튜브',gesture:'제스처 연습',dialer:'전화',browser:'인터넷'};
   if(!done.has(3))markDone(3,(N[app]||app)+' 앱을 열었어요!');
   if(app==='gesture'){showScr('gesture');initGesture();if(!done.has(4))markDone(4,'제스처 연습 앱을 열었어요!');fb('info','4가지 제스처 연습','위 탭을 눌러 하나씩 연습해보세요.');}
@@ -440,7 +629,7 @@ function openApp(app){var N={camera:'카메라',msg:'메시지',settings:'설정
   else if(app==='dialer'){showScr('dialer');fb('info','전화 앱 열림','번호를 누르고 초록 📞 버튼을 눌러보세요.');}
   else if(app==='msg'||app==='kakao'){showScr('msg');fb('info','메시지 앱 열림','아래 입력창에 글을 쓰고 → 버튼을 눌러보세요.');}
   else if(app==='camera'){showScr('cam');fb('info','카메라 열림','하얀 동그라미(셔터)를 눌러 사진을 찍어보세요 📷');}
-  else{fb('info',(N[app]||app)+' 앱','이 앱은 연습 화면이 없어요. 실제 폰에선 바로 열려요.');fb('tip','앱 설치 방법','Play 스토어 또는 App Store에서 검색해서 설치해요.');}}
+  else{fb('info',(N[app]||app)+' 앱','이 앱은 연습 화면이 없어요. 실제 폰에선 바로 열려요.');fb('tip','앱 설치 방법','Galaxy Store 또는 Play 스토어에서 검색해서 설치해요.');}}
 var gP=['여기를 탭! (한 번 눌러보세요)','왼쪽 또는 오른쪽으로 밀어보세요 →','두 손가락으로 벌리거나 모아보세요 (PC: 스크롤)','꾹! 0.7초 이상 눌러보세요'];
 var gE=['탭은 화면을 한 번 가볍게 누르는 동작이에요. 앱 실행, 버튼 누르기에 써요.','스와이프는 손가락으로 화면을 밀듯 움직이는 거예요. 페이지 넘기기, 스크롤에 써요.','핀치는 두 손가락을 벌리거나 모으는 동작이에요. 사진·지도 확대/축소에 써요.','길게 누르기는 0.7초 이상 꾹 누르는 거예요. 복사·붙여넣기, 숨겨진 메뉴 열기에 써요.'];
 function initGesture(){if(gzinit)return;gzinit=true;var z=document.getElementById('gzone');
