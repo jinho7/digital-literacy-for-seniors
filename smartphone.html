@@ -1,918 +1,660 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>1강 · 스마트폰 기초 | 디지털 배움터</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>스마트폰 체험 — 갤럭시 OS</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:'Noto Sans KR','맑은 고딕',sans-serif;background:#0d1117;color:#e2e8f0;overflow:hidden}
-.topbar{height:52px;background:#161b27;border-bottom:1px solid #21262d;display:flex;align-items:center;padding:0 18px;gap:12px;flex-shrink:0}
-.topbar a{color:#58a6ff;text-decoration:none;font-size:.9rem;font-weight:700}
-.topbar-sep{color:#30363d}
-.topbar-title{font-size:.95rem;font-weight:700}
-.stage{display:grid;grid-template-columns:256px 1fr 256px;height:calc(100vh - 52px);overflow:hidden}
+html,body{height:100%;font-family:'Noto Sans KR','맑은 고딕',sans-serif;overflow:hidden}
+body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);display:flex;align-items:center;justify-content:center;min-height:100vh}
+.topbar{position:fixed;top:0;left:0;right:0;height:46px;display:flex;align-items:center;gap:12px;padding:0 18px;color:#9fb2d4;font-size:.86rem;z-index:999}
+.topbar a{color:#7aa2ff;text-decoration:none;font-weight:700}
+.topbar .tdiv{opacity:.3}
+.hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);color:#5c6b8a;font-size:.8rem;text-align:center;z-index:999;line-height:1.6}
 
-/* LEFT */
-.lpanel{background:#161b27;border-right:1px solid #21262d;overflow-y:auto;display:flex;flex-direction:column}
-.lp-hd{padding:14px 16px 12px;border-bottom:1px solid #21262d;font-size:.95rem;font-weight:800;color:#e2e8f0;letter-spacing:.01em;flex-shrink:0}
-.lp-sub{font-size:.74rem;font-weight:500;color:#8b949e;margin-top:6px;line-height:1.5}
-.grp-hd{display:flex;align-items:center;gap:9px;padding:13px 16px 7px;user-select:none}
-.grp-title{font-size:.9rem;font-weight:800;color:#79c0ff;letter-spacing:.02em}
-.grp-count{font-size:.72rem;font-weight:700;color:#6e7681;margin-left:auto}
-.phase{margin-bottom:6px}
-.phase-hd{display:flex;align-items:center;gap:10px;padding:12px 16px 7px;user-select:none}
-.pbadge{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:900;flex-shrink:0}
-.ph-done .pbadge{background:#238636;color:#fff}
-.ph-done .ptitle{color:#2ea043;font-size:.9rem;font-weight:800;letter-spacing:.02em}
-.ph-active .pbadge{background:#1f6feb;color:#fff}
-.ph-active .ptitle{color:#58a6ff;font-size:.9rem;font-weight:800;letter-spacing:.02em}
-.ph-locked .pbadge{background:#21262d;color:#484f58}
-.ph-locked .ptitle{color:#484f58;font-size:.9rem;font-weight:800;letter-spacing:.02em}
-.ptitle{flex:1}
-.plock{font-size:.85rem;opacity:.4}
-.phase-prog{height:3px;background:#21262d;margin:2px 16px 8px;border-radius:2px;overflow:hidden}
-.phase-prog-fill{height:100%;background:#2ea043;border-radius:2px;transition:width .4s}
-.phase-done-chip{margin:0 12px 4px;padding:7px 12px;background:#0d2117;border:1px solid #1d6b2e;border-radius:9px;display:flex;align-items:center;gap:8px;font-size:.82rem;color:#3fb950;font-weight:700}
-.ci{display:flex;align-items:flex-start;gap:10px;padding:9px 16px;cursor:pointer;border-radius:9px;margin:2px 7px;transition:.1s}
-.ci:hover:not(.ci-locked){background:#21262d}
-.ci-locked{pointer-events:none}
-.ci-box{width:20px;height:20px;border-radius:5px;border:2px solid #30363d;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:.15s;font-size:.8rem}
-.ci-done .ci-box{background:#238636;border-color:#238636;color:#fff}
-.ci-done .ci-lbl{color:#484f58;text-decoration:line-through}
-.ci-tip .ci-box{background:rgba(201,133,0,.15);border-color:#c98500;color:#c98500}
-.ci-locked .ci-box{opacity:.35}
-.ci-locked .ci-lbl{color:#484f58}
-.ci-active .ci-box{border-color:#1f6feb;box-shadow:0 0 0 2px rgba(31,111,235,.25)}
-.ci-active .ci-lbl{color:#fff;font-weight:700}
-.ci-lbl{font-size:.97rem;color:#c9d1d9;line-height:1.5}
-.ci-tip .ci-lbl{color:#e3b341}
+/* ════════ PHONE FRAME ════════ */
+.stagewrap{display:flex;align-items:center;justify-content:center;transform:scale(1.04)}
+.phone{width:330px;height:680px;position:relative;flex-shrink:0;border-radius:62px;
+  background:linear-gradient(145deg,#23233a,#101019 42%,#222236 72%,#0b0b14);
+  box-shadow:0 0 0 2px rgba(255,255,255,.06),0 0 0 3px #07070e,0 0 0 13px #16161f,0 0 0 14px rgba(255,255,255,.04),0 40px 90px rgba(0,0,0,.85)}
+.phone::before{content:'';position:absolute;inset:0;border-radius:62px;background:linear-gradient(135deg,rgba(255,255,255,.07),transparent 38%,transparent 62%,rgba(255,255,255,.04));pointer-events:none;z-index:500}
+/* hardware buttons */
+.hwb{position:absolute;cursor:pointer;transition:.08s;z-index:6}
+.hwb:active{filter:brightness(1.9)}
+.bvup{left:-4px;top:172px;width:4px;height:54px;background:linear-gradient(to right,rgba(255,255,255,.18),rgba(255,255,255,.04));border-radius:3px 0 0 3px}
+.bvdown{left:-4px;top:236px;width:4px;height:54px;background:linear-gradient(to right,rgba(255,255,255,.18),rgba(255,255,255,.04));border-radius:3px 0 0 3px}
+.bpower{right:-4px;top:200px;width:4px;height:78px;background:linear-gradient(to left,rgba(255,255,255,.18),rgba(255,255,255,.04));border-radius:0 3px 3px 0}
+.pglow{position:absolute;right:-2px;top:222px;width:8px;height:8px;border-radius:50%;background:rgba(90,160,255,.85);box-shadow:0 0 10px 4px rgba(90,160,255,.5);animation:pg 2s infinite;pointer-events:none;z-index:7}
+@keyframes pg{0%,100%{opacity:.25}50%{opacity:1}}
+.phole{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:#000;border:2px solid #1c1c2c;z-index:120;box-shadow:inset 0 0 4px rgba(0,0,0,.9)}
 
-/* PHONE CENTER */
-.ppanel{display:flex;align-items:center;justify-content:center;background:#0d1117}
-.phone{width:266px;height:530px;background:linear-gradient(145deg,#1a1a2a,#0e0e18 40%,#1c1c2c 70%,#0a0a14);border-radius:50px;position:relative;flex-shrink:0;box-shadow:0 0 0 1px rgba(255,255,255,.07),0 0 0 1.5px #0a0a14,0 30px 80px rgba(0,0,0,.9)}
-.phone::before{content:'';position:absolute;inset:0;border-radius:50px;background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 40%,rgba(255,255,255,.03) 100%);pointer-events:none}
-.hwb{position:absolute;cursor:pointer;transition:.1s}
-.hwb:active{filter:brightness(2)}
-.bvup{left:-3px;top:134px;width:3px;height:42px;background:rgba(255,255,255,.1);border-radius:2px 0 0 2px}
-.bvdown{left:-3px;top:188px;width:3px;height:42px;background:rgba(255,255,255,.1);border-radius:2px 0 0 2px}
-.bpower{right:-3px;top:156px;width:3px;height:62px;background:rgba(255,255,255,.1);border-radius:0 2px 2px 0}
-.pglow{position:absolute;right:-1px;top:173px;width:6px;height:6px;border-radius:50%;background:rgba(56,139,253,.7);box-shadow:0 0 8px 3px rgba(56,139,253,.4);animation:gPulse 2s infinite;pointer-events:none}
-@keyframes gPulse{0%,100%{opacity:.3}50%{opacity:1}}
-.phole{position:absolute;top:15px;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:#000;border:1.5px solid #1a1a2a;z-index:60}
-.pscreen{position:absolute;top:7px;left:6px;right:6px;bottom:7px;border-radius:44px;overflow:hidden;background:#000}
-.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:80px;height:4px;background:rgba(255,255,255,.22);border-radius:2px;z-index:300}
-.navbarz{position:absolute;bottom:0;left:0;right:0;height:36px;display:flex;align-items:center;justify-content:space-around;z-index:290;pointer-events:none}
-.nbtn{font-size:.9rem;color:rgba(255,255,255,.55);cursor:pointer;pointer-events:auto;padding:6px 12px}
+/* ════════ SCREEN ════════ */
+.pscreen{position:absolute;top:9px;left:8px;right:8px;bottom:9px;border-radius:54px;overflow:hidden;background:#000}
+/* brightness dimmer — dims EVERYTHING like a real phone */
+.bright-dim{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:600;transition:opacity .15s}
+/* warm/night tint */
+.night-tint{position:absolute;inset:0;background:#ff9b3d;opacity:0;pointer-events:none;z-index:590;mix-blend-mode:multiply;transition:opacity .3s}
 
-/* STATUS BAR */
-.sbar{height:32px;padding:8px 16px 0;display:flex;align-items:center;justify-content:space-between;font-size:9px;font-weight:700;color:#fff;position:absolute;top:0;left:0;right:0;z-index:50}
-.sicons{display:flex;align-items:center;gap:3px}
-.sbatt{display:flex;align-items:center;gap:2px}
-.sbatt-bar{width:14px;height:7px;border:1.5px solid rgba(255,255,255,.65);border-radius:1.5px;position:relative}
-.sbatt-bar::after{content:'';position:absolute;right:-2.5px;top:50%;transform:translateY(-50%);width:1.5px;height:3px;background:rgba(255,255,255,.65);border-radius:0 1px 1px 0}
-.sbatt-fill{height:100%;background:#4caf50;border-radius:.5px;width:70%}
+/* status bar */
+.sbar{height:34px;padding:11px 22px 0;display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:700;color:#fff;position:absolute;top:0;left:0;right:0;z-index:50;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.sbar.dark-txt{color:#111;text-shadow:none}
+.sicons{display:flex;align-items:center;gap:5px}
+.si-batt{display:flex;align-items:center;gap:3px}
+.si-batt-bar{width:18px;height:9px;border:1.5px solid currentColor;border-radius:2px;position:relative;opacity:.85}
+.si-batt-bar::after{content:'';position:absolute;right:-3px;top:50%;transform:translateY(-50%);width:2px;height:4px;background:currentColor;border-radius:0 1px 1px 0}
+.si-batt-fill{position:absolute;left:1px;top:1px;bottom:1px;width:62%;background:#3ddc84;border-radius:1px}
 
-/* ══════════ SAMSUNG ONE UI SHADE ══════════ */
-.shade{position:absolute;top:0;left:0;right:0;z-index:200;background:rgba(18,18,30,.97);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);transform:translateY(-100%);border-radius:0 0 24px 24px;will-change:transform}
-.shade.snap{transition:transform .34s cubic-bezier(.25,1,.3,1)}
-.shade.open{transform:translateY(0)}
-.shade-ovr{transition:opacity .3s}
-/* grab-from-top hint strip */
-.shade-grip{position:absolute;top:0;left:0;right:0;height:46px;z-index:55}
-.shade-grip-bar{position:absolute;top:5px;left:50%;transform:translateX(-50%);width:34px;height:4px;border-radius:2px;background:rgba(255,255,255,.35);opacity:0;transition:opacity .2s;pointer-events:none}
-.shade-grip:hover .shade-grip-bar{opacity:1}
-.shade-ovr{position:absolute;inset:0;z-index:199;display:none}
-.shade-ovr.on{display:block}
-.shade-toprow{display:flex;justify-content:flex-end;align-items:center;gap:14px;padding:10px 14px 2px}
-.stbtn{font-size:1rem;opacity:.55;cursor:pointer}
-.stbtn:hover{opacity:1}
-.shade-timerow{padding:0 16px 8px;display:flex;align-items:flex-end;gap:8px}
-.sh-time{font-size:2.6rem;font-weight:200;color:#fff;line-height:1;letter-spacing:-.02em}
-.sh-dateblock{padding-bottom:4px}
-.sh-date{font-size:.67rem;color:rgba(255,255,255,.5);line-height:1.5}
-/* Large tiles */
-.qs-lg-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 10px 6px}
-.qslg{background:rgba(255,255,255,.08);border-radius:15px;padding:11px 11px 9px;display:flex;align-items:center;gap:9px;cursor:pointer;border:1.5px solid transparent;transition:.12s;min-height:52px}
-.qslg.on{background:rgba(79,195,247,.2);border-color:rgba(79,195,247,.4)}
-.qslg:active{transform:scale(.92)}
-.qslg-ico{font-size:1.2rem}
-.qslg-nm{font-size:.7rem;color:#fff;font-weight:700}
-.qslg-sub{font-size:.55rem;color:rgba(255,255,255,.4);margin-top:1px}
-.qslg.on .qslg-nm{color:#4fc3f7}
-/* Small tiles */
-.qs-sm-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:0 10px 6px}
-.qssm{background:rgba(255,255,255,.07);border-radius:13px;padding:8px 4px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border:1.5px solid transparent;transition:.12s}
-.qssm.on{background:rgba(79,195,247,.18);border-color:rgba(79,195,247,.38)}
-.qssm:active{transform:scale(.88)}
-.qssm-ico{font-size:1.05rem}
-.qssm-lbl{font-size:.5rem;color:rgba(255,255,255,.5);text-align:center}
-.qssm.on .qssm-lbl{color:#4fc3f7}
-/* Sliders */
-.shade-sliders{padding:2px 10px 8px}
-.sl-row{display:flex;align-items:center;gap:7px;padding:3px 0}
-.sl-ico{font-size:.85rem;opacity:.65;width:18px;text-align:center}
-.sl-track{flex:1;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:rgba(255,255,255,.2);outline:none;cursor:pointer;accent-color:#4fc3f7}
-.sl-track::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:#4fc3f7}
-.sl-extra{font-size:.85rem;cursor:pointer;opacity:.6;padding:2px}
-.shade-notifs{padding:0 10px 4px}
-.sh-notif-hd{font-size:.6rem;font-weight:800;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em;padding:4px 0 5px}
-.sh-notif{background:rgba(255,255,255,.06);border-radius:12px;padding:9px 11px;display:flex;align-items:center;gap:8px;margin-bottom:5px}
-.sh-ni{font-size:1rem}
-.sh-na{font-size:.6rem;color:rgba(255,255,255,.4);margin-bottom:1px}
-.sh-nt{font-size:.75rem;color:#fff;font-weight:600}
-.shade-footer{text-align:center;padding:8px 0 6px;font-size:.58rem;color:rgba(255,255,255,.18);cursor:pointer}
+/* navigation bar */
+.navbar{position:absolute;bottom:0;left:0;right:0;height:40px;display:flex;align-items:center;justify-content:space-around;z-index:80}
+.nbtn{width:46px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.78);font-size:.95rem;border-radius:8px;transition:.1s}
+.nbtn:active{background:rgba(255,255,255,.12)}
+.navbar.dark-ico .nbtn{color:rgba(20,20,20,.7)}
+.nb-recents{font-size:1rem}
+.nb-home{font-size:.9rem}
+.nb-back{font-size:1.15rem}
 
-/* ══════════ POPUP (Bottom Sheet) ══════════ */
-.pop{position:absolute;inset:0;z-index:400;background:rgba(0,0,0,.6);display:none;align-items:flex-end;padding-bottom:42px}
-.pop.on{display:flex}
-.pop-card{background:#1c1c2e;border-radius:20px 20px 0 0;width:100%;padding:6px 0 0;animation:popUp .28s ease}
-@keyframes popUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
-.pop-handle{width:32px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:8px auto 14px}
-.pop-ico{font-size:2.6rem;text-align:center;margin-bottom:7px}
-.pop-title{font-size:.95rem;font-weight:800;color:#fff;text-align:center;padding:0 16px;margin-bottom:8px}
-.pop-tag{display:inline-block;background:rgba(56,139,253,.2);color:#79c0ff;font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:99px;margin:0 16px 8px}
-.pop-body{font-size:.8rem;color:rgba(255,255,255,.7);padding:0 17px;line-height:1.8;margin-bottom:14px;white-space:pre-line}
-.pop-btn{display:block;width:calc(100% - 28px);margin:0 14px 14px;background:#1f6feb;border:none;color:#fff;font-size:.86rem;font-weight:800;padding:12px;border-radius:12px;cursor:pointer;font-family:inherit}
-.pop-btn:active{background:#388bfd}
-
-/* ══════════ SCREENS ══════════ */
+/* ════════ SCREENS ════════ */
 .scr{position:absolute;inset:0;display:none;flex-direction:column}
 .scr.on{display:flex}
 
 /* OFF */
 #s-off{background:#000;align-items:center;justify-content:center}
-.off-hint{color:rgba(255,255,255,.22);font-size:.67rem;text-align:center;line-height:2.1}
-.off-arr{font-size:1.4rem;display:block;margin-bottom:6px;animation:arrA 2s infinite}
-@keyframes arrA{0%,100%{opacity:.1;transform:translateX(4px)}50%{opacity:.45;transform:translateX(0)}}
+.off-hint{color:rgba(255,255,255,.22);font-size:.8rem;text-align:center;line-height:2.1}
+.off-arr{font-size:1.7rem;display:block;margin-bottom:8px;animation:offa 2s infinite}
+@keyframes offa{0%,100%{opacity:.12;transform:translateX(5px)}50%{opacity:.5;transform:translateX(0)}}
 
 /* BOOT */
 #s-boot{background:#000;align-items:center;justify-content:center}
-.blogos{font-size:1.8rem;font-weight:200;color:#fff;letter-spacing:.14em;opacity:0;animation:fIn .6s .3s forwards}
-.blogos-sub{font-size:.52rem;color:rgba(255,255,255,.45);letter-spacing:.3em;margin-top:8px;opacity:0;animation:fIn .3s .7s forwards;text-transform:uppercase}
-.bdots{display:flex;gap:7px;margin-top:30px;opacity:0;animation:fIn .3s 1s forwards}
-.bdot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.35);animation:dotB 1.2s infinite}
+.blogo{font-size:2.1rem;font-weight:200;color:#fff;letter-spacing:.16em;opacity:0;animation:fin .6s .3s forwards}
+.blogo-sub{font-size:.62rem;color:rgba(255,255,255,.45);letter-spacing:.35em;margin-top:10px;opacity:0;animation:fin .3s .7s forwards;text-transform:uppercase}
+.bdots{display:flex;gap:8px;margin-top:38px;opacity:0;animation:fin .3s 1s forwards}
+.bdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);animation:bd 1.2s infinite}
 .bdot:nth-child(2){animation-delay:.15s}.bdot:nth-child(3){animation-delay:.3s}
-@keyframes fIn{to{opacity:1}}
-@keyframes dotB{0%,80%,100%{transform:scale(.7);opacity:.3}40%{transform:scale(1.2);opacity:1}}
+@keyframes fin{to{opacity:1}}
+@keyframes bd{0%,80%,100%{transform:scale(.6);opacity:.3}40%{transform:scale(1.25);opacity:1}}
 
 /* LOCK */
-#s-lock{background:linear-gradient(160deg,#080c1a,#0d1a35 55%,#110820);overflow:hidden}
-#s-lock::before{content:'';position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(30,60,120,.5),transparent 70%);top:-50px;right:-60px;pointer-events:none}
-.lt-time{font-size:3.8rem;font-weight:200;color:#fff;text-align:center;margin-top:80px;letter-spacing:-.02em;position:relative;z-index:1}
-.lt-date{font-size:.8rem;color:rgba(255,255,255,.65);text-align:center;margin-top:4px;z-index:1;position:relative}
-.lock-notifs{margin:22px 12px 0;display:flex;flex-direction:column;gap:7px;z-index:1;position:relative}
-.lk-notif{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:8px}
-.lkni{font-size:1rem}.lkna{font-size:.62rem;color:rgba(255,255,255,.5);margin-bottom:2px}.lknt{font-size:.78rem;color:#fff;font-weight:600;line-height:1.3}
-.lk-hint{position:absolute;bottom:40px;left:0;right:0;text-align:center;z-index:1}
-.lkarr{font-size:1rem;color:rgba(255,255,255,.55);animation:swA 1.5s infinite;display:block;margin-bottom:3px}
-@keyframes swA{0%,100%{transform:translateY(4px);opacity:.35}50%{transform:translateY(-3px);opacity:1}}
-.lktxt{font-size:.7rem;color:rgba(255,255,255,.45)}
+#s-lock{background:linear-gradient(165deg,#0a1024,#10204a 50%,#180c30);overflow:hidden;cursor:grab}
+#s-lock:active{cursor:grabbing}
+#s-lock::before{content:'';position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(40,80,170,.5),transparent 70%);top:-70px;right:-90px;pointer-events:none}
+#s-lock::after{content:'';position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(90,40,150,.4),transparent 70%);bottom:60px;left:-80px;pointer-events:none}
+.lk-statusmini{position:absolute;top:0;left:0;right:0;height:34px;display:flex;align-items:flex-end;justify-content:space-between;padding:6px 22px;font-size:11px;color:#fff;font-weight:700;z-index:10}
+.lk-time{font-size:4.6rem;font-weight:200;color:#fff;text-align:center;margin-top:96px;letter-spacing:-.02em;position:relative;z-index:1;line-height:1}
+.lk-date{font-size:.95rem;color:rgba(255,255,255,.7);text-align:center;margin-top:8px;z-index:1;position:relative}
+.lk-notifs{margin:30px 16px 0;display:flex;flex-direction:column;gap:9px;z-index:1;position:relative}
+.lk-notif{background:rgba(255,255,255,.13);backdrop-filter:blur(14px);border-radius:18px;padding:12px 14px;display:flex;align-items:center;gap:11px}
+.lkni{font-size:1.25rem}.lkna{font-size:.7rem;color:rgba(255,255,255,.55);margin-bottom:2px}.lknt{font-size:.86rem;color:#fff;font-weight:600;line-height:1.3}
+.lk-bottom{position:absolute;bottom:46px;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:0 40px;z-index:2}
+.lk-qbtn{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.16);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;font-size:1.3rem;cursor:pointer}
+.lk-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;z-index:1}
+.lk-arr{font-size:1.15rem;color:rgba(255,255,255,.6);animation:lka 1.6s infinite;display:block}
+@keyframes lka{0%,100%{transform:translateY(5px);opacity:.35}50%{transform:translateY(-4px);opacity:1}}
+.lk-htxt{font-size:.74rem;color:rgba(255,255,255,.45)}
 
 /* HOME */
-#s-home{background:linear-gradient(135deg,#080c1a,#0d1a3a 35%,#1a0d35 70%,#060812)}
-#s-home::before{content:'';position:absolute;width:290px;height:290px;border-radius:50%;background:radial-gradient(circle,rgba(40,80,200,.28),transparent 65%);top:-60px;left:-80px;pointer-events:none}
-.hgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 4px;padding:44px 10px 8px;position:relative;z-index:1}
-.aiwrap{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;position:relative}
-.aiwrap.uninstalled{opacity:.38;cursor:default}
-.ai{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;box-shadow:0 3px 10px rgba(0,0,0,.5);transition:transform .1s}
-.aiwrap:active:not(.uninstalled) .ai{transform:scale(.85)}
-.albl{font-size:.56rem;color:rgba(255,255,255,.88);text-align:center;text-shadow:0 1px 5px rgba(0,0,0,.8);font-weight:600;max-width:48px;line-height:1.3}
-.dock{position:absolute;bottom:16px;left:8px;right:8px;background:rgba(255,255,255,.12);backdrop-filter:blur(24px);border-radius:22px;padding:9px 4px;display:flex;justify-content:space-around;z-index:1}
+#s-home{background:linear-gradient(160deg,#0a1024 0%,#102046 32%,#1d1040 66%,#080a14 100%);overflow:hidden}
+#s-home::before{content:'';position:absolute;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(40,90,210,.3),transparent 64%);top:-90px;left:-110px;pointer-events:none}
+#s-home::after{content:'';position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(120,40,200,.26),transparent 64%);bottom:120px;right:-90px;pointer-events:none}
+.home-pages{flex:1;display:flex;transition:transform .3s cubic-bezier(.3,1,.4,1);position:relative;z-index:1}
+.home-page{min-width:100%;padding:48px 16px 0;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:min-content;gap:18px 4px;align-content:start}
+.aiwrap{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.ai{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 4px 14px rgba(0,0,0,.45);transition:transform .1s}
+.aiwrap:active .ai{transform:scale(.84)}
+.albl{font-size:.62rem;color:rgba(255,255,255,.92);text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.85);font-weight:600;max-width:58px;line-height:1.3}
+.page-dots{display:flex;justify-content:center;gap:7px;padding:6px 0 2px;z-index:1}
+.pdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);transition:.2s}
+.pdot.on{background:#fff;width:18px;border-radius:3px}
+.dock{margin:6px 12px 0;background:rgba(255,255,255,.14);backdrop-filter:blur(28px);border-radius:28px;padding:11px 6px;display:flex;justify-content:space-around;z-index:1;position:relative}
 
-/* SETTINGS — Samsung One UI (light) */
-#s-settings{background:#f0f0f5}
-.settings-hd{background:#f0f0f5;padding:30px 14px 8px;display:flex;align-items:center;gap:8px;flex-shrink:0}
-.settings-back{background:none;border:none;font-size:1.1rem;cursor:pointer;color:#555;padding:4px}
-.settings-title{font-size:1.25rem;font-weight:800;color:#111;flex:1}
-.settings-search-ico{font-size:1.1rem;color:#555;cursor:pointer}
-.settings-body{flex:1;overflow-y:auto;padding:6px 10px 80px}
-.sc{background:#fff;border-radius:16px;margin-bottom:10px;overflow:hidden}
-.sc-item{display:flex;align-items:center;gap:11px;padding:12px 13px;border-bottom:1px solid #f5f5f5;cursor:pointer;transition:.1s}
-.sc-item:last-child{border-bottom:none}
-.sc-item:active{background:#f8f8f8}
-.s-ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
-.sc-text{flex:1;min-width:0}
-.sc-name{font-size:.86rem;font-weight:700;color:#111}
-.sc-sub{font-size:.62rem;color:#888;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sc-arrow{color:#ccc;font-size:1rem}
+/* ════════ NOTIFICATION SHADE ════════ */
+.shade{position:absolute;top:0;left:0;right:0;z-index:200;background:rgba(16,16,26,.97);backdrop-filter:blur(34px);border-radius:0 0 30px 30px;transform:translateY(-100%);will-change:transform;color:#fff}
+.shade.snap{transition:transform .34s cubic-bezier(.25,1,.3,1)}
+.shade-ovr{position:absolute;inset:0;z-index:199;display:none;background:rgba(0,0,0,.25)}
+.shade-ovr.on{display:block}
+.sh-top{display:flex;justify-content:flex-end;gap:18px;padding:12px 18px 4px}
+.sh-tbtn{font-size:1.1rem;opacity:.55;cursor:pointer}.sh-tbtn:hover{opacity:1}
+.sh-timerow{padding:2px 20px 10px;display:flex;align-items:flex-end;gap:10px}
+.sh-time{font-size:3rem;font-weight:200;line-height:1}
+.sh-dateblk{padding-bottom:5px}.sh-date{font-size:.74rem;color:rgba(255,255,255,.5);line-height:1.5}
+.qs-lg{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 8px}
+.qslg{background:rgba(255,255,255,.09);border-radius:18px;padding:13px;display:flex;align-items:center;gap:11px;cursor:pointer;border:2px solid transparent;transition:.12s}
+.qslg.on{background:rgba(90,170,255,.22);border-color:rgba(90,170,255,.45)}
+.qslg:active{transform:scale(.93)}
+.qslg-ico{font-size:1.35rem}.qslg-nm{font-size:.8rem;font-weight:700}.qslg-sub{font-size:.6rem;color:rgba(255,255,255,.45);margin-top:1px}
+.qslg.on .qslg-nm{color:#7ec3ff}
+.qs-sm{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 12px 8px}
+.qssm{background:rgba(255,255,255,.08);border-radius:15px;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;border:2px solid transparent;transition:.12s}
+.qssm.on{background:rgba(90,170,255,.2);border-color:rgba(90,170,255,.4)}
+.qssm:active{transform:scale(.88)}
+.qssm-ico{font-size:1.2rem}.qssm-lbl{font-size:.55rem;color:rgba(255,255,255,.5);text-align:center;line-height:1.2}
+.qssm.on .qssm-lbl{color:#7ec3ff}
+.sh-sliders{padding:4px 14px 10px}
+.sl-row{display:flex;align-items:center;gap:9px;padding:5px 0}
+.sl-ico{font-size:.95rem;opacity:.7;width:20px;text-align:center}
+.sl-track{flex:1;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;background:rgba(255,255,255,.2);outline:none;cursor:pointer}
+.sl-track::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#7ec3ff;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.sh-notifs{padding:2px 12px 6px}
+.sh-nhd{font-size:.62rem;font-weight:800;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em;padding:4px 4px 7px}
+.sh-notif{background:rgba(255,255,255,.07);border-radius:16px;padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sh-ni{font-size:1.15rem}.sh-na{font-size:.62rem;color:rgba(255,255,255,.42);margin-bottom:2px}.sh-nt{font-size:.78rem;font-weight:600}
+.sh-foot{text-align:center;padding:10px 0 8px;font-size:.62rem;color:rgba(255,255,255,.2);cursor:pointer}
 
-/* PLAY STORE */
-#s-playstore{background:#fff}
-.ps-hd{background:#fff;padding:30px 10px 8px;display:flex;align-items:center;gap:7px;border-bottom:1px solid #f0f0f0;flex-shrink:0}
-.ps-back{background:none;border:none;font-size:1.1rem;cursor:pointer;color:#555;padding:4px}
-.ps-sbox{flex:1;display:flex;align-items:center;gap:7px;background:#f2f2f2;border-radius:18px;padding:7px 11px}
-.ps-sinp{flex:1;border:none;background:transparent;font-size:.8rem;font-family:inherit;color:#111;outline:none}
-.ps-sico{font-size:.9rem}
-.ps-av{width:26px;height:26px;border-radius:50%;background:#1f6feb;color:#fff;font-size:.72rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ps-body{flex:1;overflow-y:auto;padding:8px 10px 80px}
-.ps-info{background:#e8f0fe;border-radius:10px;padding:9px 11px;margin-bottom:10px;font-size:.73rem;color:#1a5fb4;line-height:1.65}
-.ps-sec-hd{font-size:.65rem;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.05em;padding:4px 0 7px}
-.ps-app{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid #f0f0f0}
-.ps-app:last-child{border-bottom:none}
-.ps-aico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.45rem;flex-shrink:0;border:1px solid rgba(0,0,0,.07)}
-.ps-ainfo{flex:1}
-.ps-aname{font-size:.83rem;font-weight:700;color:#111}
-.ps-asub{font-size:.62rem;color:#888;margin-top:1px}
-.ps-arating{font-size:.58rem;color:#fbbc04;margin-top:2px}
-.ps-abtn{padding:6px 13px;border-radius:18px;border:1.5px solid #1f6feb;background:transparent;color:#1f6feb;font-size:.72rem;font-weight:800;cursor:pointer;font-family:inherit;min-width:46px;text-align:center;transition:.12s;white-space:nowrap}
-.ps-abtn.installed{background:#e8f0fe;border-color:transparent}
-.ps-abtn.installing{color:#aaa;border-color:#e0e0e0;background:#f5f5f5;pointer-events:none}
-.ps-abtn:hover{background:#e8f0fe}
+/* ════════ GENERIC APP SCREEN ════════ */
+.app-scr{background:#10131c}
+.app-hd{padding:42px 16px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.app-hd-ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.app-hd-name{font-size:1.15rem;font-weight:800;color:#fff}
+.app-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px 60px;text-align:center}
+.app-big{font-size:4rem;margin-bottom:16px;opacity:.85}
+.app-msg{font-size:.95rem;color:#c7d2e8;font-weight:700;margin-bottom:8px}
+.app-sub{font-size:.8rem;color:#6c7a96;line-height:1.7}
 
-/* KAKAO LOGIN */
-#s-kakao-login{background:#fff}
-.kl-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px}
-.kl-logo{font-size:3.5rem;margin-bottom:6px}
-.kl-title{font-size:1.1rem;font-weight:800;color:#3c1e1e;margin-bottom:4px}
-.kl-sub{font-size:.73rem;color:#888;text-align:center;margin-bottom:22px;line-height:1.6}
-.kl-inp{width:100%;border:1.5px solid #e8e8e8;border-radius:8px;padding:11px 13px;font-size:.86rem;font-family:inherit;outline:none;margin-bottom:8px;color:#111}
-.kl-inp:focus{border-color:#fee500}
-.kl-btn{width:100%;background:#fee500;border:none;border-radius:8px;padding:12px;font-size:.88rem;font-weight:800;color:#3c1e1e;cursor:pointer;font-family:inherit;margin-bottom:6px;transition:.12s}
-.kl-btn:active{background:#f0d800}
-.kl-find{font-size:.7rem;color:#aaa;text-align:center;cursor:pointer;padding:4px}
+/* SETTINGS (One UI light) */
+#s-settings{background:#f1f1f6}
+#s-settings.dark{background:#101013}
+.set-hd{padding:42px 18px 10px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.set-title{font-size:1.5rem;font-weight:800;color:#111;flex:1}
+#s-settings.dark .set-title{color:#fff}
+.set-search{font-size:1.2rem;color:#666;cursor:pointer}
+.set-body{flex:1;overflow-y:auto;padding:6px 12px 70px}
+.set-card{background:#fff;border-radius:18px;margin-bottom:12px;overflow:hidden}
+#s-settings.dark .set-card{background:#1c1c22}
+.set-row{display:flex;align-items:center;gap:13px;padding:14px;border-bottom:1px solid #f4f4f6;cursor:pointer}
+#s-settings.dark .set-row{border-color:#26262e}
+.set-row:last-child{border-bottom:none}
+.set-row:active{background:#f8f8fa}
+#s-settings.dark .set-row:active{background:#26262e}
+.set-ico{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
+.set-tx{flex:1;min-width:0}
+.set-nm{font-size:.92rem;font-weight:700;color:#111}
+#s-settings.dark .set-nm{color:#eee}
+.set-sb{font-size:.66rem;color:#999;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.set-toggle{width:44px;height:26px;border-radius:13px;background:#ccc;position:relative;flex-shrink:0;transition:.2s;cursor:pointer}
+.set-toggle.on{background:#3478f6}
+.set-toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.set-toggle.on::after{left:21px}
 
-/* KAKAO MAIN */
-#s-kakao-main{background:#f5f5f5}
-.km-hd{background:#fee500;padding:30px 12px 8px;display:flex;align-items:center;gap:6px;flex-shrink:0}
-.km-title{font-size:1rem;font-weight:900;color:#3c1e1e;flex:1}
-.km-icons{display:flex;gap:10px;font-size:1rem}
-.km-myprofile{display:flex;align-items:center;gap:9px;padding:10px 14px;background:#fff;border-bottom:1px solid #f0f0f0}
-.km-mav{width:38px;height:38px;border-radius:50%;background:#fee500;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
-.km-mname{font-size:.86rem;font-weight:800;color:#111}
-.km-msub{font-size:.63rem;color:#aaa;margin-top:1px}
-.km-friends-hd{font-size:.62rem;font-weight:800;color:#888;padding:10px 14px 5px;text-transform:uppercase;letter-spacing:.05em;background:#f5f5f5}
-.km-friend{display:flex;align-items:center;gap:9px;padding:9px 14px;background:#fff;border-bottom:1px solid #f8f8f8;cursor:pointer}
-.km-fav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem}
-.km-fn{font-size:.83rem;font-weight:700;color:#111}
-.km-fs{font-size:.62rem;color:#bbb;margin-top:1px}
+/* CALCULATOR */
+#s-calc{background:#000}
+.calc-disp{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-end;padding:40px 24px 16px;min-height:0}
+.calc-prev{font-size:1.1rem;color:#888;min-height:24px}
+.calc-now{font-size:3.2rem;color:#fff;font-weight:300;word-break:break-all;line-height:1.1}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px 16px 24px}
+.ck{height:60px;border:none;border-radius:50%;font-size:1.5rem;font-weight:500;cursor:pointer;color:#fff;background:#333;font-family:inherit;transition:.1s}
+.ck:active{filter:brightness(1.5)}
+.ck-op{background:#ff9f0a}.ck-fn{background:#a5a5a5;color:#000}.ck-eq{background:#ff9f0a}
 
-/* YOUTUBE */
-#s-youtube{background:#f9f9f9}
-.yt-hd{background:#fff;padding:30px 10px 8px;display:flex;align-items:center;gap:7px;border-bottom:1px solid #eee;flex-shrink:0}
-.yt-logo{font-size:.88rem;font-weight:900;flex:1}
-.yt-logo .yt-r{color:#ff0000}
-.yt-logo .yt-t{color:#282828}
-.yt-body{flex:1;overflow-y:auto}
-.yt-card{background:#fff;margin-bottom:8px}
-.yt-thumb{height:96px;display:flex;align-items:center;justify-content:center;font-size:2rem}
-.yt-info{padding:7px 10px 9px;display:flex;gap:7px}
-.yt-ch{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
-.yt-title{font-size:.78rem;font-weight:700;color:#0f0f0f;line-height:1.35}
-.yt-sub{font-size:.6rem;color:#606060;margin-top:3px}
+/* CAMERA */
+#s-camera{background:#000}
+.cam-vf{flex:1;background:radial-gradient(circle,#1a1a1a,#000);display:flex;align-items:center;justify-content:center;position:relative;min-height:0}
+.cam-scene{font-size:5rem;transition:.2s}
+.cam-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.cam-ctrl{padding:14px 26px 22px;display:flex;align-items:center;justify-content:space-between;background:#000}
+.cam-flip,.cam-thumb{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;cursor:pointer;color:#fff;background:#1a1a1a}
+.cam-shutter{width:66px;height:66px;border-radius:50%;background:#fff;border:5px solid rgba(255,255,255,.35);cursor:pointer;transition:.1s}
+.cam-shutter:active{transform:scale(.88)}
 
-/* NAVER */
-#s-naver{background:#f8f8f8}
-.nv-hd{background:#03c75a;padding:30px 10px 9px;flex-shrink:0}
-.nv-logo{font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:7px}
-.nv-sbox{display:flex;background:#fff;border-radius:5px;overflow:hidden}
-.nv-sinp{flex:1;border:none;padding:8px 11px;font-size:.8rem;font-family:inherit;outline:none;color:#111}
-.nv-sbtn{background:#03c75a;border:none;color:#fff;font-size:1rem;padding:0 12px;cursor:pointer}
-.nv-body{flex:1;overflow-y:auto;padding:8px 10px 70px}
-.nv-art{background:#fff;border-radius:10px;margin-bottom:7px;overflow:hidden;cursor:pointer}
-.nv-art:active{opacity:.8}
-.nv-art-img{height:72px;display:flex;align-items:center;justify-content:center;font-size:2rem}
-.nv-art-info{padding:7px 10px 9px}
-.nv-art-title{font-size:.8rem;font-weight:700;color:#111;line-height:1.35}
-.nv-art-sub{font-size:.6rem;color:#888;margin-top:3px}
-
-/* RIGHT PANEL */
-.rpanel{background:#161b27;border-left:1px solid #21262d;display:flex;flex-direction:column;overflow:hidden}
-.rp-hd{padding:12px 14px 8px;border-bottom:1px solid #21262d;font-size:.65rem;font-weight:800;color:#8b949e;text-transform:uppercase;letter-spacing:.1em;flex-shrink:0}
-.rfeed{flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:7px}
-.rbi{border-radius:10px;padding:11px 12px;font-size:.8rem;line-height:1.6;animation:rSlide .22s}
-@keyframes rSlide{from{transform:translateX(10px);opacity:0}to{transform:translateX(0);opacity:1}}
-.rb-ok{background:#0d2117;border-left:3px solid #2ea043;color:#56d364}
-.rb-info{background:#0d1b2a;border-left:3px solid #388bfd;color:#79c0ff}
-.rb-tip{background:#1f1700;border-left:3px solid #d29922;color:#e3b341}
-.rb-type{font-size:.58rem;font-weight:800;letter-spacing:.07em;opacity:.7;margin-bottom:3px;text-transform:uppercase}
-.rb-msg{font-weight:700;margin-bottom:2px}
-.rb-det{font-size:.73rem;opacity:.8;font-weight:400;line-height:1.55}
+/* DIALER */
+#s-dialer{background:#0d0f16}
+.dl-disp{padding:48px 20px 10px;text-align:center;min-height:90px;display:flex;flex-direction:column;justify-content:center}
+.dl-num{font-size:1.9rem;color:#fff;font-weight:300;letter-spacing:.06em;min-height:42px}
+.dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:8px 36px;flex:1;align-content:center}
+.dk{aspect-ratio:1;max-height:58px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:1.5rem;font-weight:300;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:.1s}
+.dk:active{background:rgba(255,255,255,.25)}
+.dl-actions{display:flex;justify-content:center;align-items:center;gap:40px;padding:6px 0 26px}
+.dl-call{width:64px;height:64px;border-radius:50%;background:#34c759;border:none;color:#fff;font-size:1.6rem;cursor:pointer}
+.dl-del{background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;opacity:.7}
 </style>
 </head>
 <body>
 <div class="topbar">
-  <a href="index.html">← 처음으로</a><span class="topbar-sep">|</span>
-  <span class="topbar-title">📱 1강 · 스마트폰 기초</span>
-</div>
-<div class="stage">
-
-<!-- LEFT PANEL -->
-<div class="lpanel">
-  <div class="lp-hd">📋 해볼 수 있는 기능<div class="lp-sub">순서 상관없이 자유롭게 눌러보세요. 해본 것은 ✓ 표시돼요.</div></div>
-  <div id="phase-list"></div>
+  <a href="index.html">← 처음으로</a><span class="tdiv">|</span>
+  <span>📱 스마트폰 체험</span>
 </div>
 
-<!-- PHONE -->
-<div class="ppanel">
+<div class="stagewrap">
 <div class="phone">
   <div class="hwb bvup" onclick="hwVol(1)"></div>
   <div class="hwb bvdown" onclick="hwVol(-1)"></div>
   <div class="hwb bpower" onclick="hwPower()"></div>
   <div class="pglow" id="pglow"></div>
   <div class="phole"></div>
+
   <div class="pscreen" id="pscr">
+
+    <!-- status bar -->
     <div class="sbar" id="sbar" style="display:none">
-      <span id="stime">오전 10:30</span>
-      <div class="sicons"><span style="font-size:8px">SKT</span><span>📶</span><div class="sbatt"><div class="sbatt-bar"><div class="sbatt-fill"></div></div></div></div>
+      <span id="sb-time">10:30</span>
+      <div class="sicons" id="sb-icons"></div>
     </div>
 
     <!-- SHADE -->
     <div class="shade" id="shade">
-      <div class="shade-toprow">
-        <span class="stbtn" onclick="closeShade()">✏️</span>
-        <span class="stbtn" onclick="closeShade()">⏻</span>
-        <span class="stbtn" onclick="closeShade()">⚙️</span>
+      <div class="sh-top"><span class="sh-tbtn" onclick="closeShade()">⚙️</span><span class="sh-tbtn" onclick="closeShade()">✕</span></div>
+      <div class="sh-timerow"><div class="sh-time" id="sh-time">10:30</div><div class="sh-dateblk"><div class="sh-date" id="sh-date">월요일, 6월 16일</div><div class="sh-date" id="sh-net" style="color:rgba(255,255,255,.3);margin-top:1px">SKT · LTE</div></div></div>
+      <div class="qs-lg">
+        <div class="qslg on" data-qs="wifi" onclick="qsTap('wifi')"><span class="qslg-ico">📶</span><div><div class="qslg-nm">Wi-Fi</div><div class="qslg-sub" id="qsub-wifi">우리집 5G</div></div></div>
+        <div class="qslg on" data-qs="bt" onclick="qsTap('bt')"><span class="qslg-ico">🔵</span><div><div class="qslg-nm">블루투스</div><div class="qslg-sub" id="qsub-bt">연결됨</div></div></div>
       </div>
-      <div class="shade-timerow">
-        <div class="sh-time" id="sh-time">10:30</div>
-        <div class="sh-dateblock"><div class="sh-date" id="sh-date">월요일, 6월 16일</div><div class="sh-date" style="color:rgba(255,255,255,.28);margin-top:1px">SKT &nbsp;📶 &nbsp;LTE</div></div>
+      <div class="qs-sm">
+        <div class="qssm" data-qs="sound" onclick="qsTap('sound')"><span class="qssm-ico" id="qsi-sound">🔔</span><span class="qssm-lbl" id="qsl-sound">소리</span></div>
+        <div class="qssm" data-qs="flash" onclick="qsTap('flash')"><span class="qssm-ico">🔦</span><span class="qssm-lbl">손전등</span></div>
+        <div class="qssm on" data-qs="data" onclick="qsTap('data')"><span class="qssm-ico">📡</span><span class="qssm-lbl">데이터</span></div>
+        <div class="qssm" data-qs="plane" onclick="qsTap('plane')"><span class="qssm-ico">✈️</span><span class="qssm-lbl">비행기</span></div>
+        <div class="qssm on" data-qs="rotate" onclick="qsTap('rotate')"><span class="qssm-ico">🔄</span><span class="qssm-lbl">화면회전</span></div>
+        <div class="qssm on" data-qs="loc" onclick="qsTap('loc')"><span class="qssm-ico">📍</span><span class="qssm-lbl">위치</span></div>
+        <div class="qssm" data-qs="dark" onclick="qsTap('dark')"><span class="qssm-ico">🌙</span><span class="qssm-lbl">다크모드</span></div>
+        <div class="qssm" data-qs="hotspot" onclick="qsTap('hotspot')"><span class="qssm-ico">📲</span><span class="qssm-lbl">핫스팟</span></div>
       </div>
-      <!-- Large tiles -->
-      <div class="qs-lg-row">
-        <div class="qslg on" id="qt-wifi" onclick="qsTap('wifi')">
-          <span class="qslg-ico">📶</span>
-          <div><div class="qslg-nm">Wi-Fi</div><div class="qslg-sub">내 홈 Wi-Fi</div></div>
-        </div>
-        <div class="qslg on" id="qt-bt" onclick="qsTap('bt')">
-          <span class="qslg-ico">🔵</span>
-          <div><div class="qslg-nm">블루투스</div><div class="qslg-sub">연결됨</div></div>
-        </div>
+      <div class="sh-sliders">
+        <div class="sl-row"><span class="sl-ico">🔆</span><input type="range" class="sl-track" id="sl-bright" min="10" max="100" value="85" oninput="setBright(this.value)"/></div>
+        <div class="sl-row"><span class="sl-ico" id="sl-vico">🔊</span><input type="range" class="sl-track" id="sl-vol" min="0" max="100" value="60" oninput="setVol(this.value)"/></div>
       </div>
-      <!-- Small tiles -->
-      <div class="qs-sm-row">
-        <div class="qssm" id="qt-sound" onclick="qsTap('sound')"><span class="qssm-ico">🔇</span><span class="qssm-lbl">무음</span></div>
-        <div class="qssm" id="qt-plane" onclick="qsTap('plane')"><span class="qssm-ico">✈️</span><span class="qssm-lbl">비행기</span></div>
-        <div class="qssm" id="qt-flash" onclick="qsTap('flash')"><span class="qssm-ico">🔦</span><span class="qssm-lbl">손전등</span></div>
-        <div class="qssm" id="qt-data" onclick="qsTap('data')"><span class="qssm-ico">📡</span><span class="qssm-lbl">모바일<br>데이터</span></div>
-        <div class="qssm on" id="qt-rotate" onclick="qsTap('rotate')"><span class="qssm-ico">🔄</span><span class="qssm-lbl">화면<br>회전</span></div>
-        <div class="qssm on" id="qt-loc" onclick="qsTap('loc')"><span class="qssm-ico">📍</span><span class="qssm-lbl">위치</span></div>
-        <div class="qssm" id="qt-hotspot" onclick="qsTap('hotspot')"><span class="qssm-ico">📲</span><span class="qssm-lbl">핫스팟</span></div>
-        <div class="qssm on" id="qt-nfc" onclick="qsTap('nfc')"><span class="qssm-ico">⬛</span><span class="qssm-lbl">NFC</span></div>
-      </div>
-      <!-- Sliders -->
-      <div class="shade-sliders">
-        <div class="sl-row">
-          <span class="sl-ico">🔅</span>
-          <input type="range" class="sl-track" min="0" max="100" value="80" oninput="shadeBright(this.value)"/>
-          <span class="sl-extra" title="다크모드">🌙</span>
-        </div>
-        <div class="sl-row">
-          <span class="sl-ico">🔕</span>
-          <input type="range" class="sl-track" min="0" max="100" value="60" oninput="shadeVol(this.value)"/>
-          <span class="sl-extra">🔊</span>
-        </div>
-      </div>
-      <!-- Notifications -->
-      <div class="shade-notifs">
-        <div class="sh-notif-hd">알림</div>
+      <div class="sh-notifs">
+        <div class="sh-nhd">알림</div>
         <div class="sh-notif"><span class="sh-ni">💬</span><div><div class="sh-na">카카오톡 · 방금</div><div class="sh-nt">큰딸: 엄마 점심 드셨어요? 🍚</div></div></div>
-        <div class="sh-notif"><span class="sh-ni">📞</span><div><div class="sh-na">전화 · 오전 9:42</div><div class="sh-nt">아들 (철수) — 부재중 1회</div></div></div>
+        <div class="sh-notif"><span class="sh-ni">📞</span><div><div class="sh-na">전화 · 오전 9:42</div><div class="sh-nt">아들(철수) — 부재중 1회</div></div></div>
       </div>
-      <div class="shade-footer" onclick="closeShade()">▲ 위로 밀어서 닫기</div>
+      <div class="sh-foot" onclick="closeShade()">▲ 위로 밀어서 닫기</div>
     </div>
     <div class="shade-ovr" id="shade-ovr" onclick="closeShade()"></div>
 
-    <!-- POPUP -->
-    <div class="pop" id="pop">
-      <div class="pop-card">
-        <div class="pop-handle"></div>
-        <div class="pop-ico" id="pop-ico">💡</div>
-        <div class="pop-title" id="pop-title">제목</div>
-        <span class="pop-tag" id="pop-tag">팁</span>
-        <div class="pop-body" id="pop-body">내용</div>
-        <button class="pop-btn" id="pop-btn" onclick="closePopup()">✓ 알겠어요!</button>
-      </div>
-    </div>
+    <!-- screens -->
+    <div class="scr on" id="s-off"><div class="off-hint"><span class="off-arr">→</span>오른쪽 전원 버튼을<br>꾹 눌러보세요</div></div>
 
-    <!-- SCREENS -->
-    <div class="scr on" id="s-off">
-      <div class="off-hint"><span class="off-arr">→</span>오른쪽 전원 버튼을<br>꾹 눌러보세요</div>
-    </div>
-
-    <div class="scr" id="s-boot">
-      <div class="blogos">SAMSUNG</div>
-      <div class="blogos-sub">Galaxy</div>
-      <div class="bdots"><div class="bdot"></div><div class="bdot"></div><div class="bdot"></div></div>
-    </div>
+    <div class="scr" id="s-boot"><div class="blogo">SAMSUNG</div><div class="blogo-sub">Galaxy</div><div class="bdots"><div class="bdot"></div><div class="bdot"></div><div class="bdot"></div></div></div>
 
     <div class="scr" id="s-lock">
-      <div style="position:absolute;top:0;left:0;right:0;height:28px;display:flex;align-items:flex-end;justify-content:space-between;padding:3px 14px;font-size:9px;color:#fff;font-weight:700;z-index:10">
-        <span id="lt-sm">오전 10:30</span><span>SKT 📶 🔋</span>
-      </div>
-      <div class="lt-time" id="lt-big">10:30</div>
-      <div class="lt-date">2026년 6월 16일 월요일</div>
-      <div class="lock-notifs">
+      <div class="lk-statusmini"><span id="lk-sm-time">오전 10:30</span><span id="lk-sm-icons">SKT 📶 🔋</span></div>
+      <div class="lk-time" id="lk-time">10:30</div>
+      <div class="lk-date">2026년 6월 16일 월요일</div>
+      <div class="lk-notifs">
         <div class="lk-notif"><span class="lkni">💬</span><div><div class="lkna">카카오톡</div><div class="lknt">큰딸: 엄마 점심 드셨어요? 🍚</div></div></div>
-        <div class="lk-notif"><span class="lkni">📞</span><div><div class="lkna">부재중 전화</div><div class="lknt">아들 (철수) — 1회 · 오전 9:42</div></div></div>
+        <div class="lk-notif"><span class="lkni">📞</span><div><div class="lkna">부재중 전화</div><div class="lknt">아들(철수) · 오전 9:42</div></div></div>
       </div>
-      <div class="lk-hint"><span class="lkarr">↑</span><span class="lktxt">위로 밀어서 잠금 해제</span></div>
+      <div class="lk-bottom"><div class="lk-qbtn" onclick="event.stopPropagation();unlockTo('dialer')">📞</div><div class="lk-qbtn" onclick="event.stopPropagation();unlockTo('camera')">📷</div></div>
+      <div class="lk-hint"><span class="lk-arr">↑</span><span class="lk-htxt">위로 밀어서 잠금 해제</span></div>
     </div>
 
     <div class="scr" id="s-home">
-      <div class="hgrid">
-        <div class="aiwrap" onclick="openApp('call')"><div class="ai" style="background:linear-gradient(135deg,#1a4a2a,#2ea043)">📞</div><div class="albl">전화</div></div>
-        <div class="aiwrap" onclick="openApp('camera')"><div class="ai" style="background:linear-gradient(135deg,#1a1a2e,#2a2a4a)">📷</div><div class="albl">카메라</div></div>
-        <div class="aiwrap" onclick="openApp('settings')"><div class="ai" style="background:linear-gradient(135deg,#2a2a3a,#3a3a5a)">⚙️</div><div class="albl">설정</div></div>
-        <div class="aiwrap" onclick="openApp('gallery')"><div class="ai" style="background:linear-gradient(135deg,#3a1a0a,#6b3a1f)">🖼️</div><div class="albl">갤러리</div></div>
-        <div class="aiwrap" id="home-kakao" onclick="openApp('kakao')" style="opacity:.38"><div class="ai" style="background:#fee500;font-size:1.5rem">💛</div><div class="albl">카카오톡</div></div>
-        <div class="aiwrap" id="home-youtube" onclick="openApp('youtube')" style="opacity:.38"><div class="ai" style="background:#ff0000;color:#fff;font-size:.9rem;font-weight:900">▶</div><div class="albl">유튜브</div></div>
-        <div class="aiwrap" id="home-naver" onclick="openApp('naver')" style="opacity:.38"><div class="ai" style="background:#03c75a;color:#fff;font-size:1rem;font-weight:900">N</div><div class="albl">네이버</div></div>
-        <div class="aiwrap" onclick="openApp('playstore')"><div class="ai" style="background:linear-gradient(135deg,#e8f0fe,#f3e5f5);font-size:1.2rem">▶️</div><div class="albl">Play<br>스토어</div></div>
+      <div class="home-pages" id="home-pages">
+        <div class="home-page" id="hp0"></div>
+        <div class="home-page" id="hp1"></div>
       </div>
-      <div class="dock">
-        <div class="aiwrap" onclick="openApp('call')"><div class="ai" style="background:linear-gradient(135deg,#1a4a2a,#2ea043);width:42px;height:42px">📞</div><div class="albl">전화</div></div>
-        <div class="aiwrap" onclick="openApp('playstore')"><div class="ai" style="background:linear-gradient(135deg,#e8f0fe,#f3e5f5);width:42px;height:42px;font-size:1.1rem">▶️</div><div class="albl">스토어</div></div>
-        <div class="aiwrap" onclick="openApp('camera')"><div class="ai" style="background:linear-gradient(135deg,#1a1a2e,#2a2a4a);width:42px;height:42px">📷</div><div class="albl">카메라</div></div>
-        <div class="aiwrap" onclick="openApp('settings')"><div class="ai" style="background:linear-gradient(135deg,#2a2a3a,#3a3a5a);width:42px;height:42px">⚙️</div><div class="albl">설정</div></div>
-      </div>
+      <div class="page-dots"><div class="pdot on" id="pd0"></div><div class="pdot" id="pd1"></div></div>
+      <div class="dock" id="dock"></div>
+    </div>
+
+    <!-- generic app -->
+    <div class="scr app-scr" id="s-app">
+      <div class="app-hd"><div class="app-hd-ico" id="app-hd-ico"></div><div class="app-hd-name" id="app-hd-name"></div></div>
+      <div class="app-body"><div class="app-big" id="app-big"></div><div class="app-msg" id="app-msg"></div><div class="app-sub">이 앱은 다음 단계에서 만들 예정이에요.<br>지금은 ‹ 뒤로가기나 ○ 홈 버튼을 연습해보세요.</div></div>
     </div>
 
     <!-- SETTINGS -->
     <div class="scr" id="s-settings">
-      <div class="settings-hd">
-        <button class="settings-back" onclick="goHome()">‹</button>
-        <span class="settings-title">설정</span>
-        <span class="settings-search-ico">🔍</span>
-      </div>
-      <div class="settings-body">
-        <div class="sc">
-          <div class="sc-item" onclick="settingTap('wifi')"><div class="s-ico" style="background:#2196F3">📶</div><div class="sc-text"><div class="sc-name">연결</div><div class="sc-sub">Wi-Fi · 블루투스 · 비행기 탑승 모드</div></div><span class="sc-arrow">›</span></div>
-          <div class="sc-item"><div class="s-ico" style="background:#7B1FA2">📲</div><div class="sc-text"><div class="sc-name">기기 간 연결</div><div class="sc-sub">Quick Share · Samsung DeX</div></div><span class="sc-arrow">›</span></div>
+      <div class="set-hd"><span class="set-title">설정</span><span class="set-search">🔍</span></div>
+      <div class="set-body">
+        <div class="set-card">
+          <div class="set-row"><div class="set-ico" style="background:#2196F3">📶</div><div class="set-tx"><div class="set-nm">Wi-Fi</div><div class="set-sb" id="set-wifi-sb">우리집 5G에 연결됨</div></div><div class="set-toggle on" id="set-wifi" onclick="settingToggle('wifi')"></div></div>
+          <div class="set-row"><div class="set-ico" style="background:#3478f6">🔵</div><div class="set-tx"><div class="set-nm">블루투스</div><div class="set-sb">무선 이어폰·스피커 연결</div></div><div class="set-toggle on" id="set-bt" onclick="settingToggle('bt')"></div></div>
+          <div class="set-row"><div class="set-ico" style="background:#7B1FA2">📡</div><div class="set-tx"><div class="set-nm">모바일 데이터</div><div class="set-sb">SKT · LTE</div></div><div class="set-toggle on" id="set-data" onclick="settingToggle('data')"></div></div>
         </div>
-        <div class="sc">
-          <div class="sc-item" onclick="settingTap('sound')"><div class="s-ico" style="background:#F57C00">🔊</div><div class="sc-text"><div class="sc-name">소리 및 진동</div><div class="sc-sub">소리 모드 · 벨소리 · 음량</div></div><span class="sc-arrow">›</span></div>
-          <div class="sc-item"><div class="s-ico" style="background:#E53935">🔔</div><div class="sc-text"><div class="sc-name">알림</div><div class="sc-sub">상태표시줄 · 방해 금지</div></div><span class="sc-arrow">›</span></div>
+        <div class="set-card">
+          <div class="set-row"><div class="set-ico" style="background:#F57C00">🔔</div><div class="set-tx"><div class="set-nm">소리 모드</div><div class="set-sb" id="set-sound-sb">소리</div></div><div class="set-toggle on" id="set-sound" onclick="settingToggle('sound')"></div></div>
+          <div class="set-row"><div class="set-ico" style="background:#5856d6">🌙</div><div class="set-tx"><div class="set-nm">다크 모드</div><div class="set-sb">화면을 어둡게</div></div><div class="set-toggle" id="set-dark" onclick="settingToggle('dark')"></div></div>
+          <div class="set-row"><div class="set-ico" style="background:#43A047">🔄</div><div class="set-tx"><div class="set-nm">화면 자동 회전</div><div class="set-sb">폰을 돌리면 화면도 회전</div></div><div class="set-toggle on" id="set-rotate" onclick="settingToggle('rotate')"></div></div>
         </div>
-        <div class="sc">
-          <div class="sc-item" onclick="settingTap('display')"><div class="s-ico" style="background:#43A047">☀️</div><div class="sc-text"><div class="sc-name">디스플레이</div><div class="sc-sub">밝기 · 다크모드 · 내비게이션 바</div></div><span class="sc-arrow">›</span></div>
-          <div class="sc-item"><div class="s-ico" style="background:#00897B">🔋</div><div class="sc-text"><div class="sc-name">배터리</div><div class="sc-sub">절전 모드 · 충전 현황</div></div><span class="sc-arrow">›</span></div>
-          <div class="sc-item"><div class="s-ico" style="background:#E91E63">🖼️</div><div class="sc-text"><div class="sc-name">배경화면 및 스타일</div><div class="sc-sub">배경화면 · 컬러 팔레트</div></div><span class="sc-arrow">›</span></div>
-        </div>
-        <div class="sc">
-          <div class="sc-item" onclick="settingTap('apps')"><div class="s-ico" style="background:#3949AB">📦</div><div class="sc-text"><div class="sc-name">앱</div><div class="sc-sub">설치된 앱 관리 · 기본값</div></div><span class="sc-arrow">›</span></div>
-          <div class="sc-item"><div class="s-ico" style="background:#FB8C00">🔒</div><div class="sc-text"><div class="sc-name">잠금화면 및 보안</div><div class="sc-sub">화면 잠금 · 지문 · Face ID</div></div><span class="sc-arrow">›</span></div>
+        <div class="set-card">
+          <div class="set-row"><div class="set-ico" style="background:#00897B">🔋</div><div class="set-tx"><div class="set-nm">배터리</div><div class="set-sb">62% · 약 8시간 남음</div></div><span style="color:#ccc">›</span></div>
+          <div class="set-row"><div class="set-ico" style="background:#E91E63">🖼️</div><div class="set-tx"><div class="set-nm">배경화면 및 스타일</div><div class="set-sb">배경화면 · 컬러</div></div><span style="color:#ccc">›</span></div>
+          <div class="set-row"><div class="set-ico" style="background:#FB8C00">🔒</div><div class="set-tx"><div class="set-nm">잠금화면 및 보안</div><div class="set-sb">화면 잠금 · 지문</div></div><span style="color:#ccc">›</span></div>
         </div>
       </div>
     </div>
 
-    <!-- PLAY STORE -->
-    <div class="scr" id="s-playstore">
-      <div class="ps-hd">
-        <button class="ps-back" onclick="goHome()">‹</button>
-        <div class="ps-sbox"><span class="ps-sico">🔍</span><input class="ps-sinp" placeholder="앱, 게임 검색" id="ps-inp" value="" readonly/></div>
-        <div class="ps-av">G</div>
-      </div>
-      <div class="ps-body">
-        <div class="ps-info">💡 <b>플레이스토어</b>는 앱을 설치하는 곳이에요. 아래 추천 앱을 눌러 무료로 설치해보세요!</div>
-        <div class="ps-sec-hd">📲 지금 설치해보세요 (무료)</div>
-        <div class="ps-app">
-          <div class="ps-aico" style="background:#fee500">💛</div>
-          <div class="ps-ainfo"><div class="ps-aname">카카오톡</div><div class="ps-asub">대한민국 대표 메신저</div><div class="ps-arating">★★★★★ 4.8</div></div>
-          <button class="ps-abtn" id="pib-kakao" onclick="psInstall('kakao',this)">설치</button>
-        </div>
-        <div class="ps-app">
-          <div class="ps-aico" style="background:#ff0000;color:#fff;font-size:1.6rem">▶</div>
-          <div class="ps-ainfo"><div class="ps-aname">YouTube</div><div class="ps-asub">동영상 스트리밍</div><div class="ps-arating">★★★★★ 4.7</div></div>
-          <button class="ps-abtn" id="pib-youtube" onclick="psInstall('youtube',this)">설치</button>
-        </div>
-        <div class="ps-app">
-          <div class="ps-aico" style="background:#03c75a;color:#fff;font-size:1.2rem;font-weight:900">N</div>
-          <div class="ps-ainfo"><div class="ps-aname">네이버</div><div class="ps-asub">검색 · 뉴스 · 지도</div><div class="ps-arating">★★★★☆ 4.5</div></div>
-          <button class="ps-abtn" id="pib-naver" onclick="psInstall('naver',this)">설치</button>
-        </div>
+    <!-- CALCULATOR -->
+    <div class="scr" id="s-calc">
+      <div class="set-hd" style="padding-bottom:0"><span class="set-title" style="color:#fff">계산기</span></div>
+      <div class="calc-disp"><div class="calc-prev" id="calc-prev"></div><div class="calc-now" id="calc-now">0</div></div>
+      <div class="calc-grid">
+        <button class="ck ck-fn" onclick="calcC()">C</button>
+        <button class="ck ck-fn" onclick="calcSign()">±</button>
+        <button class="ck ck-fn" onclick="calcPct()">%</button>
+        <button class="ck ck-op" onclick="calcOp('/')">÷</button>
+        <button class="ck" onclick="calcN('7')">7</button><button class="ck" onclick="calcN('8')">8</button><button class="ck" onclick="calcN('9')">9</button><button class="ck ck-op" onclick="calcOp('*')">×</button>
+        <button class="ck" onclick="calcN('4')">4</button><button class="ck" onclick="calcN('5')">5</button><button class="ck" onclick="calcN('6')">6</button><button class="ck ck-op" onclick="calcOp('-')">−</button>
+        <button class="ck" onclick="calcN('1')">1</button><button class="ck" onclick="calcN('2')">2</button><button class="ck" onclick="calcN('3')">3</button><button class="ck ck-op" onclick="calcOp('+')">+</button>
+        <button class="ck" style="grid-column:span 2;border-radius:30px" onclick="calcN('0')">0</button><button class="ck" onclick="calcN('.')">.</button><button class="ck ck-eq" onclick="calcEq()">=</button>
       </div>
     </div>
 
-    <!-- KAKAO LOGIN -->
-    <div class="scr" id="s-kakao-login">
-      <div class="kl-body">
-        <div class="kl-logo">💛</div>
-        <div class="kl-title">카카오톡</div>
-        <div class="kl-sub">전화번호로 로그인하면<br>가족·친구와 무료로 대화해요</div>
-        <input class="kl-inp" placeholder="전화번호 (예: 010-1234-5678)" id="kl-phone" type="tel" oninput="klPhoneInput()"/>
-        <input class="kl-inp" placeholder="인증번호 4자리" id="kl-code" type="number" style="display:none"/>
-        <button class="kl-btn" id="kl-btn" onclick="klNext()">카카오계정으로 계속</button>
-        <div class="kl-find">계정이 없으신가요? 새로 만들기</div>
-        <button style="margin-top:10px;background:none;border:none;color:#aaa;font-size:.7rem;cursor:pointer;font-family:inherit" onclick="goHome()">← 홈으로 돌아가기</button>
-      </div>
-    </div>
-
-    <!-- KAKAO MAIN -->
-    <div class="scr" id="s-kakao-main">
-      <div class="km-hd"><span class="km-title">카카오톡</span><div class="km-icons"><span>🔍</span><span>⚙️</span></div></div>
-      <div class="km-myprofile">
-        <div class="km-mav">🧓</div>
-        <div><div class="km-mname">나 (어르신)</div><div class="km-msub">상태메시지를 입력하세요</div></div>
-      </div>
-      <div class="km-friends-hd">친구 3명</div>
-      <div class="km-friend"><div class="km-fav" style="background:#ffe0e0">👩</div><div><div class="km-fn">큰딸 (영희)</div><div class="km-fs">잘 지내고 있어요 😊</div></div></div>
-      <div class="km-friend"><div class="km-fav" style="background:#e0ffe0">👨</div><div><div class="km-fn">아들 (철수)</div><div class="km-fs">주말에 뵈러 갈게요!</div></div></div>
-      <div class="km-friend"><div class="km-fav" style="background:#e0e0ff">👴</div><div><div class="km-fn">옆집 박씨</div><div class="km-fs">오늘 날씨 좋네요~</div></div></div>
-      <div style="text-align:center;padding:16px;font-size:.75rem;color:#aaa">
-        카카오톡 설치 완료! 🎉<br><button style="margin-top:8px;background:none;border:none;color:#1f6feb;font-size:.75rem;cursor:pointer;font-family:inherit" onclick="goHome()">← 홈으로</button>
-      </div>
-    </div>
-
-    <!-- YOUTUBE -->
-    <div class="scr" id="s-youtube">
-      <div class="yt-hd"><span class="yt-logo"><span class="yt-r">You</span><span class="yt-t">Tube</span></span><span style="font-size:1rem;cursor:pointer">🔍</span><span style="font-size:1rem;cursor:pointer">👤</span></div>
-      <div class="yt-body">
-        <div class="yt-card"><div class="yt-thumb" style="background:linear-gradient(135deg,#1a2a4a,#2a4a8a)">📺</div><div class="yt-info"><div class="yt-ch" style="background:#e0e0e0">📺</div><div><div class="yt-title">어르신을 위한 스마트폰 완전 정복 — 따라하기 쉬운 기초 강의</div><div class="yt-sub">디지털 배움터 · 조회수 12만회 · 3일 전</div></div></div></div>
-        <div class="yt-card"><div class="yt-thumb" style="background:linear-gradient(135deg,#2a1a0a,#6b3a1f)">🍳</div><div class="yt-info"><div class="yt-ch" style="background:#ffe0c0">👩‍🍳</div><div><div class="yt-title">집에서 쉽게 만드는 된장찌개 — 5분 레시피</div><div class="yt-sub">요리채널 · 조회수 45만회 · 1주 전</div></div></div></div>
-        <div class="yt-card"><div class="yt-thumb" style="background:linear-gradient(135deg,#0a2a1a,#1a6b3a)">🌿</div><div class="yt-info"><div class="yt-ch" style="background:#c0ffe0">🌱</div><div><div class="yt-title">베란다 텃밭 가꾸기 — 토마토 키우는 법</div><div class="yt-sub">베란다농부 · 조회수 8만회 · 2주 전</div></div></div></div>
-      </div>
-      <div style="text-align:center;padding:8px;font-size:.68rem;color:#aaa"><button style="background:none;border:none;color:#1f6feb;font-size:.7rem;cursor:pointer;font-family:inherit" onclick="goHome()">← 홈으로</button></div>
-    </div>
-
-    <!-- NAVER -->
-    <div class="scr" id="s-naver">
-      <div class="nv-hd">
-        <div class="nv-logo">NAVER</div>
-        <div class="nv-sbox"><input class="nv-sinp" placeholder="검색어를 입력하세요" id="nv-inp"/><button class="nv-sbtn">🔍</button></div>
-      </div>
-      <div class="nv-body">
-        <div style="font-size:.65rem;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.05em;padding:6px 0 8px">오늘의 뉴스</div>
-        <div class="nv-art"><div class="nv-art-img" style="background:linear-gradient(135deg,#e8f0fe,#f3e5f5)">📰</div><div class="nv-art-info"><div class="nv-art-title">디지털 배움터 어르신 수강생 전국 10만 명 돌파</div><div class="nv-art-sub">네이버뉴스 · 방금 전</div></div></div>
-        <div class="nv-art"><div class="nv-art-img" style="background:linear-gradient(135deg,#fff3e0,#fce4ec)">🌤️</div><div class="nv-art-info"><div class="nv-art-title">오늘 날씨 맑음, 기온 24도 — 산책하기 좋은 날</div><div class="nv-art-sub">날씨뉴스 · 1시간 전</div></div></div>
-        <div class="nv-art"><div class="nv-art-img" style="background:linear-gradient(135deg,#e8f5e9,#e3f2fd)">🏥</div><div class="nv-art-info"><div class="nv-art-title">건강보험 혜택 확대 — 어르신 검진 무료 항목 늘어</div><div class="nv-art-sub">건강뉴스 · 3시간 전</div></div></div>
-      </div>
-      <div style="text-align:center;padding:4px"><button style="background:none;border:none;color:#1f6feb;font-size:.7rem;cursor:pointer;font-family:inherit" onclick="goHome()">← 홈으로</button></div>
-    </div>
-
-    <!-- SIMPLE CAMERA -->
+    <!-- CAMERA -->
     <div class="scr" id="s-camera">
-      <div style="flex:1;background:#0a0a0a;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative">
-        <span id="cam-scene">🌸</span>
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:8px 16px 10px;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:space-around">
-          <span style="font-size:1.2rem;cursor:pointer;color:#fff" onclick="flipCam()">🔄</span>
-          <div style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.9);border:4px solid rgba(255,255,255,.3);cursor:pointer" onclick="shootPhoto()"></div>
-          <div style="width:38px;height:38px;border-radius:7px;background:#1a1a2a;display:flex;align-items:center;justify-content:center;font-size:1.1rem" id="cam-thumb">🖼</div>
-        </div>
-      </div>
-      <button style="background:#222;border:none;color:rgba(255,255,255,.5);font-size:.7rem;padding:6px;cursor:pointer;font-family:inherit" onclick="goHome()">← 홈으로</button>
+      <div class="cam-vf"><span class="cam-scene" id="cam-scene">🌸</span><div class="cam-flash" id="cam-flash"></div></div>
+      <div class="cam-ctrl"><div class="cam-flip" onclick="camFlip()">🔄</div><div class="cam-shutter" onclick="camShoot()"></div><div class="cam-thumb" id="cam-thumb">🖼</div></div>
     </div>
 
-    <div class="homebar"></div>
-    <!-- Nav bar -->
-    <div class="navbarz">
-      <span class="nbtn" onclick="goHome()">|||</span>
-      <span class="nbtn" onclick="goHome()">○</span>
-      <span class="nbtn" onclick="navBack()">‹</span>
+    <!-- DIALER -->
+    <div class="scr" id="s-dialer">
+      <div class="dl-disp"><div class="dl-num" id="dl-num"></div></div>
+      <div class="dl-grid">
+        <button class="dk" onclick="dlK('1')">1</button><button class="dk" onclick="dlK('2')">2</button><button class="dk" onclick="dlK('3')">3</button>
+        <button class="dk" onclick="dlK('4')">4</button><button class="dk" onclick="dlK('5')">5</button><button class="dk" onclick="dlK('6')">6</button>
+        <button class="dk" onclick="dlK('7')">7</button><button class="dk" onclick="dlK('8')">8</button><button class="dk" onclick="dlK('9')">9</button>
+        <button class="dk" onclick="dlK('*')">*</button><button class="dk" onclick="dlK('0')">0</button><button class="dk" onclick="dlK('#')">#</button>
+      </div>
+      <div class="dl-actions"><div style="width:40px"></div><button class="dl-call" onclick="dlCall()">📞</button><button class="dl-del" onclick="dlDel()">⌫</button></div>
     </div>
+
+    <!-- overlays -->
+    <div class="bright-dim" id="bright-dim"></div>
+    <div class="night-tint" id="night-tint"></div>
+
+    <!-- nav bar -->
+    <div class="navbar" id="navbar" style="display:none">
+      <div class="nbtn nb-recents" onclick="navRecents()">▢</div>
+      <div class="nbtn nb-home" onclick="navHome()">○</div>
+      <div class="nbtn nb-back" onclick="navBack()">‹</div>
+    </div>
+
   </div><!-- /pscreen -->
 </div><!-- /phone -->
 </div>
 
-<!-- RIGHT -->
-<div class="rpanel">
-  <div class="rp-hd">💬 결과 안내</div>
-  <div class="rfeed" id="rfeed">
-    <div class="rbi rb-info" style="animation:none">
-      <div class="rb-type">시작 전</div>
-      <div class="rb-msg">전원 버튼을 눌러 시작!</div>
-      <div class="rb-det">오른쪽 옆면 파란 불빛이 깜빡이는 버튼을 2~3초 꾹 눌러보세요.</div>
-    </div>
-  </div>
-</div>
+<div class="hint" id="hint">오른쪽 옆면의 전원 버튼(파란 불빛)을 눌러 휴대폰을 켜보세요</div>
 
-</div><!-- /stage -->
 <script>
-// ════════ DATA ════════
-var PHASES=[
-  {id:1,emoji:'📱',title:'기본 켜기',items:[
-    {id:'power', lbl:'전원 켜기',         type:'action'},
-    {id:'boot',  lbl:'부팅 기다리기',     type:'action'},
-    {id:'unlock',lbl:'잠금 해제 (스와이프)', type:'action'},
-  ]},
-  {id:2,emoji:'⚙️',title:'설정 익히기',items:[
-    {id:'shade',     lbl:'위에서 내려 빠른 설정 열기', type:'action'},
-    {id:'wifi-tog',  lbl:'Wi-Fi 켜고 끄기',           type:'action'},
-    {id:'vol-adj',   lbl:'음량 조절하기',              type:'action'},
-    {id:'bright-adj',lbl:'밝기 조절하기',              type:'action'},
-    {id:'tip-back',  lbl:'뒤로가기 버튼 배우기 💡',    type:'tip', popup:'back'},
-    {id:'tip-lp',    lbl:'길게 누르기 배우기 💡',      type:'tip', popup:'longpress'},
-    {id:'tip-nav',   lbl:'홈/뒤로/앱목록 버튼 💡',    type:'tip', popup:'navbar'},
-    {id:'tip-wifi',  lbl:'Wi-Fi vs 데이터 차이 💡',   type:'tip', popup:'wifidata'},
-    {id:'settings',  lbl:'설정 앱 직접 들어가기',      type:'action'},
-  ]},
-  {id:3,emoji:'📲',title:'앱 설치',items:[
-    {id:'tip-store', lbl:'플레이스토어란? 💡',         type:'tip', popup:'playstore'},
-    {id:'store-open',lbl:'플레이스토어 열기',           type:'action'},
-    {id:'kakao-inst',lbl:'카카오톡 설치',               type:'action'},
-    {id:'yt-inst',   lbl:'유튜브 설치',                 type:'action'},
-    {id:'nv-inst',   lbl:'네이버 설치',                 type:'action'},
-    {id:'tip-acct',  lbl:'계정(로그인)이란? 💡',       type:'tip', popup:'account'},
-    {id:'kakao-login',lbl:'카카오톡 로그인 해보기',     type:'action'},
-  ]}
-];
-var POPUPS={
-  back:{ico:'⬅️',title:'뒤로가기 = 만능 취소 키!',tag:'기본 조작',body:'화면 아래 오른쪽 ‹ 버튼이에요.\n\n• 앱 화면에서 → 이전 페이지로 돌아가요\n• 메뉴가 열렸을 때 → 메뉴가 닫혀요\n• 잘못 눌렀을 때 → 취소하고 되돌아가요\n\n여러 번 눌러도 괜찮아요!\n컴퓨터의 ESC 키와 같은 역할이에요.'},
-  longpress:{ico:'✊',title:'길게 누르기 = 컴퓨터 우클릭!',tag:'기본 조작',body:'화면을 0.7초 이상 꾹 누르면\n숨겨진 메뉴가 나타나요!\n\n• 앱 아이콘 꾹 → 삭제 · 이름 변경 메뉴\n• 글자 꾹 → 복사 · 붙여넣기 메뉴\n• 사진 꾹 → 저장 · 공유 · 삭제 메뉴\n\n💡 짧게 누르면 실행,\n   길게 누르면 옵션 메뉴!'},
-  navbar:{ico:'📍',title:'화면 아래 3가지 버튼',tag:'기본 조작',body:'스마트폰 아래에는 버튼 3개가 있어요:\n\n||| (왼쪽) — 앱 목록\n   최근에 쓴 앱 목록을 보여요\n\n○ (가운데) — 홈 버튼\n   어디서든 홈 화면으로 돌아가요\n   아무리 깊이 들어가도 OK!\n\n‹ (오른쪽) — 뒤로가기\n   이전 화면으로 돌아가요'},
-  wifidata:{ico:'📶',title:'Wi-Fi vs 모바일 데이터',tag:'인터넷 연결',body:'인터넷을 쓰는 방법 2가지:\n\n📶 Wi-Fi (와이파이)\n   집, 카페, 식당의 무선 인터넷\n   → 별도 요금 없음! 빠르고 안정적\n   → 이 건물 안에서만 사용 가능\n\n📡 모바일 데이터 (LTE/5G)\n   통신사(SKT, KT 등)의 인터넷\n   → 요금제에 포함된 데이터 사용\n   → 어디서든 사용 가능\n\n💡 집에서는 Wi-Fi,\n   밖에서는 데이터를 써요!'},
-  playstore:{ico:'🏪',title:'플레이스토어 = 앱 마트!',tag:'앱 설치',body:'앱을 검색하고 설치하는 곳이에요.\n(마치 앱 전용 마트 같아요!)\n\n• 대부분의 앱은 무료예요\n• 검색창에 앱 이름을 입력 → 설치\n• 설치된 앱은 홈화면에 자동으로 생겨요\n• 삭제도 여기서 할 수 있어요\n\n💡 아이폰은 "앱스토어",\n   갤럭시는 "플레이스토어"예요!'},
-  account:{ico:'🔑',title:'계정 = 인터넷 신분증!',tag:'계정/로그인',body:'앱을 쓰려면 "로그인"이 필요해요.\n(내가 누구인지 알려주는 과정)\n\n📱 카카오계정\n   → 전화번호로 가입\n   → 카카오톡, 카카오맵, 배달의민족\n\n🔴 구글계정\n   → 이메일로 가입\n   → 유튜브, 플레이스토어, 구글맵\n\n🟢 네이버계정\n   → 이름+생년월일로 가입\n   → 네이버, 네이버TV, 밴드\n\n💡 비밀번호를 꼭 메모해두세요!'}
+// ════════ OS STATE ════════
+var OS={
+  screen:'off', bootedOnce:false, shadeOpen:false, homePage:0,
+  q:{wifi:true,bt:true,data:true,sound:true,flash:false,plane:false,rotate:true,loc:true,dark:false,hotspot:false},
+  brightness:85, volume:60, appStack:[]
 };
-// ════════ STATE ════════
-var done=new Set(), curscr='off', shadeOpen=false, popCbId=null;
-var installedApps=new Set(), kakaoLoggedIn=false;
-var camScenes=['🌸','🌳','🌄','🏠','☕','🐕','🌻'];
-var camIdx=0, camFront=false, photoCnt=0;
+var APPS={
+  phone:{n:'전화',i:'📞',bg:'linear-gradient(135deg,#1a8a3a,#34c759)',open:'dialer'},
+  messages:{n:'메시지',i:'💬',bg:'linear-gradient(135deg,#0a6cff,#4a9bff)',stub:true},
+  contacts:{n:'연락처',i:'👥',bg:'linear-gradient(135deg,#8a5a2a,#c9893f)',stub:true},
+  camera:{n:'카메라',i:'📷',bg:'linear-gradient(135deg,#1a1a2e,#3a3a5a)',open:'camera'},
+  gallery:{n:'갤러리',i:'🖼️',bg:'linear-gradient(135deg,#c2410c,#f97316)',stub:true},
+  clock:{n:'시계',i:'⏰',bg:'linear-gradient(135deg,#111,#333)',stub:true},
+  calc:{n:'계산기',i:'🧮',bg:'linear-gradient(135deg,#222,#444)',open:'calc'},
+  weather:{n:'날씨',i:'⛅',bg:'linear-gradient(135deg,#0ea5e9,#7dd3fc)',stub:true},
+  settings:{n:'설정',i:'⚙️',bg:'linear-gradient(135deg,#2a2a3a,#4a4a6a)',open:'settings'},
+  kakao:{n:'카카오톡',i:'💛',bg:'#fee500',stub:true},
+  youtube:{n:'유튜브',i:'▶',bg:'#ff0000',stub:true},
+  naver:{n:'네이버',i:'N',bg:'#03c75a',stub:true},
+  maps:{n:'지도',i:'🗺️',bg:'linear-gradient(135deg,#16a34a,#86efac)',stub:true},
+  store:{n:'Play 스토어',i:'▶️',bg:'linear-gradient(135deg,#eef2ff,#fce7f3)',stub:true}
+};
+var PAGES=[
+  ['phone','messages','contacts','camera','gallery','clock','calc','weather'],
+  ['kakao','youtube','naver','maps','store','settings']
+];
+var DOCK=['phone','messages','camera','settings'];
 
 // ════════ INIT ════════
-renderPhases();startClock();initLock();initShade();
+buildHome();startClock();initLock();initShade();initHomeSwipe();renderQS();applyBright();renderStatus();
 
 // ════════ CLOCK ════════
 function startClock(){
   function tick(){
-    var n=new Date(),h=n.getHours(),m=n.getMinutes().toString().padStart(2,'0'),ap=h>=12?'오후':'오전',h12=h%12||12,ts=h12+':'+m;
+    var n=new Date(),h=n.getHours(),m=n.getMinutes().toString().padStart(2,'0'),ap=h>=12?'오후':'오전',h12=h%12||12;
     var ds=['일','월','화','수','목','금','토'];
-    ['stime','lt-sm'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=ap+' '+ts;});
-    ['lt-big','sh-time'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=h12+':'+m;});
-    var sd=document.getElementById('sh-date');if(sd)sd.textContent=ds[n.getDay()]+'요일, '+(n.getMonth()+1)+'월 '+n.getDate()+'일';
+    set('sb-time',h12+':'+m);set('sh-time',h12+':'+m);set('lk-time',h12+':'+m);
+    set('lk-sm-time',ap+' '+h12+':'+m);
+    set('sh-date',ds[n.getDay()]+'요일, '+(n.getMonth()+1)+'월 '+n.getDate()+'일');
   }
-  tick();setInterval(tick,15000);
+  tick();setInterval(tick,10000);
+}
+function set(id,t){var e=document.getElementById(id);if(e)e.textContent=t;}
+
+// ════════ HOME BUILD ════════
+function appIcon(key){
+  var a=APPS[key];
+  return '<div class="aiwrap" onclick="openApp(\''+key+'\')"><div class="ai" style="background:'+a.bg+(/^#/.test(a.bg)&&['naver'].includes(key)?';color:#fff;font-weight:900;font-size:1.3rem':'')+(key==='youtube'?';color:#fff;font-size:1.2rem':'')+'">'+a.i+'</div><div class="albl">'+a.n+'</div></div>';
+}
+function buildHome(){
+  document.getElementById('hp0').innerHTML=PAGES[0].map(appIcon).join('');
+  document.getElementById('hp1').innerHTML=PAGES[1].map(appIcon).join('');
+  document.getElementById('dock').innerHTML=DOCK.map(appIcon).join('');
 }
 
-// ════════ FEATURE LIST (no gating — free exploration) ════════
-function renderPhases(){
-  var html='';
-  PHASES.forEach(function(ph){
-    var doneCount=ph.items.filter(function(i){return done.has(i.id);}).length;
-    html+='<div class="phase"><div class="grp-hd"><span class="grp-title">'+ph.emoji+' '+ph.title+'</span><span class="grp-count">'+doneCount+'/'+ph.items.length+'</span></div>';
-    ph.items.forEach(function(it){
-      var isDone=done.has(it.id);
-      var isTip=it.type==='tip';
-      var cls2='ci'+(isDone?' ci-done':isTip?' ci-tip':'');
-      var boxIcon=isDone?'✓':isTip?'💡':'';
-      html+='<div class="'+cls2+'" onclick="ciClick(\''+it.id+'\')">'
-        +'<div class="ci-box">'+boxIcon+'</div>'
-        +'<div class="ci-lbl">'+it.lbl+'</div></div>';
-    });
-    html+='</div>';
-  });
-  document.getElementById('phase-list').innerHTML=html;
-}
-// Hints shown when an ACTION item is tapped (guides where the real button is)
-var ACTION_HINTS={
-  power:'오른쪽 옆면 전원 버튼(파란 불빛)을 꾹 누르면 켜고 끌 수 있어요.',
-  boot:'전원을 켜면 SAMSUNG 로고가 뜨며 자동으로 부팅돼요.',
-  unlock:'잠금화면에서 화면을 아래에서 위로 밀어 올려보세요.',
-  shade:'화면 맨 위(상태표시줄)를 손가락으로 잡고 아래로 끌어내려 보세요.',
-  'wifi-tog':'빠른 설정창을 내린 뒤 "Wi-Fi" 타일을 눌러 켜고 꺼보세요.',
-  'vol-adj':'왼쪽 옆면 볼륨 버튼을 누르거나, 빠른 설정창의 음량 막대를 움직여보세요.',
-  'bright-adj':'빠른 설정창의 밝기(🔅) 막대를 좌우로 움직여보세요.',
-  settings:'홈 화면에서 ⚙️ 설정 앱을 눌러 들어가보세요.',
-  'store-open':'홈 화면에서 ▶️ Play 스토어를 눌러보세요.',
-  'kakao-inst':'Play 스토어에서 카카오톡 옆 "설치" 버튼을 눌러보세요.',
-  'yt-inst':'Play 스토어에서 YouTube 옆 "설치" 버튼을 눌러보세요.',
-  'nv-inst':'Play 스토어에서 네이버 옆 "설치" 버튼을 눌러보세요.',
-  'kakao-login':'카카오톡을 설치한 뒤 홈에서 💛 아이콘을 눌러 로그인해보세요.'
-};
-function ciClick(id){
-  var item=null;
-  PHASES.forEach(function(p){p.items.forEach(function(it){if(it.id===id)item=it;});});
-  if(!item)return;
-  if(item.type==='tip'){ showPopup(item.popup, id); return; }
-  // Action item tapped → guide the user to the real button (re-checkable anytime)
-  var hint=ACTION_HINTS[id]||'폰에서 직접 눌러보세요!';
-  rb('tip','👉 '+item.lbl,hint+(done.has(id)?'\n\n(이미 해보셨어요 ✓ — 다시 해봐도 좋아요!)':''));
-}
-function checkItem(id,msg,det){
-  if(done.has(id))return;
-  done.add(id);
-  renderPhases();
-  rb('ok', '✅ '+findItemLabel(id), det||msg||'잘 하셨어요!');
-}
-function findItemLabel(id){
-  var lbl=id;
-  PHASES.forEach(function(p){p.items.forEach(function(i){if(i.id===id)lbl=i.lbl;});});
-  return lbl.replace(' 💡','');
-}
-
-// ════════ POPUP SYSTEM ════════
-function showPopup(key, cbId){
-  var p=POPUPS[key];if(!p)return;
-  popCbId=cbId||null;
-  document.getElementById('pop-ico').textContent=p.ico;
-  document.getElementById('pop-title').textContent=p.title;
-  document.getElementById('pop-tag').textContent=p.tag;
-  document.getElementById('pop-body').textContent=p.body;
-  document.getElementById('pop-btn').textContent='✓ 알겠어요!';
-  document.getElementById('pop').classList.add('on');
-  rb('tip','💡 '+p.title,'왼쪽 목록의 💡 항목은 언제든 다시 눌러 설명을 볼 수 있어요.');
-}
-function closePopup(){
-  document.getElementById('pop').classList.remove('on');
-  if(popCbId){checkItem(popCbId,'팁을 확인했어요!');popCbId=null;}
-}
-
-// ════════ SCREEN ════════
+// ════════ SCREEN MACHINE ════════
 function showScr(id){
   document.querySelectorAll('.scr').forEach(function(e){e.classList.remove('on');});
   var el=document.getElementById('s-'+id);if(el)el.classList.add('on');
-  var sb=document.getElementById('sbar');
-  if(sb)sb.style.display=['off','boot','lock'].includes(id)?'none':'flex';
-  curscr=id;
+  OS.screen=id;
+  var systemScreens=['off','boot','lock'];
+  document.getElementById('sbar').style.display=systemScreens.includes(id)?'none':'flex';
+  document.getElementById('navbar').style.display=(systemScreens.includes(id))?'none':'flex';
+  // settings dark theme
+  document.getElementById('s-settings').classList.toggle('dark',OS.q.dark);
+  updateHint();
 }
-function goHome(){closeShade();showScr('home');rb('info','홈 화면','○ 홈 버튼을 누르면 언제든 홈으로 돌아와요!');}
-function navBack(){
-  if(shadeOpen){closeShade();return;}
-  if(document.getElementById('pop').classList.contains('on')){closePopup();return;}
-  if(curscr!=='home'&&curscr!=='off'&&curscr!=='boot'&&curscr!=='lock'){goHome();}
-  rb('info','‹ 뒤로가기!','잘 하셨어요. 뒤로가기로 이전 화면에 돌아왔어요.');
+function updateHint(){
+  var h=document.getElementById('hint');
+  var map={off:'오른쪽 옆면의 전원 버튼(파란 불빛)을 눌러 휴대폰을 켜보세요',
+    lock:'화면을 아래에서 위로 밀어 잠금을 풀어보세요',
+    home:'앱을 눌러 열거나, 화면 맨 위를 잡고 아래로 끌어 알림창을 열어보세요',
+    settings:'스위치를 눌러 켜고 끄거나, ‹ 뒤로 / ○ 홈 버튼을 눌러보세요'};
+  h.textContent=map[OS.screen]||'‹ 뒤로가기, ○ 홈 버튼을 자유롭게 눌러보세요';
 }
 
-// ════════ HW BUTTONS ════════
-var bootedOnce=false;
+// ════════ POWER ════════
 function hwPower(){
-  // Power works ANYTIME — closes any overlay first, then toggles on/off
-  if(curscr==='off'){
+  if(OS.screen==='off'){
     document.getElementById('pglow').style.display='none';
-    if(!bootedOnce){
-      // First power-on: full boot animation → lock screen
-      showScr('boot');checkItem('power','전원 버튼을 눌러 폰을 켰어요!');
-      rb('info','⏳ 부팅 중...','SAMSUNG 로고가 나왔어요. 잠시 기다려요.');
-      setTimeout(function(){bootedOnce=true;showScr('lock');checkItem('boot','부팅이 완료됐어요!');
-        rb('ok','부팅 완료!','잠금화면이에요. 화면을 아래에서 위로 밀어 잠금을 해제해보세요.');},2400);
-    } else {
-      // Already booted before: just wake the screen to lock
-      showScr('lock');checkItem('power','전원 버튼으로 화면을 다시 켰어요!');
-      rb('ok','🔆 화면 켜짐','전원 버튼을 짧게 누르면 화면이 켜지고 꺼져요. 위로 밀어 잠금을 해제하세요.');
-    }
+    if(!OS.bootedOnce){
+      showScr('boot');
+      setTimeout(function(){OS.bootedOnce=true;showScr('lock');},2400);
+    } else { showScr('lock'); }
   } else {
-    // Turn OFF from anywhere (home, app, lock, even with shade/popup open)
     closeShade();
-    document.getElementById('pop').classList.remove('on');
-    showScr('off');document.getElementById('pglow').style.display='block';
-    checkItem('power','전원 버튼으로 화면을 껐어요!');
-    rb('info','🌙 화면이 꺼졌어요','어디서든 전원 버튼을 누르면 화면을 끌 수 있어요. 다시 누르면 켜져요.');
+    OS.screen='off';
+    document.querySelectorAll('.scr').forEach(function(e){e.classList.remove('on');});
+    document.getElementById('s-off').classList.add('on');
+    document.getElementById('sbar').style.display='none';
+    document.getElementById('navbar').style.display='none';
+    document.getElementById('pglow').style.display='block';
+    updateHint();
   }
 }
 function hwVol(d){
-  checkItem('vol-adj','볼륨 버튼으로 소리를 조절했어요!');
-  rb('ok',d>0?'🔊 볼륨 올리기':'🔉 볼륨 내리기','왼쪽 버튼 2개가 볼륨 조절 버튼이에요.');
+  OS.volume=Math.max(0,Math.min(100,OS.volume+d*10));
+  document.getElementById('sl-vol').value=OS.volume;
+  if(OS.volume===0){OS.q.sound=false;} else if(d>0){OS.q.sound=true;}
+  renderQS();renderStatus();
+  flashToast((d>0?'🔊 볼륨 ':'🔉 볼륨 ')+OS.volume+'%');
 }
 
-// ════════ LOCK UNLOCK ════════
+// ════════ LOCK / UNLOCK ════════
 function initLock(){
-  var lock=document.getElementById('s-lock'),sx,sy,drag=false;
-  function st(e){if(shadeOpen)return;var p=e.touches?e.touches[0]:e;sx=p.clientX;sy=p.clientY;drag=true;}
-  function mv(e){if(!drag)return;var p=e.touches?e.touches[0]:e;if(sy-p.clientY>38){drag=false;unlock();}if(e.cancelable)e.preventDefault();}
+  var lock=document.getElementById('s-lock'),sy=0,drag=false;
+  function st(e){if(OS.shadeOpen)return;var p=e.touches?e.touches[0]:e;sy=p.clientY;drag=true;}
+  function mv(e){if(!drag)return;var p=e.touches?e.touches[0]:e;if(sy-p.clientY>50){drag=false;unlock();}if(e.cancelable)e.preventDefault();}
   function en(){drag=false;}
   lock.addEventListener('touchstart',st,{passive:true});lock.addEventListener('touchmove',mv,{passive:false});lock.addEventListener('touchend',en);
-  lock.addEventListener('mousedown',st);window.addEventListener('mousemove',function(e){if(curscr==='lock'&&drag)mv(e);});window.addEventListener('mouseup',en);
+  lock.addEventListener('mousedown',st);window.addEventListener('mousemove',function(e){if(OS.screen==='lock'&&drag)mv(e);});window.addEventListener('mouseup',en);
 }
-function unlock(){showScr('home');checkItem('unlock','잠금 화면을 위로 밀어 해제했어요!');rb('ok','🔓 잠금 해제!','홈화면이에요. 아이콘을 눌러 앱을 열 수 있어요.');}
+function unlock(){OS.appStack=[];showScr('home');}
+function unlockTo(app){OS.appStack=[];showScr('home');openApp(app);}
 
-// ════════ NOTIFICATION SHADE (interactive top-sheet drag) ════════
-var sh, ovr, shH=0, dragging=false, startY=0, startT=0, curT=0, openedOnce=false;
-function shadeH(){return sh.offsetHeight||360;}
+// ════════ NAVIGATION ════════
+function openApp(key){
+  var a=APPS[key];if(!a)return;
+  if(a.open){OS.appStack.push(a.open);showScr(a.open);return;}
+  // stub app → generic screen
+  OS.appStack.push('app');
+  document.getElementById('app-hd-ico').style.background=a.bg;
+  document.getElementById('app-hd-ico').textContent=a.i;
+  document.getElementById('app-hd-name').textContent=a.n;
+  document.getElementById('app-big').textContent=a.i;
+  document.getElementById('app-msg').textContent=a.n+' 앱';
+  showScr('app');
+}
+function navHome(){closeShade();OS.appStack=[];showScr('home');}
+function navBack(){
+  if(OS.shadeOpen){closeShade();return;}
+  if(OS.appStack.length){OS.appStack.pop();
+    if(OS.appStack.length){showScr(OS.appStack[OS.appStack.length-1]);}
+    else showScr('home');
+  } else if(OS.screen!=='home'){showScr('home');}
+}
+function navRecents(){closeShade();OS.appStack=[];showScr('home');flashToast('최근 앱 (준비 중)');}
+
+// ════════ NOTIFICATION SHADE ════════
+var sh,ovr,dragging=false,startY=0,startT=0,curT=0;
+function shadeH(){return sh.offsetHeight||420;}
 function setT(px){curT=px;sh.style.transform='translateY('+px+'px)';
   var prog=1-Math.min(1,Math.abs(px)/shadeH());
-  ovr.style.opacity=prog;ovr.classList.toggle('on',prog>0.02);}
+  ovr.classList.toggle('on',prog>0.02);}
 function initShade(){
   sh=document.getElementById('shade');ovr=document.getElementById('shade-ovr');
   var ps=document.getElementById('pscr');
-  setT(-shadeH()); // start fully closed (off-screen above)
-
-  function dragStart(e){
-    if(['off','boot'].includes(curscr))return;
-    var t=e.touches?e.touches[0]:e, rect=ps.getBoundingClientRect(), y=t.clientY-rect.top;
-    // open gesture: grab within top 46px while closed.
-    // close gesture: grab anywhere on the open shade.
-    if(!shadeOpen && y>46) return;
-    dragging=true;startY=t.clientY;
-    shH=shadeH();
-    startT=shadeOpen?0:-shH;
-    sh.classList.remove('snap');
-  }
-  function dragMove(e){
-    if(!dragging)return;
-    var t=e.touches?e.touches[0]:e;
-    var np=startT+(t.clientY-startY);
-    if(np>0)np=0;if(np<-shH)np=-shH;
-    setT(np);
-    if(e.cancelable)e.preventDefault();
-  }
-  function dragEnd(){
-    if(!dragging)return;dragging=false;
-    sh.classList.add('snap');
-    // snap based on how far it's pulled (>40% open => open)
-    if(curT > -shH*0.6) openShade(); else closeShade();
-  }
-  ps.addEventListener('touchstart',dragStart,{passive:true});
-  ps.addEventListener('touchmove',dragMove,{passive:false});
-  ps.addEventListener('touchend',dragEnd);
-  ps.addEventListener('mousedown',dragStart);
-  window.addEventListener('mousemove',dragMove);
-  window.addEventListener('mouseup',dragEnd);
-}
-function openShade(){
-  if(['off','boot'].includes(curscr))return;
-  shadeOpen=true;sh.classList.add('snap');
-  requestAnimationFrame(function(){setT(0);});
-  ovr.classList.add('on');ovr.style.opacity=1;
-  if(!openedOnce){openedOnce=true;
-    checkItem('shade','상단에서 내려 빠른 설정창을 열었어요!');
-    rb('info','🔽 빠른 설정창 열림!','손가락으로 잡아 끌어내린 것처럼 내려와요. Wi-Fi·소리·밝기 타일을 눌러보세요!');
-  }
-}
-function closeShade(){
-  shadeOpen=false;sh.classList.add('snap');
   setT(-shadeH());
-  ovr.style.opacity=0;
-  setTimeout(function(){if(!shadeOpen)ovr.classList.remove('on');},300);
+  function ds(e){
+    if(['off','boot'].includes(OS.screen))return;
+    var t=e.touches?e.touches[0]:e,rect=ps.getBoundingClientRect(),y=t.clientY-rect.top;
+    if(!OS.shadeOpen && y>50)return;
+    dragging=true;startY=t.clientY;startT=OS.shadeOpen?0:-shadeH();sh.classList.remove('snap');
+  }
+  function dm(e){
+    if(!dragging)return;var t=e.touches?e.touches[0]:e;
+    var np=startT+(t.clientY-startY);if(np>0)np=0;if(np<-shadeH())np=-shadeH();
+    setT(np);if(e.cancelable)e.preventDefault();
+  }
+  function de(){if(!dragging)return;dragging=false;sh.classList.add('snap');
+    if(curT>-shadeH()*0.6)openShade();else closeShade();}
+  ps.addEventListener('touchstart',ds,{passive:true});ps.addEventListener('touchmove',dm,{passive:false});ps.addEventListener('touchend',de);
+  ps.addEventListener('mousedown',ds);window.addEventListener('mousemove',dm);window.addEventListener('mouseup',de);
 }
-var qsState={wifi:true,bt:true,sound:false,plane:false,flash:false,data:true,rotate:true,loc:true,hotspot:false,nfc:true};
-var qsInfo={wifi:'Wi-Fi가 켜지면 집·카페 무선 인터넷을 무료로 써요.',bt:'블루투스로 무선 이어폰·스피커를 연결해요.',sound:'무음으로 바꾸면 진동이나 소리가 안 나요.',plane:'비행기 탑승 시 켜요. 모든 통신이 차단돼요.',flash:'카메라 옆 LED 손전등을 켜고 꺼요.',data:'모바일 데이터를 켜고 끌 수 있어요. 데이터 절약에 좋아요.',rotate:'켜면 폰을 옆으로 돌릴 때 화면도 같이 돌아가요.',loc:'지도·배달 앱에서 내 위치를 알려면 켜야 해요.',hotspot:'내 폰의 데이터를 다른 기기에 나눠줄 수 있어요.',nfc:'카드 단말기에 폰을 대서 결제할 때 써요.'};
-function qsTap(key){
-  qsState[key]=!qsState[key];
-  document.getElementById('qt-'+key).classList.toggle('on',qsState[key]);
-  if(key==='wifi')checkItem('wifi-tog','빠른 설정에서 Wi-Fi를 켜고 껐어요!');
-  rb(qsState[key]?'ok':'info',({wifi:'Wi-Fi',bt:'블루투스',sound:'무음',plane:'비행기 모드',flash:'손전등',data:'모바일 데이터',rotate:'화면 회전',loc:'위치',hotspot:'핫스팟',nfc:'NFC'}[key]||key)+' '+(qsState[key]?'켜짐 ✅':'꺼짐 ⭕'),qsInfo[key]);
-}
-function shadeBright(v){checkItem('bright-adj','밝기를 조절했어요!');rb('ok','☀️ 밝기 '+v+'%',+v<30?'어둡게 — 배터리 절약!':+v>80?'밝게 — 야외에서 잘 보여요!':'적당한 밝기예요.');}
-function shadeVol(v){checkItem('vol-adj','빠른 설정에서 음량을 조절했어요!');rb('ok','🔊 음량 '+v+'%',+v===0?'무음 상태예요.':+v<40?'조용한 소리예요.':+v>75?'큰 소리예요.':'적당한 소리예요.');}
+function openShade(){if(['off','boot'].includes(OS.screen))return;OS.shadeOpen=true;sh.classList.add('snap');requestAnimationFrame(function(){if(OS.shadeOpen)setT(0);});ovr.classList.add('on');}
+function closeShade(){OS.shadeOpen=false;if(!sh)return;sh.classList.add('snap');setT(-shadeH());setTimeout(function(){if(!OS.shadeOpen)ovr.classList.remove('on');},300);}
 
-// ════════ APPS ════════
-function openApp(app){
-  var appMap={call:'camera',camera:'camera',gallery:'camera',settings:'settings',playstore:'playstore',kakao:'kakao-login',youtube:'youtube',naver:'naver'};
-  if(app==='settings'){showScr('settings');checkItem('settings','설정 앱을 열었어요!');rb('info','⚙️ 설정 앱','소리, 화면, Wi-Fi 등 다양한 설정을 여기서 바꿀 수 있어요.');return;}
-  if(app==='playstore'){showScr('playstore');checkItem('store-open','플레이스토어를 열었어요!');rb('info','🏪 플레이스토어','앱을 설치하는 곳이에요. 아래 앱들을 "설치" 버튼을 눌러 설치해보세요!');return;}
-  if(app==='kakao'){
-    if(kakaoLoggedIn){showScr('kakao-main');rb('ok','💛 카카오톡 열림','친구 목록에서 대화를 시작할 수 있어요!');}
-    else{showScr('kakao-login');rb('info','💛 카카오톡 로그인','전화번호를 입력하고 로그인해보세요.');}
-    return;}
-  if(app==='youtube'){showScr('youtube');rb('ok','▶ 유튜브 열림','영상을 검색하고 시청해보세요!');return;}
-  if(app==='naver'){showScr('naver');rb('ok','N 네이버 열림','검색창에 궁금한 것을 입력해보세요!');return;}
-  if(app==='camera'){showScr('camera');rb('info','📷 카메라','하얀 동그라미를 눌러 사진을 찍어보세요!');return;}
-  rb('info',app+' 앱 실행','실제 폰에서는 바로 열려요!');
+// ════════ QUICK SETTINGS ════════
+var QMETA={
+  wifi:{nm:'Wi-Fi'},bt:{nm:'블루투스'},data:{nm:'모바일 데이터'},sound:{nm:'소리'},
+  flash:{nm:'손전등'},plane:{nm:'비행기 모드'},rotate:{nm:'화면 회전'},loc:{nm:'위치'},dark:{nm:'다크 모드'},hotspot:{nm:'핫스팟'}
+};
+function qsTap(key){
+  OS.q[key]=!OS.q[key];
+  // side-effects
+  if(key==='plane' && OS.q.plane){OS.q.wifi=false;OS.q.data=false;OS.q.bt=false;}
+  if((key==='wifi'||key==='data'||key==='bt') && OS.q[key]){OS.q.plane=false;}
+  if(key==='dark')applyDark();
+  if(key==='flash')applyFlash();
+  if(key==='sound'){var v=OS.q.sound?(OS.volume||60):0;OS.volume=v;document.getElementById('sl-vol').value=v;}
+  renderQS();renderStatus();syncSettings();
+  flashToast((OS.q[key]?'✅ ':'⭕ ')+QMETA[key].nm+(OS.q[key]?' 켜짐':' 꺼짐'));
 }
-function settingTap(key){
-  var msgs={wifi:'Wi-Fi 목록에서 연결할 네트워크를 선택할 수 있어요.',sound:'벨소리 음량, 미디어 음량, 알림 음량을 각각 조절할 수 있어요.',display:'밝기 자동조절, 다크모드, 야간 모드 등을 설정해요.',apps:'설치된 앱 목록을 보고 삭제하거나 권한을 관리할 수 있어요.'};
-  rb('info','⚙️ '+key+' 설정',msgs[key]||'이 설정 항목을 눌러 세부 설정을 바꿀 수 있어요.');
+function renderQS(){
+  Object.keys(OS.q).forEach(function(k){
+    document.querySelectorAll('[data-qs="'+k+'"]').forEach(function(el){el.classList.toggle('on',OS.q[k]);});
+  });
+  set('qsub-wifi',OS.q.wifi?'우리집 5G':'꺼짐');
+  set('qsub-bt',OS.q.bt?'연결됨':'꺼짐');
+  var snd=document.getElementById('qsi-sound'),sl=document.getElementById('qsl-sound');
+  if(snd){snd.textContent=OS.q.sound?'🔔':'🔇';sl.textContent=OS.q.sound?'소리':'무음';}
 }
-// Play Store install
-function psInstall(app, btn){
-  btn.textContent='설치 중...';btn.className='ps-abtn installing';
-  rb('info',app+' 설치 중...','다운로드 중이에요. 잠시 기다려주세요!');
-  setTimeout(function(){
-    btn.textContent='열기';btn.className='ps-abtn installed';
-    installedApps.add(app);
-    // Update home screen icon
-    var homeEl=document.getElementById('home-'+app);
-    if(homeEl){homeEl.style.opacity='1';homeEl.onclick=function(){openApp(app);};}
-    var names={kakao:'카카오톡',youtube:'유튜브',naver:'네이버'};
-    checkItem(app+'-inst',names[app]+'이(가) 설치됐어요!');
-    rb('ok','✅ '+names[app]+' 설치 완료!','홈화면에 아이콘이 생겼어요. 눌러서 열어보세요!');
-  },2200);
+function applyDark(){document.getElementById('night-tint');document.getElementById('s-settings').classList.toggle('dark',OS.q.dark);
+  document.body.style.background=OS.q.dark?'radial-gradient(circle at 30% 20%,#0a0a14,#050508 60%,#000)':'radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d)';}
+function applyFlash(){var t=document.getElementById('night-tint');
+  // flashlight: brief bright flash overlay
+  if(OS.q.flash){var f=document.getElementById('cam-flash');}
+  var dim=document.getElementById('bright-dim');
+  // when flashlight on, slightly brighten regardless
 }
-// KakaoTalk login flow
-var klStep=0;
-function klPhoneInput(){
-  var v=document.getElementById('kl-phone').value;
-  if(v.replace(/\D/g,'').length>=10){
-    document.getElementById('kl-btn').textContent='인증번호 받기';
-    klStep=1;
+function setBright(v){OS.brightness=+v;applyBright();}
+function applyBright(){var dim=document.getElementById('bright-dim');
+  var op=(100-OS.brightness)/100*0.78;dim.style.opacity=op;}
+function setVol(v){OS.volume=+v;OS.q.sound=(+v>0);renderQS();renderStatus();
+  document.getElementById('sl-vico').textContent=(+v===0)?'🔇':(+v<50?'🔉':'🔊');}
+
+// ════════ STATUS BAR ════════
+function renderStatus(){
+  var ic=[];
+  if(!OS.q.sound)ic.push('<span>🔇</span>');
+  if(OS.q.plane){ic.push('<span>✈️</span>');}
+  else{
+    if(OS.q.wifi)ic.push('<span title="Wi-Fi">📶</span>');
+    if(OS.q.data)ic.push('<span style="font-size:9px;font-weight:800">LTE</span>');
   }
+  ic.push('<span style="font-size:9px">SKT</span>');
+  ic.push('<span class="si-batt"><span style="font-size:9px">62%</span><span class="si-batt-bar"><span class="si-batt-fill"></span></span></span>');
+  document.getElementById('sb-icons').innerHTML=ic.join('');
+  set('sh-net',OS.q.plane?'비행기 모드':('SKT · '+(OS.q.data?'LTE':(OS.q.wifi?'Wi-Fi':'연결 없음'))));
 }
-function klNext(){
-  if(klStep===0){rb('info','전화번호 입력','010으로 시작하는 전화번호를 입력해주세요.');return;}
-  if(klStep===1){
-    document.getElementById('kl-code').style.display='block';
-    document.getElementById('kl-btn').textContent='인증번호 확인';
-    document.getElementById('kl-phone').readOnly=true;
-    klStep=2;rb('info','인증번호 발송','실제로는 문자로 4자리 숫자가 와요.');return;}
-  if(klStep===2){
-    kakaoLoggedIn=true;showScr('kakao-main');
-    checkItem('kakao-login','카카오톡에 로그인했어요!');
-    rb('ok','💛 카카오톡 로그인 성공!','이제 가족·친구와 무료로 문자와 통화를 할 수 있어요!');
-    klStep=0;document.getElementById('kl-phone').value='';document.getElementById('kl-phone').readOnly=false;document.getElementById('kl-code').style.display='none';
-  }
+
+// ════════ SETTINGS TOGGLES (synced w/ quick settings) ════════
+function settingToggle(key){
+  OS.q[key]=!OS.q[key];
+  if(key==='dark')applyDark();
+  if(key==='sound'){OS.volume=OS.q.sound?(OS.volume||60):0;document.getElementById('sl-vol').value=OS.volume;}
+  syncSettings();renderQS();renderStatus();
 }
-// Camera
-function flipCam(){
-  camFront=!camFront;
-  document.getElementById('cam-scene').textContent=camFront?'🤳':camScenes[camIdx%camScenes.length];
-  rb('info',camFront?'전면 카메라 (셀카)':'후면 카메라','전면은 자기 얼굴, 후면은 풍경·사물을 찍어요.');
+function syncSettings(){
+  ['wifi','bt','data','sound','dark','rotate'].forEach(function(k){
+    var el=document.getElementById('set-'+k);if(el)el.classList.toggle('on',OS.q[k]);
+  });
+  set('set-wifi-sb',OS.q.wifi?'우리집 5G에 연결됨':'꺼짐');
+  set('set-sound-sb',OS.q.sound?'소리':'무음');
 }
-function shootPhoto(){
-  photoCnt++;camIdx++;
-  document.getElementById('cam-scene').textContent=camScenes[camIdx%camScenes.length];
-  document.getElementById('cam-thumb').textContent=camScenes[(camIdx-1)%camScenes.length];
-  rb('ok','📷 사진 '+photoCnt+'장 촬영!',photoCnt===1?'찍은 사진은 갤러리에 자동 저장돼요.':'계속 찍어봐도 돼요!');
+
+// ════════ TOAST ════════
+var toastTimer=null;
+function flashToast(msg){
+  var t=document.getElementById('os-toast');
+  if(!t){t=document.createElement('div');t.id='os-toast';
+    t.style.cssText='position:absolute;bottom:58px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.82);color:#fff;padding:9px 18px;border-radius:22px;font-size:.78rem;font-weight:600;z-index:560;pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .2s';
+    document.getElementById('pscr').appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.style.opacity='0';},1400);
 }
-// Right panel feed
-function rb(type,msg,det){
-  var feed=document.getElementById('rfeed');
-  var el=document.createElement('div');
-  el.className='rbi rb-'+type;
-  var labels={ok:'성공 ✅',info:'안내 ℹ️',tip:'팁 💡'};
-  el.innerHTML='<div class="rb-type">'+(labels[type]||type)+'</div><div class="rb-msg">'+msg+'</div>'+(det?'<div class="rb-det">'+det+'</div>':'');
-  feed.insertBefore(el,feed.firstChild);
-  while(feed.children.length>8)feed.removeChild(feed.lastChild);
+
+// ════════ HOME PAGE SWIPE ════════
+function initHomeSwipe(){
+  var hp=document.getElementById('home-pages'),sx=0,sw=false;
+  function st(e){if(OS.screen!=='home'||OS.shadeOpen)return;var p=e.touches?e.touches[0]:e;sx=p.clientX;sw=true;}
+  function en(e){if(!sw)return;sw=false;var p=e.changedTouches?e.changedTouches[0]:e;var dx=p.clientX-sx;
+    if(dx<-40&&OS.homePage<1)gotoPage(1);else if(dx>40&&OS.homePage>0)gotoPage(0);}
+  hp.addEventListener('touchstart',st,{passive:true});hp.addEventListener('touchend',en);
+  hp.addEventListener('mousedown',st);hp.addEventListener('mouseup',en);
 }
+function gotoPage(p){OS.homePage=p;document.getElementById('home-pages').style.transform='translateX('+(-p*100)+'%)';
+  document.getElementById('pd0').classList.toggle('on',p===0);document.getElementById('pd1').classList.toggle('on',p===1);}
+
+// ════════ CALCULATOR ════════
+var calc={now:'0',prev:null,op:null,fresh:true};
+function calcRender(){set('calc-now',calc.now);set('calc-prev',(calc.prev!=null?calc.prev+' '+(({'/':'÷','*':'×','-':'−','+':'+'})[calc.op]||''):''));}
+function calcN(n){if(calc.fresh){calc.now=(n==='.'?'0.':n);calc.fresh=false;}
+  else{if(n==='.'&&calc.now.includes('.'))return;calc.now=(calc.now==='0'&&n!=='.')?n:calc.now+n;}calcRender();}
+function calcOp(o){if(calc.op&&!calc.fresh)calcEq();calc.prev=parseFloat(calc.now);calc.op=o;calc.fresh=true;calcRender();}
+function calcEq(){if(calc.op==null||calc.prev==null)return;var a=calc.prev,b=parseFloat(calc.now),r=0;
+  if(calc.op==='+')r=a+b;else if(calc.op==='-')r=a-b;else if(calc.op==='*')r=a*b;else if(calc.op==='/')r=b===0?0:a/b;
+  calc.now=String(Math.round(r*1e8)/1e8);calc.op=null;calc.prev=null;calc.fresh=true;calcRender();}
+function calcC(){calc={now:'0',prev:null,op:null,fresh:true};calcRender();}
+function calcSign(){calc.now=String(parseFloat(calc.now)*-1);calcRender();}
+function calcPct(){calc.now=String(parseFloat(calc.now)/100);calcRender();}
+
+// ════════ CAMERA ════════
+var camScenes=['🌸','🌳','🌄','🏠','☕','🐕','🌻','🌙'],camIdx=0,camFrontMode=false,camPhotos=0;
+function camShoot(){var f=document.getElementById('cam-flash');f.style.transition='none';f.style.opacity='0.9';
+  setTimeout(function(){f.style.transition='opacity .4s';f.style.opacity='0';},40);
+  camPhotos++;camIdx=(camIdx+1)%camScenes.length;
+  document.getElementById('cam-thumb').textContent=document.getElementById('cam-scene').textContent;
+  if(!camFrontMode)document.getElementById('cam-scene').textContent=camScenes[camIdx];
+  flashToast('📷 사진 '+camPhotos+'장 촬영');}
+function camFlip(){camFrontMode=!camFrontMode;document.getElementById('cam-scene').textContent=camFrontMode?'🤳':camScenes[camIdx];
+  flashToast(camFrontMode?'전면 카메라 (셀카)':'후면 카메라');}
+
+// ════════ DIALER ════════
+var dlNum='';
+function dlFmt(s){return s.replace(/^(\d{3})(\d{0,4})(\d{0,4}).*$/,function(_,a,b,c){return c?a+'-'+b+'-'+c:b?a+'-'+b:a;});}
+function dlK(k){dlNum+=k;set('dl-num',dlFmt(dlNum));}
+function dlDel(){dlNum=dlNum.slice(0,-1);set('dl-num',dlFmt(dlNum));}
+function dlCall(){if(!dlNum){flashToast('번호를 먼저 눌러주세요');return;}flashToast('📞 '+dlFmt(dlNum)+' (연습용)');}
 </script>
 </body>
 </html>
