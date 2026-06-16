@@ -7,14 +7,40 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;font-family:'Noto Sans KR','맑은 고딕',sans-serif;overflow:hidden}
-body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);display:flex;align-items:center;justify-content:center;min-height:100vh}
-.topbar{position:fixed;top:0;left:0;right:0;height:46px;display:flex;align-items:center;gap:12px;padding:0 18px;color:#9fb2d4;font-size:.86rem;z-index:999}
+body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);min-height:100vh}
+.topbar{height:48px;display:flex;align-items:center;gap:12px;padding:0 18px;color:#9fb2d4;font-size:.9rem;border-bottom:1px solid #161d2c;background:#0a0e18}
 .topbar a{color:#7aa2ff;text-decoration:none;font-weight:700}
 .topbar .tdiv{opacity:.3}
-.hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);color:#5c6b8a;font-size:.8rem;text-align:center;z-index:999;line-height:1.6}
+/* 3-panel layout: checklist | phone | feedback */
+.stage{display:grid;grid-template-columns:300px 1fr 300px;height:calc(100vh - 48px)}
+.lpanel,.rpanel{background:#0d111c;display:flex;flex-direction:column;overflow:hidden}
+.lpanel{border-right:1px solid #1a2233}
+.rpanel{border-left:1px solid #1a2233}
+.lp-hd,.rp-hd{padding:16px 16px 13px;font-size:1rem;font-weight:800;color:#eef2f8;border-bottom:1px solid #1a2233;flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
+.lp-hd small{font-size:.74rem;font-weight:700;color:#5f6f8a}
+.chk-list{overflow-y:auto;flex:1;padding:8px}
+.chk{display:flex;gap:11px;align-items:flex-start;padding:11px 11px;border-radius:11px}
+.chk+.chk{margin-top:2px}
+.chk-box{width:24px;height:24px;border-radius:7px;border:2px solid #2f425f;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#fff;transition:.15s}
+.chk.done .chk-box{background:#2ea043;border-color:#2ea043}
+.chk.done{background:rgba(46,160,67,.07)}
+.chk-t{font-size:.96rem;color:#b8c4d6;line-height:1.45;font-weight:600}
+.chk.done .chk-t{color:#5a6a82;text-decoration:line-through}
+.rp-hint{padding:13px 15px;font-size:.85rem;color:#8595ad;line-height:1.65;border-bottom:1px solid #1a2233;background:#0b0f19;flex-shrink:0}
+.rp-feed{flex:1;overflow-y:auto;padding:11px;display:flex;flex-direction:column;gap:9px}
+.rp-empty{color:#465269;font-size:.84rem;text-align:center;padding:30px 16px;line-height:1.7}
+.fb{border-radius:13px;padding:12px 14px;animation:fbin .22s ease}
+@keyframes fbin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.fb-ttl{font-weight:800;font-size:.9rem;margin-bottom:4px}
+.fb-desc{font-size:.8rem;line-height:1.55;opacity:.82}
+.fb.ok{background:#0f2417;border-left:3px solid #2ea043;color:#86e6a6}
+.fb.info{background:#0e1c2e;border-left:3px solid #3b82f6;color:#93c3ff}
+.fb.act{background:#1b1633;border-left:3px solid #8b5cf6;color:#c7b6fd}
+@media(max-width:1000px){.stage{grid-template-columns:1fr}.lpanel,.rpanel{display:none}}
 
 /* ════════ PHONE FRAME ════════ */
-.stagewrap{display:flex;align-items:center;justify-content:center;transform:scale(1.04)}
+.stagewrap{display:flex;align-items:center;justify-content:center;height:100%;overflow:hidden}
+.stagewrap .phscale{transform:scale(1.14);transform-origin:center}
 .phone{width:330px;height:680px;position:relative;flex-shrink:0;border-radius:62px;
   user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
   background:linear-gradient(145deg,#23233a,#101019 42%,#222236 72%,#0b0b14);
@@ -263,10 +289,20 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
 <body>
 <div class="topbar">
   <a href="index.html">← 처음으로</a><span class="tdiv">|</span>
-  <span>📱 스마트폰 체험</span>
+  <span>📱 스마트폰 체험 — 마음껏 눌러보세요</span>
 </div>
 
+<div class="stage">
+
+<!-- LEFT: free checklist -->
+<aside class="lpanel">
+  <div class="lp-hd">✅ 이것저것 해보기 <small id="chk-count">0 / 0</small></div>
+  <div class="chk-list" id="chk-list"></div>
+</aside>
+
+<!-- CENTER: phone -->
 <div class="stagewrap">
+<div class="phscale">
 <div class="phone">
   <div class="hwb bvup" onclick="hwVol(1)"></div>
   <div class="hwb bvdown" onclick="hwVol(-1)"></div>
@@ -450,9 +486,17 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
 
   </div><!-- /pscreen -->
 </div><!-- /phone -->
-</div>
+</div><!-- /phscale -->
+</div><!-- /stagewrap -->
 
-<div class="hint" id="hint">오른쪽 옆면의 전원 버튼(파란 불빛)을 눌러 휴대폰을 켜보세요</div>
+<!-- RIGHT: interaction feedback -->
+<aside class="rpanel">
+  <div class="rp-hd">👆 방금 한 동작</div>
+  <div class="rp-hint" id="hint">오른쪽 옆면의 전원 버튼(파란 불빛)을 눌러 휴대폰을 켜보세요</div>
+  <div class="rp-feed" id="rfeed"><div class="rp-empty">휴대폰을 눌러보면<br>여기에 무엇을 했는지<br>하나하나 설명이 나와요 😊</div></div>
+</aside>
+
+</div><!-- /stage -->
 
 <script>
 // ════════ OS STATE ════════
@@ -499,8 +543,60 @@ var PAGES=[
 ];
 var DOCK=['phone','messages','camera','settings'];
 
+// ════════ CHECKLIST (free — no order) + FEEDBACK ════════
+var CHECKLIST=[
+  {id:'power',    t:'전원 켜고 끄기'},
+  {id:'unlock',   t:'잠금 풀기 (위로 밀기)'},
+  {id:'shade',    t:'알림창 내리기'},
+  {id:'qstoggle', t:'빠른 설정 켜고 끄기'},
+  {id:'qsswipe',  t:'빠른 설정 옆 페이지 보기'},
+  {id:'bright',   t:'밝기 조절하기'},
+  {id:'dark',     t:'다크 모드 켜보기'},
+  {id:'eye',      t:'편안하게 화면 보기'},
+  {id:'homeswipe',t:'홈 화면 옆으로 넘기기'},
+  {id:'app',      t:'아무 앱이나 열기'},
+  {id:'back',     t:'뒤로가기 · 홈 버튼'},
+  {id:'settings', t:'설정 앱 들어가기'},
+  {id:'calc',     t:'계산기로 계산하기'},
+  {id:'camera',   t:'카메라로 사진 찍기'},
+  {id:'dial',     t:'전화 번호 눌러보기'},
+  {id:'qsedit',   t:'빠른 설정 버튼 편집하기'}
+];
+var doneChecks=new Set();
+function renderChecks(){
+  document.getElementById('chk-list').innerHTML=CHECKLIST.map(function(c){
+    var d=doneChecks.has(c.id);
+    return '<div class="chk'+(d?' done':'')+'"><div class="chk-box">'+(d?'✓':'')+'</div><div class="chk-t">'+c.t+'</div></div>';
+  }).join('');
+  set('chk-count',doneChecks.size+' / '+CHECKLIST.length);
+}
+function check(id){if(doneChecks.has(id))return;doneChecks.add(id);renderChecks();}
+// right-panel feedback card
+function fb(type,title,desc){
+  var feed=document.getElementById('rfeed');if(!feed)return;
+  var empty=feed.querySelector('.rp-empty');if(empty)empty.remove();
+  var el=document.createElement('div');el.className='fb '+type;
+  el.innerHTML='<div class="fb-ttl">'+title+'</div>'+(desc?'<div class="fb-desc">'+desc+'</div>':'');
+  feed.insertBefore(el,feed.firstChild);
+  while(feed.children.length>30)feed.removeChild(feed.lastChild);
+}
+var QEXPLAIN={
+  wifi:'Wi-Fi는 집·카페의 무선 인터넷이에요. 켜면 데이터 요금 없이 인터넷을 써요.',
+  bt:'블루투스로 무선 이어폰·스피커를 연결해요.',
+  data:'모바일 데이터는 통신사(SKT 등) 인터넷이에요. 밖에서 인터넷 쓸 때 필요해요.',
+  sound:'소리 모드와 무음 모드를 바꿔요.',
+  flash:'손전등(뒷면 LED)을 켜고 꺼요.',
+  plane:'비행기 모드를 켜면 전화·인터넷이 모두 꺼져요.',
+  rotate:'화면 자동 회전(세로/가로)을 켜고 꺼요.',
+  loc:'위치(GPS)를 켜면 지도·날씨 앱이 내 위치를 알 수 있어요.',
+  dark:'다크 모드는 화면을 어둡게 해 눈이 편하고 배터리도 아껴요.',
+  hotspot:'내 폰 데이터를 다른 기기와 나눠 써요.',
+  nfc:'교통카드·간편결제에 쓰는 근거리 통신이에요.',
+  aod:'화면이 꺼져 있어도 시계·알림을 항상 보여줘요.'
+};
+
 // ════════ INIT ════════
-buildHome();startClock();initLock();renderQSTiles();initQSSwipe();initShade();initHomeSwipe();renderQS();applyBright();renderStatus();
+buildHome();startClock();initLock();renderQSTiles();initQSSwipe();initShade();initHomeSwipe();renderQS();applyBright();renderStatus();renderChecks();
 
 // ════════ CLOCK ════════
 function startClock(){
@@ -558,8 +654,10 @@ function hwPower(){
     document.getElementById('pglow').style.display='none';
     if(!OS.bootedOnce){
       showScr('boot');
+      fb('act','🔌 전원 켜기','전원 버튼을 길게 누르면 휴대폰이 켜져요. SAMSUNG 로고가 나오며 부팅이 시작돼요.');
       setTimeout(function(){OS.bootedOnce=true;showScr('lock');},2400);
-    } else { showScr('lock'); }
+    } else { showScr('lock'); fb('act','🔆 화면 켜기','전원 버튼을 짧게 누르면 꺼졌던 화면이 다시 켜져요.'); }
+    check('power');
   } else {
     closeShade();
     OS.screen='off';
@@ -569,6 +667,8 @@ function hwPower(){
     document.getElementById('navbar').style.display='none';
     document.getElementById('pglow').style.display='block';
     updateHint();
+    fb('act','🌙 화면 끄기','전원 버튼을 누르면 화면이 꺼져요. 어디서든 끌 수 있고, 다시 누르면 켜져요.');
+    check('power');
   }
 }
 function hwVol(d){
@@ -576,6 +676,7 @@ function hwVol(d){
   if(OS.volume===0){OS.q.sound=false;} else if(d>0){OS.q.sound=true;}
   renderQS();renderStatus();syncSettings();
   flashToast((d>0?'🔊 볼륨 ':'🔉 볼륨 ')+OS.volume+'%');
+  fb('act',(d>0?'🔊 볼륨 올리기':'🔉 볼륨 내리기')+' ('+OS.volume+'%)','옆면 위/아래 버튼으로 소리 크기를 조절해요.');
 }
 
 // ════════ LOCK / UNLOCK (finger-following lift) ════════
@@ -609,12 +710,15 @@ function initLock(){
   lock.addEventListener('touchstart',st,{passive:true});lock.addEventListener('touchmove',mv,{passive:false});lock.addEventListener('touchend',en);
   lock.addEventListener('mousedown',st);window.addEventListener('mousemove',function(e){if(OS.screen==='lock')mv(e);});window.addEventListener('mouseup',function(e){if(OS.screen==='lock')en(e);});
 }
-function unlock(){OS.appStack=[];showScr('home');}
-function unlockTo(app){OS.appStack=[];showScr('home');openApp(app);}
+function unlock(){OS.appStack=[];showScr('home');check('unlock');fb('ok','🔓 잠금 해제','잠금화면을 아래에서 위로 밀면 잠금이 풀리고 홈 화면이 나와요.');}
+function unlockTo(app){OS.appStack=[];showScr('home');openApp(app);check('unlock');}
 
 // ════════ NAVIGATION ════════
 function openApp(key){
   var a=APPS[key];if(!a)return;
+  check('app');
+  if(key==='settings')check('settings');
+  fb('act','📲 '+a.n+' 열기','앱 아이콘을 누르면 해당 앱이 열려요.'+(a.stub?' (이 앱은 다음 단계에서 만들 예정이에요)':''));
   if(a.open){OS.appStack.push(a.open);showScr(a.open);return;}
   // stub app → generic screen
   OS.appStack.push('app');
@@ -625,15 +729,18 @@ function openApp(key){
   document.getElementById('app-msg').textContent=a.n+' 앱';
   showScr('app');
 }
-function navHome(){closeShade();OS.appStack=[];showScr('home');}
+function navHome(){var was=OS.screen;closeShade();OS.appStack=[];showScr('home');
+  if(was!=='home'){check('back');fb('info','🏠 홈 버튼','가운데 ○ 홈 버튼을 누르면 어느 화면에서든 홈으로 돌아와요.');}}
 function navBack(){
   if(OS.shadeOpen){closeShade();return;}
-  if(OS.appStack.length){OS.appStack.pop();
+  var moved=false;
+  if(OS.appStack.length){OS.appStack.pop();moved=true;
     if(OS.appStack.length){showScr(OS.appStack[OS.appStack.length-1]);}
     else showScr('home');
-  } else if(OS.screen!=='home'){showScr('home');}
+  } else if(OS.screen!=='home'){showScr('home');moved=true;}
+  if(moved){check('back');fb('info','‹ 뒤로가기','오른쪽 ‹ 버튼은 이전 화면으로 돌아가요. 컴퓨터의 취소(ESC) 같은 만능 키예요.');}
 }
-function navRecents(){closeShade();OS.appStack=[];showScr('home');flashToast('최근 앱 (준비 중)');}
+function navRecents(){closeShade();OS.appStack=[];showScr('home');flashToast('최근 앱 (준비 중)');fb('info','▢ 최근 앱','왼쪽 ▢ 버튼은 최근 사용한 앱 목록을 보여줘요. (준비 중)');}
 
 // ════════ NOTIFICATION SHADE ════════
 var sh,ovr,dragging=false,startY=0,startT=0,curT=0;
@@ -662,9 +769,10 @@ function initShade(){
   ps.addEventListener('touchstart',ds,{passive:true});ps.addEventListener('touchmove',dm,{passive:false});ps.addEventListener('touchend',de);
   ps.addEventListener('mousedown',ds);window.addEventListener('mousemove',dm);window.addEventListener('mouseup',de);
 }
-function openShade(){if(['off','boot'].includes(OS.screen))return;OS.shadeOpen=true;
+function openShade(){if(['off','boot'].includes(OS.screen))return;var wasOpen=OS.shadeOpen;OS.shadeOpen=true;
   sh.classList.remove('snap');sh.style.transform='translateY(-100%)';void sh.offsetHeight; // start closed + reflow
-  sh.classList.add('snap');setT(0);ovr.classList.add('on');}
+  sh.classList.add('snap');setT(0);ovr.classList.add('on');
+  if(!wasOpen){check('shade');fb('ok','🔽 알림창 열기','화면 맨 위(상태표시줄)를 잡고 아래로 끌어내리면 빠른 설정창이 나와요. Wi-Fi·소리·밝기를 빠르게 바꿀 수 있어요.');}}
 function closeShade(){OS.shadeOpen=false;if(!sh)return;sh.classList.add('snap');setT(-shadeH());setTimeout(function(){if(!OS.shadeOpen)ovr.classList.remove('on');},300);}
 
 // ════════ QUICK SETTINGS ════════
@@ -681,7 +789,10 @@ function qsTap(key){
   if(key==='dark')applyDark();
   if(key==='sound'){OS.volume=OS.q.sound?(OS.volume||60):0;}
   renderQS();renderStatus();syncSettings();
-  flashToast((OS.q[key]?'✅ ':'⭕ ')+(QMETA[key]?QMETA[key].nm:key)+(OS.q[key]?' 켜짐':' 꺼짐'));
+  var nm=(QMETA[key]?QMETA[key].nm:key);
+  flashToast((OS.q[key]?'✅ ':'⭕ ')+nm+(OS.q[key]?' 켜짐':' 꺼짐'));
+  check('qstoggle'); if(key==='dark')check('dark');
+  fb('ok',(OS.q[key]?'✅ ':'⭕ ')+nm+(OS.q[key]?' 켜짐':' 꺼짐'),QEXPLAIN[key]||'빠른 설정 버튼을 눌러 켜고 꺼요.');
 }
 // tap a tile in the carousel (toggle or action)
 function qsTileTap(k){
@@ -712,9 +823,10 @@ function renderQSTiles(){
   dots.innerHTML=pages>1?d:'';
 }
 function qsGoPage(p){var pages=document.querySelectorAll('#qs-track .qs-page').length;
-  p=Math.max(0,Math.min(pages-1,p));OS.qsPage=p;
+  p=Math.max(0,Math.min(pages-1,p));var changed=(p!==OS.qsPage);OS.qsPage=p;
   document.getElementById('qs-track').style.transform='translateX('+(-p*100)+'%)';
-  document.querySelectorAll('#qs-dots .qs-dot').forEach(function(d,i){d.classList.toggle('on',i===p);});}
+  document.querySelectorAll('#qs-dots .qs-dot').forEach(function(d,i){d.classList.toggle('on',i===p);});
+  if(changed){check('qsswipe');fb('info','↔️ 빠른 설정 '+(p+1)+'페이지','빠른 설정 버튼은 여러 페이지로 나뉘어요. 옆으로 밀면 더 많은 버튼(· · 점으로 표시)을 볼 수 있어요.');}}
 // horizontal swipe across the tile pages (the "넓게" / 2-page motion)
 function initQSSwipe(){
   var track=document.getElementById('qs-track'),sx=0,sw=false,base=0,w=0,moved=false,horiz=false;
@@ -735,11 +847,14 @@ function initQSSwipe(){
 function toggleEye(){OS.eye=!OS.eye;
   document.getElementById('m-eye').classList.toggle('on',OS.eye);
   document.getElementById('night-tint').style.opacity=OS.eye?'0.32':'0';
-  flashToast('편안하게 화면 보기 '+(OS.eye?'켜짐 (블루라이트 감소)':'꺼짐'));}
+  flashToast('편안하게 화면 보기 '+(OS.eye?'켜짐 (블루라이트 감소)':'꺼짐'));
+  check('eye');fb('ok','🌅 편안하게 화면 보기 '+(OS.eye?'켜짐':'꺼짐'),'화면을 따뜻한 색으로 바꿔 블루라이트를 줄여줘요. 밤에 눈이 편해져요.');}
 // ── edit screen ──
-function openQSEdit(){closeShade();OS.appStack.push('qsedit');showScr('qsedit');document.getElementById('qse-editor').classList.remove('on');}
+function openQSEdit(){closeShade();OS.appStack.push('qsedit');showScr('qsedit');document.getElementById('qse-editor').classList.remove('on');
+  check('qsedit');fb('act','✏️ 빠른 설정 편집','연필 버튼을 누르면 빠른 설정 버튼을 편집하는 화면이 열려요.');}
 // reached from the Settings app → open edit screen with the arrange editor already shown
-function openQSEditFromSettings(){OS.appStack.push('qsedit');showScr('qsedit');showQSEditor();}
+function openQSEditFromSettings(){OS.appStack.push('qsedit');showScr('qsedit');showQSEditor();
+  check('qsedit');fb('act','✏️ 빠른 설정 버튼 편집','설정 앱에서도 빠른 설정 버튼의 순서와 표시를 바꿀 수 있어요.');}
 function showQSEditor(){var ed=document.getElementById('qse-editor');ed.classList.add('on');renderQSEditor();ed.scrollIntoView({behavior:'smooth'});}
 function renderQSEditor(){
   document.getElementById('qse-editor-list').innerHTML=QSTILES.map(function(t,i){
@@ -767,7 +882,10 @@ function renderQS(){
 }
 function applyDark(){document.getElementById('s-settings').classList.toggle('dark',OS.q.dark);updateNavTheme();
   document.body.style.background=OS.q.dark?'radial-gradient(circle at 30% 20%,#0a0a14,#050508 60%,#000)':'radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d)';}
-function setBright(v){OS.brightness=+v;applyBright();}
+var brightFbTimer=null;
+function setBright(v){OS.brightness=+v;applyBright();check('bright');
+  clearTimeout(brightFbTimer);brightFbTimer=setTimeout(function(){
+    fb('ok','🔆 밝기 '+OS.brightness+'%','막대를 움직여 화면 밝기를 바꿔요. 낮추면 눈이 편하고 배터리가 절약돼요.');},250);}
 function applyBright(){var dim=document.getElementById('bright-dim');
   var op=(100-OS.brightness)/100*0.78;dim.style.opacity=op;}
 
@@ -792,6 +910,9 @@ function settingToggle(key){
   if(key==='dark')applyDark();
   if(key==='sound'){OS.volume=OS.q.sound?(OS.volume||60):0;}
   syncSettings();renderQS();renderStatus();
+  check('qstoggle');if(key==='dark')check('dark');
+  var nm=(QMETA[key]?QMETA[key].nm:key);
+  fb('ok',(OS.q[key]?'✅ ':'⭕ ')+nm+(OS.q[key]?' 켜짐':' 꺼짐'),'설정 앱의 스위치로도 켜고 끌 수 있어요. '+(QEXPLAIN[key]||''));
 }
 function syncSettings(){
   ['wifi','bt','data','sound','dark','rotate'].forEach(function(k){
@@ -844,10 +965,11 @@ function initHomeSwipe(){
   // swallow the click that fires right after a swipe so we don't open an app
   hp.addEventListener('click',function(e){if(homeSwiped){e.stopPropagation();e.preventDefault();homeSwiped=false;}},true);
 }
-function gotoPage(p){OS.homePage=p;var hp=document.getElementById('home-pages');
+function gotoPage(p){var changed=(p!==OS.homePage);OS.homePage=p;var hp=document.getElementById('home-pages');
   hp.style.transition='transform .3s cubic-bezier(.3,1,.4,1)';
   hp.style.transform='translateX('+(-p*hp.offsetWidth)+'px)';
-  document.getElementById('pd0').classList.toggle('on',p===0);document.getElementById('pd1').classList.toggle('on',p===1);}
+  document.getElementById('pd0').classList.toggle('on',p===0);document.getElementById('pd1').classList.toggle('on',p===1);
+  if(changed){check('homeswipe');fb('info','↔️ 홈 화면 '+(p+1)+'페이지','홈 화면은 여러 페이지예요. 좌우로 밀어 더 많은 앱을 볼 수 있어요.');}}
 
 // ════════ CALCULATOR ════════
 var calc={now:'0',prev:null,op:null,fresh:true};
@@ -857,7 +979,8 @@ function calcN(n){if(calc.fresh){calc.now=(n==='.'?'0.':n);calc.fresh=false;}
 function calcOp(o){if(calc.op&&!calc.fresh)calcEq();calc.prev=parseFloat(calc.now);calc.op=o;calc.fresh=true;calcRender();}
 function calcEq(){if(calc.op==null||calc.prev==null)return;var a=calc.prev,b=parseFloat(calc.now),r=0;
   if(calc.op==='+')r=a+b;else if(calc.op==='-')r=a-b;else if(calc.op==='*')r=a*b;else if(calc.op==='/')r=b===0?0:a/b;
-  calc.now=String(Math.round(r*1e8)/1e8);calc.op=null;calc.prev=null;calc.fresh=true;calcRender();}
+  calc.now=String(Math.round(r*1e8)/1e8);calc.op=null;calc.prev=null;calc.fresh=true;calcRender();
+  check('calc');fb('ok','🧮 계산 결과: '+calc.now,'계산기로 더하기·빼기·곱하기·나누기를 할 수 있어요.');}
 function calcC(){calc={now:'0',prev:null,op:null,fresh:true};calcRender();}
 function calcSign(){calc.now=String(parseFloat(calc.now)*-1);calcRender();}
 function calcPct(){calc.now=String(parseFloat(calc.now)/100);calcRender();}
@@ -869,16 +992,19 @@ function camShoot(){var f=document.getElementById('cam-flash');f.style.transitio
   camPhotos++;camIdx=(camIdx+1)%camScenes.length;
   document.getElementById('cam-thumb').textContent=document.getElementById('cam-scene').textContent;
   if(!camFrontMode)document.getElementById('cam-scene').textContent=camScenes[camIdx];
-  flashToast('📷 사진 '+camPhotos+'장 촬영');}
+  flashToast('📷 사진 '+camPhotos+'장 촬영');
+  check('camera');fb('ok','📷 사진 촬영 ('+camPhotos+'장)','가운데 하얀 버튼(셔터)을 누르면 사진이 찍혀요. 🔄 버튼으로 셀카로 바꿀 수 있어요.');}
 function camFlip(){camFrontMode=!camFrontMode;document.getElementById('cam-scene').textContent=camFrontMode?'🤳':camScenes[camIdx];
   flashToast(camFrontMode?'전면 카메라 (셀카)':'후면 카메라');}
 
 // ════════ DIALER ════════
 var dlNum='';
 function dlFmt(s){return s.replace(/^(\d{3})(\d{0,4})(\d{0,4}).*$/,function(_,a,b,c){return c?a+'-'+b+'-'+c:b?a+'-'+b:a;});}
-function dlK(k){dlNum+=k;set('dl-num',dlFmt(dlNum));}
+function dlK(k){dlNum+=k;set('dl-num',dlFmt(dlNum));check('dial');
+  if(dlNum.length===1)fb('act','📞 전화 번호 누르기','숫자 버튼을 눌러 전화번호를 입력해요. 다 누르면 초록색 통화 버튼을 눌러요.');}
 function dlDel(){dlNum=dlNum.slice(0,-1);set('dl-num',dlFmt(dlNum));}
-function dlCall(){if(!dlNum){flashToast('번호를 먼저 눌러주세요');return;}flashToast('📞 '+dlFmt(dlNum)+' (연습용)');}
+function dlCall(){if(!dlNum){flashToast('번호를 먼저 눌러주세요');fb('info','번호가 없어요','먼저 숫자 버튼으로 전화번호를 눌러주세요.');return;}
+  flashToast('📞 '+dlFmt(dlNum)+' (연습용)');check('dial');fb('ok','📞 전화 거는 중 (연습)',dlFmt(dlNum)+' 로 전화를 걸어요. 연습이라 실제로 걸리진 않아요.');}
 </script>
 </body>
 </html>
