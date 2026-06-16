@@ -63,7 +63,7 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
 .scr{position:absolute;inset:0;display:none;flex-direction:column}
 .scr.on{display:flex}
 /* screens that show the nav bar end ABOVE it (no overlap) */
-#s-home,#s-app,#s-settings,#s-calc,#s-camera,#s-dialer{bottom:42px}
+#s-home,#s-app,#s-settings,#s-calc,#s-camera,#s-dialer,#s-qsedit{bottom:42px}
 
 /* OFF */
 #s-off{background:#000;align-items:center;justify-content:center}
@@ -114,38 +114,81 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
 .pdot.on{background:#fff;width:18px;border-radius:3px}
 .dock{margin:6px 12px 0;background:rgba(255,255,255,.14);backdrop-filter:blur(28px);border-radius:28px;padding:11px 6px;display:flex;justify-content:space-around;z-index:1;position:relative}
 
-/* ════════ NOTIFICATION SHADE ════════ */
-.shade{position:absolute;top:0;left:0;right:0;z-index:200;background:rgba(16,16,26,.97);backdrop-filter:blur(34px);border-radius:0 0 30px 30px;transform:translateY(-100%);will-change:transform;color:#fff}
+/* ════════ NOTIFICATION SHADE (Samsung One UI) ════════ */
+.shade{position:absolute;top:0;left:0;right:0;z-index:200;background:linear-gradient(180deg,rgba(30,32,44,.98),rgba(17,18,27,.98));backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-radius:0 0 36px 36px;transform:translateY(-100%);will-change:transform;color:#fff;padding-bottom:14px}
 .shade.snap{transition:transform .34s cubic-bezier(.25,1,.3,1)}
-.shade-ovr{position:absolute;inset:0;z-index:199;display:none;background:rgba(0,0,0,.25)}
+.shade-ovr{position:absolute;inset:0;z-index:199;display:none;background:rgba(0,0,0,.3)}
 .shade-ovr.on{display:block}
-.sh-top{display:flex;justify-content:flex-end;gap:18px;padding:12px 18px 4px}
-.sh-tbtn{font-size:1.1rem;opacity:.55;cursor:pointer}.sh-tbtn:hover{opacity:1}
-.sh-timerow{padding:2px 20px 10px;display:flex;align-items:flex-end;gap:10px}
-.sh-time{font-size:3rem;font-weight:200;line-height:1}
-.sh-dateblk{padding-bottom:5px}.sh-date{font-size:.74rem;color:rgba(255,255,255,.5);line-height:1.5}
-.qs-lg{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 8px}
-.qslg{background:rgba(255,255,255,.09);border-radius:18px;padding:13px;display:flex;align-items:center;gap:11px;cursor:pointer;border:2px solid transparent;transition:.12s}
-.qslg.on{background:rgba(90,170,255,.22);border-color:rgba(90,170,255,.45)}
-.qslg:active{transform:scale(.93)}
-.qslg-ico{font-size:1.35rem}.qslg-nm{font-size:.8rem;font-weight:700}.qslg-sub{font-size:.6rem;color:rgba(255,255,255,.45);margin-top:1px}
-.qslg.on .qslg-nm{color:#7ec3ff}
-.qs-sm{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 12px 8px}
-.qssm{background:rgba(255,255,255,.08);border-radius:15px;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;border:2px solid transparent;transition:.12s}
-.qssm.on{background:rgba(90,170,255,.2);border-color:rgba(90,170,255,.4)}
-.qssm:active{transform:scale(.88)}
-.qssm-ico{font-size:1.2rem}.qssm-lbl{font-size:.55rem;color:rgba(255,255,255,.5);text-align:center;line-height:1.2}
-.qssm.on .qssm-lbl{color:#7ec3ff}
-.sh-sliders{padding:4px 14px 10px}
-.sl-row{display:flex;align-items:center;gap:9px;padding:5px 0}
-.sl-ico{font-size:.95rem;opacity:.7;width:20px;text-align:center}
-.sl-track{flex:1;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;background:rgba(255,255,255,.2);outline:none;cursor:pointer}
-.sl-track::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#7ec3ff;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.4)}
-.sh-notifs{padding:2px 12px 6px}
-.sh-nhd{font-size:.62rem;font-weight:800;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em;padding:4px 4px 7px}
-.sh-notif{background:rgba(255,255,255,.07);border-radius:16px;padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.sh-ni{font-size:1.15rem}.sh-na{font-size:.62rem;color:rgba(255,255,255,.42);margin-bottom:2px}.sh-nt{font-size:.78rem;font-weight:600}
-.sh-foot{text-align:center;padding:10px 0 8px;font-size:.62rem;color:rgba(255,255,255,.2);cursor:pointer}
+.sh-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px}
+.sh-headL{font-size:.82rem;font-weight:700}
+.sh-headR{display:flex;gap:18px}
+.sh-hic{font-size:1.05rem;opacity:.72;cursor:pointer}.sh-hic:hover{opacity:1}
+/* large Wi-Fi/BT tiles */
+.qs-lg{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 14px 9px}
+.qslg{background:rgba(255,255,255,.1);border-radius:26px;padding:11px 13px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:.12s}
+.qslg.on{background:#5a9eff}
+.qslg:active{transform:scale(.96)}
+.qslg-circ{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.qslg.on .qslg-circ{background:rgba(255,255,255,.32)}
+.qslg-nm{font-size:.82rem;font-weight:700}.qslg-sub{font-size:.6rem;color:rgba(255,255,255,.5);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px}
+.qslg.on .qslg-sub{color:rgba(255,255,255,.85)}
+/* tile carousel panel */
+.qs-panel{background:rgba(255,255,255,.06);border-radius:26px;margin:0 14px 10px;padding:16px 8px 8px;overflow:hidden;position:relative;touch-action:pan-y}
+.qs-track{display:flex;transition:transform .3s cubic-bezier(.3,1,.4,1)}
+.qs-page{min-width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:16px 0}
+.qs-tile{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+.qs-circ{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:.12s}
+.qs-tile.on .qs-circ{background:#5a9eff;color:#fff}
+.qs-tile:active .qs-circ{transform:scale(.86)}
+.qs-tlbl{font-size:.55rem;color:rgba(255,255,255,.78);text-align:center;line-height:1.25;max-width:62px}
+.qs-dots{display:flex;justify-content:center;gap:7px;padding:8px 0 2px}
+.qs-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.28);transition:.2s}
+.qs-dot.on{background:#fff;width:16px;border-radius:3px}
+/* brightness */
+.sh-bright{margin:0 14px 10px;background:rgba(255,255,255,.06);border-radius:26px;padding:9px 16px;display:flex;align-items:center;gap:12px}
+.sl-track{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:rgba(255,255,255,.22);outline:none;cursor:pointer}
+.sl-track::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.sh-bdots{font-size:1.1rem;opacity:.5;cursor:pointer;line-height:.5}
+/* mode + media rows */
+.sh-modes,.sh-media{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 14px 9px}
+.sh-mtile{background:rgba(255,255,255,.07);border-radius:26px;padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:.12s}
+.sh-mtile.on{background:#5a9eff}
+.sh-mtile:active{transform:scale(.97)}
+.sh-mt-circ{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.sh-mtile.on .sh-mt-circ{background:rgba(255,255,255,.3)}
+.sh-mt-nm{font-size:.72rem;font-weight:700;line-height:1.2}.sh-mt-sub{font-size:.55rem;color:rgba(255,255,255,.45);margin-top:1px}
+.sh-foot{text-align:center;padding:8px 0 4px;font-size:.6rem;color:rgba(255,255,255,.22);cursor:pointer}
+
+/* ════════ QUICK-SETTINGS EDIT SCREEN ════════ */
+#s-qsedit{background:#0b0d15}
+.qse-hd{padding:42px 16px 14px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.qse-back{font-size:1.4rem;cursor:pointer;color:#fff;line-height:1}
+.qse-title{font-size:1.2rem;font-weight:800;color:#fff}
+.qse-body{flex:1;overflow-y:auto;padding:0 16px 30px}
+.qse-cards{background:rgba(255,255,255,.05);border-radius:20px;padding:18px 12px;margin-bottom:14px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.qse-col{display:flex;flex-direction:column;align-items:center;gap:11px}
+.qse-col-t{font-size:.82rem;color:#dfe3ec;font-weight:600}
+.qse-prev{width:100%;aspect-ratio:.66;background:rgba(255,255,255,.92);border-radius:16px;padding:14px 12px;display:flex;flex-direction:column;gap:9px}
+.qse-prow{display:flex;gap:5px}
+.qse-pd{width:8px;height:8px;border-radius:50%;background:#4a90e2}
+.qse-pbar{height:8px;border-radius:4px;background:#cfd4dc;flex:1}
+.qse-pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.qse-pg{width:9px;height:9px;border-radius:50%;background:#4a90e2;justify-self:center}
+.qse-editbtn{background:rgba(255,255,255,.13);border:none;color:#fff;font-size:.78rem;font-weight:700;padding:8px 26px;border-radius:18px;cursor:pointer;font-family:inherit}
+.qse-editbtn:active{background:rgba(255,255,255,.25)}
+.qse-row{background:rgba(255,255,255,.05);border-radius:14px;padding:15px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.qse-rt{font-size:.88rem;font-weight:700;color:#fff}
+.qse-rs{font-size:.66rem;color:#8b94a8;margin-top:3px}
+/* inline tile on/off editor */
+.qse-editor{background:rgba(255,255,255,.05);border-radius:16px;padding:8px 0;margin-bottom:14px;display:none}
+.qse-editor.on{display:block}
+.qse-eh{font-size:.72rem;color:#8b94a8;padding:8px 16px 10px;font-weight:700}
+.qse-eitem{display:flex;align-items:center;gap:12px;padding:10px 16px;cursor:pointer}
+.qse-eitem:active{background:rgba(255,255,255,.04)}
+.qse-eic{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.qse-en{flex:1;font-size:.85rem;color:#e7eaf0;font-weight:600}
+.qse-chk{width:22px;height:22px;border-radius:50%;border:2px solid #555;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;flex-shrink:0}
+.qse-eitem.on .qse-chk{background:#5a9eff;border-color:#5a9eff}
 
 /* ════════ GENERIC APP SCREEN ════════ */
 .app-scr{background:#10131c}
@@ -236,32 +279,32 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
       <div class="sicons" id="sb-icons"></div>
     </div>
 
-    <!-- SHADE -->
+    <!-- SHADE (Samsung One UI quick settings) -->
     <div class="shade" id="shade">
-      <div class="sh-top"><span class="sh-tbtn" onclick="closeShade()">⚙️</span><span class="sh-tbtn" onclick="closeShade()">✕</span></div>
-      <div class="sh-timerow"><div class="sh-time" id="sh-time">10:30</div><div class="sh-dateblk"><div class="sh-date" id="sh-date">월요일, 6월 16일</div><div class="sh-date" id="sh-net" style="color:rgba(255,255,255,.3);margin-top:1px">SKT · LTE</div></div></div>
+      <div class="sh-head">
+        <span class="sh-headL"><span id="sh-time">10:30</span> · <span id="sh-date">월요일, 6월 16일</span></span>
+        <span class="sh-headR"><span class="sh-hic" onclick="openQSEdit()">✏️</span><span class="sh-hic" onclick="hwPower()">⏻</span><span class="sh-hic" onclick="openApp('settings')">⚙️</span></span>
+      </div>
       <div class="qs-lg">
-        <div class="qslg on" data-qs="wifi" onclick="qsTap('wifi')"><span class="qslg-ico">📶</span><div><div class="qslg-nm">Wi-Fi</div><div class="qslg-sub" id="qsub-wifi">우리집 5G</div></div></div>
-        <div class="qslg on" data-qs="bt" onclick="qsTap('bt')"><span class="qslg-ico">🔵</span><div><div class="qslg-nm">블루투스</div><div class="qslg-sub" id="qsub-bt">연결됨</div></div></div>
+        <div class="qslg on" data-qs="wifi" onclick="qsTap('wifi')"><span class="qslg-circ">📶</span><div><div class="qslg-nm">Wi-Fi</div><div class="qslg-sub" id="qsub-wifi">우리집 5G</div></div></div>
+        <div class="qslg on" data-qs="bt" onclick="qsTap('bt')"><span class="qslg-circ">🔵</span><div><div class="qslg-nm">블루투스</div><div class="qslg-sub" id="qsub-bt">연결됨</div></div></div>
       </div>
-      <div class="qs-sm">
-        <div class="qssm" data-qs="sound" onclick="qsTap('sound')"><span class="qssm-ico" id="qsi-sound">🔔</span><span class="qssm-lbl" id="qsl-sound">소리</span></div>
-        <div class="qssm" data-qs="flash" onclick="qsTap('flash')"><span class="qssm-ico">🔦</span><span class="qssm-lbl">손전등</span></div>
-        <div class="qssm on" data-qs="data" onclick="qsTap('data')"><span class="qssm-ico">📡</span><span class="qssm-lbl">데이터</span></div>
-        <div class="qssm" data-qs="plane" onclick="qsTap('plane')"><span class="qssm-ico">✈️</span><span class="qssm-lbl">비행기</span></div>
-        <div class="qssm on" data-qs="rotate" onclick="qsTap('rotate')"><span class="qssm-ico">🔄</span><span class="qssm-lbl">화면회전</span></div>
-        <div class="qssm on" data-qs="loc" onclick="qsTap('loc')"><span class="qssm-ico">📍</span><span class="qssm-lbl">위치</span></div>
-        <div class="qssm" data-qs="dark" onclick="qsTap('dark')"><span class="qssm-ico">🌙</span><span class="qssm-lbl">다크모드</span></div>
-        <div class="qssm" data-qs="hotspot" onclick="qsTap('hotspot')"><span class="qssm-ico">📲</span><span class="qssm-lbl">핫스팟</span></div>
+      <div class="qs-panel">
+        <div class="qs-track" id="qs-track"></div>
+        <div class="qs-dots" id="qs-dots"></div>
       </div>
-      <div class="sh-sliders">
-        <div class="sl-row"><span class="sl-ico">🔆</span><input type="range" class="sl-track" id="sl-bright" min="10" max="100" value="85" oninput="setBright(this.value)"/></div>
-        <div class="sl-row"><span class="sl-ico" id="sl-vico">🔊</span><input type="range" class="sl-track" id="sl-vol" min="0" max="100" value="60" oninput="setVol(this.value)"/></div>
+      <div class="sh-bright">
+        <span style="font-size:1rem;opacity:.7">🔆</span>
+        <input type="range" class="sl-track" id="sl-bright" min="10" max="100" value="85" oninput="setBright(this.value)"/>
+        <span class="sh-bdots" onclick="flashToast('밝기 옵션 (준비 중)')">⋮</span>
       </div>
-      <div class="sh-notifs">
-        <div class="sh-nhd">알림</div>
-        <div class="sh-notif"><span class="sh-ni">💬</span><div><div class="sh-na">카카오톡 · 방금</div><div class="sh-nt">큰딸: 엄마 점심 드셨어요? 🍚</div></div></div>
-        <div class="sh-notif"><span class="sh-ni">📞</span><div><div class="sh-na">전화 · 오전 9:42</div><div class="sh-nt">아들(철수) — 부재중 1회</div></div></div>
+      <div class="sh-modes">
+        <div class="sh-mtile" id="m-eye" onclick="toggleEye()"><span class="sh-mt-circ">🌅</span><div><div class="sh-mt-nm">편안하게 화면 보기</div></div></div>
+        <div class="sh-mtile" data-qs="dark" onclick="qsTap('dark')"><span class="sh-mt-circ">🌙</span><div><div class="sh-mt-nm">다크 모드</div></div></div>
+      </div>
+      <div class="sh-media">
+        <div class="sh-mtile" onclick="flashToast('Smart View — 화면 미러링 (준비 중)')"><span class="sh-mt-circ">📺</span><div><div class="sh-mt-nm">Smart View</div><div class="sh-mt-sub">화면 미러링</div></div></div>
+        <div class="sh-mtile" onclick="flashToast('기기 제어 — SmartThings (준비 중)')"><span class="sh-mt-circ">⊞</span><div><div class="sh-mt-nm">기기 제어</div><div class="sh-mt-sub">SmartThings</div></div></div>
       </div>
       <div class="sh-foot" onclick="closeShade()">▲ 위로 밀어서 닫기</div>
     </div>
@@ -355,6 +398,39 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
       <div class="dl-actions"><div style="width:40px"></div><button class="dl-call" onclick="dlCall()">📞</button><button class="dl-del" onclick="dlDel()">⌫</button></div>
     </div>
 
+    <!-- QUICK-SETTINGS EDIT SCREEN -->
+    <div class="scr" id="s-qsedit">
+      <div class="qse-hd"><span class="qse-back" onclick="navBack()">‹</span><span class="qse-title">편집</span></div>
+      <div class="qse-body">
+        <div class="qse-cards">
+          <div class="qse-col">
+            <div class="qse-col-t">상단</div>
+            <div class="qse-prev">
+              <div class="qse-prow"><div class="qse-pd"></div><div class="qse-pd"></div><div class="qse-pd"></div><div class="qse-pd"></div><div class="qse-pd"></div></div>
+              <div class="qse-pbar"></div><div class="qse-pbar" style="width:60%;flex:none"></div>
+            </div>
+            <button class="qse-editbtn" onclick="showQSEditor()">편집</button>
+          </div>
+          <div class="qse-col">
+            <div class="qse-col-t">전체</div>
+            <div class="qse-prev">
+              <div class="qse-prow"><div class="qse-pbar" style="height:9px"></div><div class="qse-pbar" style="height:9px"></div></div>
+              <div class="qse-pgrid"><div class="qse-pg"></div><div class="qse-pg"></div><div class="qse-pg"></div><div class="qse-pg"></div><div class="qse-pg"></div><div class="qse-pg"></div><div class="qse-pg"></div><div class="qse-pg"></div><div class="qse-pg"></div></div>
+            </div>
+            <button class="qse-editbtn" onclick="showQSEditor()">편집</button>
+          </div>
+        </div>
+        <div class="qse-editor" id="qse-editor">
+          <div class="qse-eh">표시할 버튼을 선택하세요 (눌러서 켜고 끄기)</div>
+          <div id="qse-editor-list"></div>
+        </div>
+        <div class="qse-row"><div><div class="qse-rt">빠른 설정창 바로 열기</div></div><div class="set-toggle" onclick="this.classList.toggle('on')"></div></div>
+        <div class="qse-row"><div><div class="qse-rt">밝기 제어</div><div class="qse-rs">항상 표시</div></div><span style="color:#666">›</span></div>
+        <div class="qse-row"><div><div class="qse-rt">기기 제어 및 미디어 출력 버튼</div><div class="qse-rs">빠른 설정창 접었을 때 표시</div></div><span style="color:#666">›</span></div>
+        <div class="qse-row"><div><div class="qse-rt">문의하기</div></div><span style="color:#666">›</span></div>
+      </div>
+    </div>
+
     <!-- overlays -->
     <div class="bright-dim" id="bright-dim"></div>
     <div class="night-tint" id="night-tint"></div>
@@ -376,9 +452,25 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
 // ════════ OS STATE ════════
 var OS={
   screen:'off', bootedOnce:false, shadeOpen:false, homePage:0,
-  q:{wifi:true,bt:true,data:true,sound:true,flash:false,plane:false,rotate:true,loc:true,dark:false,hotspot:false},
-  brightness:85, volume:60, appStack:[]
+  q:{wifi:true,bt:true,data:true,sound:true,flash:false,plane:false,rotate:true,loc:true,dark:false,hotspot:false,nfc:true,aod:false},
+  brightness:85, volume:60, appStack:[], qsPage:0, eye:false
 };
+// ordered quick-settings tiles — first 8 on page 1, rest on page 2 (· · dots)
+var QSTILES=[
+  {k:'sound',  nm:'소리',     ico:'🔊', state:'sound'},
+  {k:'rotate', nm:'세로',     ico:'🔒', state:'rotate'},
+  {k:'qr',     nm:'QR 코드 스캔', ico:'🔳', act:1},
+  {k:'gpt',    nm:'ChatGPT',  ico:'🤖', act:1},
+  {k:'flash',  nm:'손전등',   ico:'🔦', state:'flash'},
+  {k:'nfc',    nm:'NFC',      ico:'🇳', state:'nfc'},
+  {k:'data',   nm:'모바일 데이터', ico:'↕️', state:'data'},
+  {k:'capture',nm:'화면 캡처', ico:'✂️', act:1},
+  {k:'hotspot',nm:'모바일 핫스팟', ico:'📡', state:'hotspot'},
+  {k:'aod',    nm:'Always On Display', ico:'🕙', state:'aod'},
+  {k:'loc',    nm:'위치',     ico:'📍', state:'loc'},
+  {k:'quickshare',nm:'Quick Share', ico:'🔄', act:1}
+];
+QSTILES.forEach(function(t){t.vis=true;});
 var APPS={
   phone:{n:'전화',i:'📞',bg:'linear-gradient(135deg,#1a8a3a,#34c759)',open:'dialer'},
   messages:{n:'메시지',i:'💬',bg:'linear-gradient(135deg,#0a6cff,#4a9bff)',stub:true},
@@ -402,7 +494,7 @@ var PAGES=[
 var DOCK=['phone','messages','camera','settings'];
 
 // ════════ INIT ════════
-buildHome();startClock();initLock();initShade();initHomeSwipe();renderQS();applyBright();renderStatus();
+buildHome();startClock();initLock();initShade();initHomeSwipe();renderQSTiles();initQSSwipe();renderQS();applyBright();renderStatus();
 
 // ════════ CLOCK ════════
 function startClock(){
@@ -475,9 +567,8 @@ function hwPower(){
 }
 function hwVol(d){
   OS.volume=Math.max(0,Math.min(100,OS.volume+d*10));
-  document.getElementById('sl-vol').value=OS.volume;
   if(OS.volume===0){OS.q.sound=false;} else if(d>0){OS.q.sound=true;}
-  renderQS();renderStatus();
+  renderQS();renderStatus();syncSettings();
   flashToast((d>0?'🔊 볼륨 ':'🔉 볼륨 ')+OS.volume+'%');
 }
 
@@ -570,7 +661,8 @@ function closeShade(){OS.shadeOpen=false;if(!sh)return;sh.classList.add('snap');
 // ════════ QUICK SETTINGS ════════
 var QMETA={
   wifi:{nm:'Wi-Fi'},bt:{nm:'블루투스'},data:{nm:'모바일 데이터'},sound:{nm:'소리'},
-  flash:{nm:'손전등'},plane:{nm:'비행기 모드'},rotate:{nm:'화면 회전'},loc:{nm:'위치'},dark:{nm:'다크 모드'},hotspot:{nm:'핫스팟'}
+  flash:{nm:'손전등'},plane:{nm:'비행기 모드'},rotate:{nm:'세로(화면 회전)'},loc:{nm:'위치'},
+  dark:{nm:'다크 모드'},hotspot:{nm:'모바일 핫스팟'},nfc:{nm:'NFC'},aod:{nm:'Always On Display'}
 };
 function qsTap(key){
   OS.q[key]=!OS.q[key];
@@ -578,33 +670,87 @@ function qsTap(key){
   if(key==='plane' && OS.q.plane){OS.q.wifi=false;OS.q.data=false;OS.q.bt=false;}
   if((key==='wifi'||key==='data'||key==='bt') && OS.q[key]){OS.q.plane=false;}
   if(key==='dark')applyDark();
-  if(key==='flash')applyFlash();
-  if(key==='sound'){var v=OS.q.sound?(OS.volume||60):0;OS.volume=v;document.getElementById('sl-vol').value=v;}
+  if(key==='sound'){OS.volume=OS.q.sound?(OS.volume||60):0;}
   renderQS();renderStatus();syncSettings();
-  flashToast((OS.q[key]?'✅ ':'⭕ ')+QMETA[key].nm+(OS.q[key]?' 켜짐':' 꺼짐'));
+  flashToast((OS.q[key]?'✅ ':'⭕ ')+(QMETA[key]?QMETA[key].nm:key)+(OS.q[key]?' 켜짐':' 꺼짐'));
 }
+// tap a tile in the carousel (toggle or action)
+function qsTileTap(k){
+  var t=null;QSTILES.forEach(function(x){if(x.k===k)t=x;});
+  if(!t)return;
+  if(t.act){flashToast(t.nm+' (준비 중)');return;}
+  qsTap(t.state);
+}
+// build the 2-page tile carousel + dots
+function renderQSTiles(){
+  var track=document.getElementById('qs-track'),dots=document.getElementById('qs-dots');
+  if(!track)return;
+  var vis=QSTILES.filter(function(t){return t.vis;});
+  var per=8,pages=Math.max(1,Math.ceil(vis.length/per));
+  if(OS.qsPage>=pages)OS.qsPage=pages-1;
+  var html='';
+  for(var p=0;p<pages;p++){
+    html+='<div class="qs-page">';
+    vis.slice(p*per,p*per+per).forEach(function(t){
+      var on=t.state&&OS.q[t.state];
+      html+='<div class="qs-tile'+(on?' on':'')+'" onclick="qsTileTap(\''+t.k+'\')"><span class="qs-circ">'+t.ico+'</span><span class="qs-tlbl">'+t.nm+'</span></div>';
+    });
+    html+='</div>';
+  }
+  track.innerHTML=html;
+  track.style.transform='translateX('+(-OS.qsPage*100)+'%)';
+  var d='';for(var i=0;i<pages;i++)d+='<div class="qs-dot'+(i===OS.qsPage?' on':'')+'"></div>';
+  dots.innerHTML=pages>1?d:'';
+}
+function qsGoPage(p){var pages=document.querySelectorAll('#qs-track .qs-page').length;
+  p=Math.max(0,Math.min(pages-1,p));OS.qsPage=p;
+  document.getElementById('qs-track').style.transform='translateX('+(-p*100)+'%)';
+  document.querySelectorAll('#qs-dots .qs-dot').forEach(function(d,i){d.classList.toggle('on',i===p);});}
+// horizontal swipe across the tile pages (the "넓게" / 2-page motion)
+function initQSSwipe(){
+  var track=document.getElementById('qs-track'),sx=0,sw=false,base=0,w=0,moved=false,horiz=false;
+  function st(e){var p=e.touches?e.touches[0]:e;sx=p.clientX;sw=true;moved=false;horiz=false;
+    w=track.offsetWidth;base=-OS.qsPage*w;track.style.transition='none';}
+  function mv(e){if(!sw)return;var p=e.touches?e.touches[0]:e,dx=p.clientX-sx;
+    if(!moved){if(Math.abs(dx)<6)return;moved=true;horiz=true;}
+    var np=base+dx,pages=document.querySelectorAll('#qs-track .qs-page').length,min=-(pages-1)*w;
+    if(np>0)np*=0.32;if(np<min)np=min+(np-min)*0.32;
+    track.style.transform='translateX('+np+'px)';if(e.cancelable)e.preventDefault();}
+  function en(e){if(!sw)return;sw=false;track.style.transition='';
+    var p=(e.changedTouches?e.changedTouches[0]:e),dx=p.clientX-sx,pg=OS.qsPage,pages=document.querySelectorAll('#qs-track .qs-page').length;
+    if(horiz){if(dx<-44&&pg<pages-1)pg++;else if(dx>44&&pg>0)pg--;}
+    qsGoPage(pg);}
+  track.addEventListener('touchstart',st,{passive:true});track.addEventListener('touchmove',mv,{passive:false});track.addEventListener('touchend',en);
+  track.addEventListener('mousedown',st);window.addEventListener('mousemove',function(e){if(OS.shadeOpen)mv(e);});window.addEventListener('mouseup',function(e){if(OS.shadeOpen)en(e);});
+}
+function toggleEye(){OS.eye=!OS.eye;
+  document.getElementById('m-eye').classList.toggle('on',OS.eye);
+  document.getElementById('night-tint').style.opacity=OS.eye?'0.32':'0';
+  flashToast('편안하게 화면 보기 '+(OS.eye?'켜짐 (블루라이트 감소)':'꺼짐'));}
+// ── edit screen ──
+function openQSEdit(){closeShade();OS.appStack.push('qsedit');showScr('qsedit');document.getElementById('qse-editor').classList.remove('on');}
+function showQSEditor(){var ed=document.getElementById('qse-editor');ed.classList.add('on');renderQSEditor();ed.scrollIntoView({behavior:'smooth'});}
+function renderQSEditor(){
+  document.getElementById('qse-editor-list').innerHTML=QSTILES.map(function(t){
+    return '<div class="qse-eitem'+(t.vis?' on':'')+'" onclick="qsEditToggle(\''+t.k+'\')"><span class="qse-eic">'+t.ico+'</span><span class="qse-en">'+t.nm+'</span><span class="qse-chk">✓</span></div>';
+  }).join('');
+}
+function qsEditToggle(k){var vis=QSTILES.filter(function(t){return t.vis;}).length;
+  QSTILES.forEach(function(t){if(t.k===k){ if(t.vis&&vis<=1){flashToast('최소 1개는 있어야 해요');return;} t.vis=!t.vis; }});
+  renderQSEditor();renderQSTiles();}
 function renderQS(){
   Object.keys(OS.q).forEach(function(k){
     document.querySelectorAll('[data-qs="'+k+'"]').forEach(function(el){el.classList.toggle('on',OS.q[k]);});
   });
   set('qsub-wifi',OS.q.wifi?'우리집 5G':'꺼짐');
   set('qsub-bt',OS.q.bt?'연결됨':'꺼짐');
-  var snd=document.getElementById('qsi-sound'),sl=document.getElementById('qsl-sound');
-  if(snd){snd.textContent=OS.q.sound?'🔔':'🔇';sl.textContent=OS.q.sound?'소리':'무음';}
+  renderQSTiles();
 }
 function applyDark(){document.getElementById('s-settings').classList.toggle('dark',OS.q.dark);updateNavTheme();
   document.body.style.background=OS.q.dark?'radial-gradient(circle at 30% 20%,#0a0a14,#050508 60%,#000)':'radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d)';}
-function applyFlash(){var t=document.getElementById('night-tint');
-  // flashlight: brief bright flash overlay
-  if(OS.q.flash){var f=document.getElementById('cam-flash');}
-  var dim=document.getElementById('bright-dim');
-  // when flashlight on, slightly brighten regardless
-}
 function setBright(v){OS.brightness=+v;applyBright();}
 function applyBright(){var dim=document.getElementById('bright-dim');
   var op=(100-OS.brightness)/100*0.78;dim.style.opacity=op;}
-function setVol(v){OS.volume=+v;OS.q.sound=(+v>0);renderQS();renderStatus();
-  document.getElementById('sl-vico').textContent=(+v===0)?'🔇':(+v<50?'🔉':'🔊');}
 
 // ════════ STATUS BAR ════════
 function renderStatus(){
@@ -625,7 +771,7 @@ function renderStatus(){
 function settingToggle(key){
   OS.q[key]=!OS.q[key];
   if(key==='dark')applyDark();
-  if(key==='sound'){OS.volume=OS.q.sound?(OS.volume||60):0;document.getElementById('sl-vol').value=OS.volume;}
+  if(key==='sound'){OS.volume=OS.q.sound?(OS.volume||60):0;}
   syncSettings();renderQS();renderStatus();
 }
 function syncSettings(){
