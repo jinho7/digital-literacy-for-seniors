@@ -14,24 +14,25 @@ html,body{height:100%;font-family:'Noto Sans KR','맑은 고딕',sans-serif;back
 
 /* LEFT */
 .lpanel{background:#161b27;border-right:1px solid #21262d;overflow-y:auto;display:flex;flex-direction:column}
-.lp-hd{padding:12px 14px 8px;border-bottom:1px solid #21262d;font-size:.65rem;font-weight:800;color:#8b949e;text-transform:uppercase;letter-spacing:.1em;flex-shrink:0}
-.phase{margin-bottom:2px}
-.phase-hd{display:flex;align-items:center;gap:8px;padding:9px 14px 5px;user-select:none}
-.pbadge{width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:900;flex-shrink:0}
+.lp-hd{padding:14px 16px 10px;border-bottom:1px solid #21262d;font-size:.8rem;font-weight:800;color:#8b949e;letter-spacing:.04em;flex-shrink:0}
+.phase{margin-bottom:6px}
+.phase-hd{display:flex;align-items:center;gap:10px;padding:12px 16px 7px;user-select:none}
+.pbadge{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:900;flex-shrink:0}
 .ph-done .pbadge{background:#238636;color:#fff}
-.ph-done .ptitle{color:#2ea043;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.ph-done .ptitle{color:#2ea043;font-size:.9rem;font-weight:800;letter-spacing:.02em}
 .ph-active .pbadge{background:#1f6feb;color:#fff}
-.ph-active .ptitle{color:#58a6ff;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.ph-active .ptitle{color:#58a6ff;font-size:.9rem;font-weight:800;letter-spacing:.02em}
 .ph-locked .pbadge{background:#21262d;color:#484f58}
-.ph-locked .ptitle{color:#484f58;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.ph-locked .ptitle{color:#484f58;font-size:.9rem;font-weight:800;letter-spacing:.02em}
 .ptitle{flex:1}
-.plock{font-size:.7rem;opacity:.4}
-.phase-prog{height:2px;background:#21262d;margin:0 14px 6px;border-radius:1px;overflow:hidden}
-.phase-prog-fill{height:100%;background:#2ea043;border-radius:1px;transition:width .4s}
-.ci{display:flex;align-items:flex-start;gap:8px;padding:6px 14px;cursor:pointer;border-radius:7px;margin:1px 5px;transition:.1s}
+.plock{font-size:.85rem;opacity:.4}
+.phase-prog{height:3px;background:#21262d;margin:2px 16px 8px;border-radius:2px;overflow:hidden}
+.phase-prog-fill{height:100%;background:#2ea043;border-radius:2px;transition:width .4s}
+.phase-done-chip{margin:0 12px 4px;padding:7px 12px;background:#0d2117;border:1px solid #1d6b2e;border-radius:9px;display:flex;align-items:center;gap:8px;font-size:.82rem;color:#3fb950;font-weight:700}
+.ci{display:flex;align-items:flex-start;gap:10px;padding:9px 16px;cursor:pointer;border-radius:9px;margin:2px 7px;transition:.1s}
 .ci:hover:not(.ci-locked){background:#21262d}
 .ci-locked{pointer-events:none}
-.ci-box{width:16px;height:16px;border-radius:4px;border:2px solid #30363d;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:.15s;font-size:.65rem}
+.ci-box{width:20px;height:20px;border-radius:5px;border:2px solid #30363d;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:.15s;font-size:.8rem}
 .ci-done .ci-box{background:#238636;border-color:#238636;color:#fff}
 .ci-done .ci-lbl{color:#484f58;text-decoration:line-through}
 .ci-tip .ci-box{background:rgba(201,133,0,.15);border-color:#c98500;color:#c98500}
@@ -39,7 +40,7 @@ html,body{height:100%;font-family:'Noto Sans KR','맑은 고딕',sans-serif;back
 .ci-locked .ci-lbl{color:#484f58}
 .ci-active .ci-box{border-color:#1f6feb;box-shadow:0 0 0 2px rgba(31,111,235,.25)}
 .ci-active .ci-lbl{color:#fff;font-weight:700}
-.ci-lbl{font-size:.8rem;color:#c9d1d9;line-height:1.4}
+.ci-lbl{font-size:.97rem;color:#c9d1d9;line-height:1.5}
 .ci-tip .ci-lbl{color:#e3b341}
 
 /* PHONE CENTER */
@@ -68,8 +69,14 @@ html,body{height:100%;font-family:'Noto Sans KR','맑은 고딕',sans-serif;back
 .sbatt-fill{height:100%;background:#4caf50;border-radius:.5px;width:70%}
 
 /* ══════════ SAMSUNG ONE UI SHADE ══════════ */
-.shade{position:absolute;top:0;left:0;right:0;z-index:200;background:rgba(18,18,30,.96);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);transform:translateY(-105%);transition:transform .36s cubic-bezier(.4,0,.2,1);border-radius:0 0 24px 24px}
+.shade{position:absolute;top:0;left:0;right:0;z-index:200;background:rgba(18,18,30,.97);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);transform:translateY(-100%);border-radius:0 0 24px 24px;will-change:transform}
+.shade.snap{transition:transform .34s cubic-bezier(.25,1,.3,1)}
 .shade.open{transform:translateY(0)}
+.shade-ovr{transition:opacity .3s}
+/* grab-from-top hint strip */
+.shade-grip{position:absolute;top:0;left:0;right:0;height:46px;z-index:55}
+.shade-grip-bar{position:absolute;top:5px;left:50%;transform:translateX(-50%);width:34px;height:4px;border-radius:2px;background:rgba(255,255,255,.35);opacity:0;transition:opacity .2s;pointer-events:none}
+.shade-grip:hover .shade-grip-bar{opacity:1}
 .shade-ovr{position:absolute;inset:0;z-index:199;display:none}
 .shade-ovr.on{display:block}
 .shade-toprow{display:flex;justify-content:flex-end;align-items:center;gap:14px;padding:10px 14px 2px}
@@ -625,7 +632,6 @@ function startClock(){
 
 // ════════ PHASE CHECKLIST ════════
 function renderPhases(){
-  var completedPhases=PHASES.filter(function(p){return p.items.every(function(i){return done.has(i.id);});}).map(function(p){return p.id;});
   var firstIncomplete=PHASES.find(function(p){return !p.items.every(function(i){return done.has(i.id);});});
   var activePhaseId=firstIncomplete?firstIncomplete.id:0;
   var html='';
@@ -633,17 +639,21 @@ function renderPhases(){
     var phDone=ph.items.every(function(i){return done.has(i.id);});
     var phActive=ph.id===activePhaseId;
     var phLocked=!phDone && !phActive;
+    // Completed phases collapse into a small "done" chip — items disappear
+    if(phDone){
+      html+='<div class="phase"><div class="phase-done-chip">✅ '+ph.emoji+' '+ph.title+' 완료!</div></div>';
+      return;
+    }
     var doneCount=ph.items.filter(function(i){return done.has(i.id);}).length;
     var pct=Math.round(doneCount/ph.items.length*100);
-    var cls=phDone?'ph-done':phActive?'ph-active':'ph-locked';
-    html+='<div class="phase"><div class="phase-hd '+cls+'"><div class="pbadge">'+(phDone?'✓':ph.id)+'</div><span class="ptitle">'+ph.emoji+' '+ph.title+'</span>'+(phLocked?'<span class="plock">🔒</span>':'')+'</div>';
+    var cls=phActive?'ph-active':'ph-locked';
+    html+='<div class="phase"><div class="phase-hd '+cls+'"><div class="pbadge">'+ph.id+'</div><span class="ptitle">'+ph.emoji+' '+ph.title+'</span>'+(phLocked?'<span class="plock">🔒</span>':'')+'</div>';
     if(!phLocked){
       html+='<div class="phase-prog"><div class="phase-prog-fill" style="width:'+pct+'%"></div></div>';
       ph.items.forEach(function(it){
         var isDone=done.has(it.id);
-        var isLocked=phLocked;
         var isTip=it.type==='tip';
-        var cls2='ci'+(isDone?' ci-done':isLocked?' ci-locked':isTip?' ci-tip':'');
+        var cls2='ci'+(isDone?' ci-done':isTip?' ci-tip':'');
         var boxIcon=isDone?'✓':isTip?'💡':'';
         html+='<div class="'+cls2+'" onclick="ciClick(\''+it.id+'\')">'
           +'<div class="ci-box">'+boxIcon+'</div>'
@@ -738,38 +748,64 @@ function initLock(){
 }
 function unlock(){showScr('home');checkItem('unlock','잠금 화면을 위로 밀어 해제했어요!');rb('ok','🔓 잠금 해제!','홈화면이에요. 아이콘을 눌러 앱을 열 수 있어요.');}
 
-// ════════ NOTIFICATION SHADE ════════
+// ════════ NOTIFICATION SHADE (interactive top-sheet drag) ════════
+var sh, ovr, shH=0, dragging=false, startY=0, startT=0, curT=0, openedOnce=false;
+function shadeH(){return sh.offsetHeight||360;}
+function setT(px){curT=px;sh.style.transform='translateY('+px+'px)';
+  var prog=1-Math.min(1,Math.abs(px)/shadeH());
+  ovr.style.opacity=prog;ovr.classList.toggle('on',prog>0.02);}
 function initShade(){
-  var ps=document.getElementById('pscr'),sy=0,from=false,drag=false;
-  function st(e){
-    if(['off','boot'].includes(curscr)||shadeOpen)return;
-    var t=e.touches?e.touches[0]:e,rect=ps.getBoundingClientRect();
-    from=(t.clientY-rect.top)<46;sy=t.clientY;drag=true;}
-  function mv(e){
-    if(!drag||!from)return;
+  sh=document.getElementById('shade');ovr=document.getElementById('shade-ovr');
+  var ps=document.getElementById('pscr');
+  setT(-shadeH()); // start fully closed (off-screen above)
+
+  function dragStart(e){
+    if(['off','boot'].includes(curscr))return;
+    var t=e.touches?e.touches[0]:e, rect=ps.getBoundingClientRect(), y=t.clientY-rect.top;
+    // open gesture: grab within top 46px while closed.
+    // close gesture: grab anywhere on the open shade.
+    if(!shadeOpen && y>46) return;
+    dragging=true;startY=t.clientY;
+    shH=shadeH();
+    startT=shadeOpen?0:-shH;
+    sh.classList.remove('snap');
+  }
+  function dragMove(e){
+    if(!dragging)return;
     var t=e.touches?e.touches[0]:e;
-    if(t.clientY-sy>30){drag=false;openShade();}if(e.cancelable)e.preventDefault();}
-  function en(){drag=false;}
-  ps.addEventListener('touchstart',st,{passive:true});ps.addEventListener('touchmove',mv,{passive:false});ps.addEventListener('touchend',en);
-  ps.addEventListener('mousedown',st);window.addEventListener('mousemove',function(e){if(drag&&from&&!shadeOpen&&(e.clientY-sy>30)){drag=false;openShade();}});window.addEventListener('mouseup',en);
-  // Swipe up to close
-  var sh=document.getElementById('shade'),ssy=0,sdrag=false;
-  sh.addEventListener('touchstart',function(e){ssy=e.touches[0].clientY;sdrag=true;},{passive:true});
-  sh.addEventListener('touchmove',function(e){if(!sdrag)return;if(ssy-e.touches[0].clientY>40){sdrag=false;closeShade();}},{passive:true});
-  sh.addEventListener('touchend',function(){sdrag=false;});
+    var np=startT+(t.clientY-startY);
+    if(np>0)np=0;if(np<-shH)np=-shH;
+    setT(np);
+    if(e.cancelable)e.preventDefault();
+  }
+  function dragEnd(){
+    if(!dragging)return;dragging=false;
+    sh.classList.add('snap');
+    // snap based on how far it's pulled (>40% open => open)
+    if(curT > -shH*0.6) openShade(); else closeShade();
+  }
+  ps.addEventListener('touchstart',dragStart,{passive:true});
+  ps.addEventListener('touchmove',dragMove,{passive:false});
+  ps.addEventListener('touchend',dragEnd);
+  ps.addEventListener('mousedown',dragStart);
+  window.addEventListener('mousemove',dragMove);
+  window.addEventListener('mouseup',dragEnd);
 }
 function openShade(){
   if(['off','boot'].includes(curscr))return;
-  shadeOpen=true;
-  document.getElementById('shade').classList.add('open');
-  document.getElementById('shade-ovr').classList.add('on');
-  checkItem('shade','상단에서 내려 빠른 설정창을 열었어요!');
-  rb('info','🔽 빠른 설정창 열림!','Wi-Fi, 소리, 밝기 등을 여기서 빠르게 바꿀 수 있어요. 타일을 눌러보세요!');
+  shadeOpen=true;sh.classList.add('snap');
+  requestAnimationFrame(function(){setT(0);});
+  ovr.classList.add('on');ovr.style.opacity=1;
+  if(!openedOnce){openedOnce=true;
+    checkItem('shade','상단에서 내려 빠른 설정창을 열었어요!');
+    rb('info','🔽 빠른 설정창 열림!','손가락으로 잡아 끌어내린 것처럼 내려와요. Wi-Fi·소리·밝기 타일을 눌러보세요!');
+  }
 }
 function closeShade(){
-  shadeOpen=false;
-  document.getElementById('shade').classList.remove('open');
-  document.getElementById('shade-ovr').classList.remove('on');
+  shadeOpen=false;sh.classList.add('snap');
+  setT(-shadeH());
+  ovr.style.opacity=0;
+  setTimeout(function(){if(!shadeOpen)ovr.classList.remove('on');},300);
 }
 var qsState={wifi:true,bt:true,sound:false,plane:false,flash:false,data:true,rotate:true,loc:true,hotspot:false,nfc:true};
 var qsInfo={wifi:'Wi-Fi가 켜지면 집·카페 무선 인터넷을 무료로 써요.',bt:'블루투스로 무선 이어폰·스피커를 연결해요.',sound:'무음으로 바꾸면 진동이나 소리가 안 나요.',plane:'비행기 탑승 시 켜요. 모든 통신이 차단돼요.',flash:'카메라 옆 LED 손전등을 켜고 꺼요.',data:'모바일 데이터를 켜고 끌 수 있어요. 데이터 절약에 좋아요.',rotate:'켜면 폰을 옆으로 돌릴 때 화면도 같이 돌아가요.',loc:'지도·배달 앱에서 내 위치를 알려면 켜야 해요.',hotspot:'내 폰의 데이터를 다른 기기에 나눠줄 수 있어요.',nfc:'카드 단말기에 폰을 대서 결제할 때 써요.'};
