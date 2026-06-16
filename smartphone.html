@@ -500,7 +500,7 @@ var PAGES=[
 var DOCK=['phone','messages','camera','settings'];
 
 // ════════ INIT ════════
-buildHome();startClock();initLock();initShade();initHomeSwipe();renderQSTiles();initQSSwipe();renderQS();applyBright();renderStatus();
+buildHome();startClock();initLock();renderQSTiles();initQSSwipe();initShade();initHomeSwipe();renderQS();applyBright();renderStatus();
 
 // ════════ CLOCK ════════
 function startClock(){
@@ -644,7 +644,8 @@ function setT(px){curT=px;sh.style.transform='translateY('+px+'px)';
 function initShade(){
   sh=document.getElementById('shade');ovr=document.getElementById('shade-ovr');
   var ps=document.getElementById('pscr');
-  setT(-shadeH());
+  // closed by percentage so it stays fully hidden no matter the content height
+  sh.style.transform='translateY(-100%)';curT=-shadeH();
   function ds(e){
     if(['off','boot'].includes(OS.screen))return;
     var t=e.touches?e.touches[0]:e,rect=ps.getBoundingClientRect(),y=t.clientY-rect.top;
@@ -661,7 +662,9 @@ function initShade(){
   ps.addEventListener('touchstart',ds,{passive:true});ps.addEventListener('touchmove',dm,{passive:false});ps.addEventListener('touchend',de);
   ps.addEventListener('mousedown',ds);window.addEventListener('mousemove',dm);window.addEventListener('mouseup',de);
 }
-function openShade(){if(['off','boot'].includes(OS.screen))return;OS.shadeOpen=true;sh.classList.add('snap');requestAnimationFrame(function(){if(OS.shadeOpen)setT(0);});ovr.classList.add('on');}
+function openShade(){if(['off','boot'].includes(OS.screen))return;OS.shadeOpen=true;
+  sh.classList.remove('snap');sh.style.transform='translateY(-100%)';void sh.offsetHeight; // start closed + reflow
+  sh.classList.add('snap');setT(0);ovr.classList.add('on');}
 function closeShade(){OS.shadeOpen=false;if(!sh)return;sh.classList.add('snap');setT(-shadeH());setTimeout(function(){if(!OS.shadeOpen)ovr.classList.remove('on');},300);}
 
 // ════════ QUICK SETTINGS ════════
