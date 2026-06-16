@@ -48,11 +48,13 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
 .si-batt-bar::after{content:'';position:absolute;right:-3px;top:50%;transform:translateY(-50%);width:2px;height:4px;background:currentColor;border-radius:0 1px 1px 0}
 .si-batt-fill{position:absolute;left:1px;top:1px;bottom:1px;width:62%;background:#3ddc84;border-radius:1px}
 
-/* navigation bar */
-.navbar{position:absolute;bottom:0;left:0;right:0;height:40px;display:flex;align-items:center;justify-content:space-around;z-index:80}
-.nbtn{width:46px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.78);font-size:.95rem;border-radius:8px;transition:.1s}
-.nbtn:active{background:rgba(255,255,255,.12)}
-.navbar.dark-ico .nbtn{color:rgba(20,20,20,.7)}
+/* navigation bar — its own band pinned to the very bottom */
+.navbar{position:absolute;bottom:0;left:0;right:0;height:42px;display:flex;align-items:center;justify-content:space-around;z-index:80;background:#08080f;border-top:1px solid rgba(255,255,255,.06)}
+.navbar.light{background:#f1f1f6;border-top-color:#e3e3e9}
+.nbtn{width:46px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.72);font-size:.95rem;border-radius:8px;transition:.1s}
+.nbtn:active{background:rgba(255,255,255,.14)}
+.navbar.light .nbtn{color:rgba(20,20,20,.6)}
+.navbar.light .nbtn:active{background:rgba(0,0,0,.08)}
 .nb-recents{font-size:1rem}
 .nb-home{font-size:.9rem}
 .nb-back{font-size:1.15rem}
@@ -60,6 +62,8 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);d
 /* ════════ SCREENS ════════ */
 .scr{position:absolute;inset:0;display:none;flex-direction:column}
 .scr.on{display:flex}
+/* screens that show the nav bar end ABOVE it (no overlap) */
+#s-home,#s-app,#s-settings,#s-calc,#s-camera,#s-dialer{bottom:42px}
 
 /* OFF */
 #s-off{background:#000;align-items:center;justify-content:center}
@@ -434,7 +438,12 @@ function showScr(id){
   document.getElementById('navbar').style.display=(systemScreens.includes(id))?'none':'flex';
   // settings dark theme
   document.getElementById('s-settings').classList.toggle('dark',OS.q.dark);
+  updateNavTheme();
   updateHint();
+}
+// nav bar adopts a light band only over the light Settings screen
+function updateNavTheme(){
+  document.getElementById('navbar').classList.toggle('light', OS.screen==='settings' && !OS.q.dark);
 }
 function updateHint(){
   var h=document.getElementById('hint');
@@ -583,7 +592,7 @@ function renderQS(){
   var snd=document.getElementById('qsi-sound'),sl=document.getElementById('qsl-sound');
   if(snd){snd.textContent=OS.q.sound?'🔔':'🔇';sl.textContent=OS.q.sound?'소리':'무음';}
 }
-function applyDark(){document.getElementById('night-tint');document.getElementById('s-settings').classList.toggle('dark',OS.q.dark);
+function applyDark(){document.getElementById('s-settings').classList.toggle('dark',OS.q.dark);updateNavTheme();
   document.body.style.background=OS.q.dark?'radial-gradient(circle at 30% 20%,#0a0a14,#050508 60%,#000)':'radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d)';}
 function applyFlash(){var t=document.getElementById('night-tint');
   // flashlight: brief bright flash overlay
