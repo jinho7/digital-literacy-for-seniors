@@ -638,6 +638,7 @@ var PAGES=[
 var DOCK=['phone','messages','camera','settings'];
 
 // ════════ CHECKLIST (free — no order) + FEEDBACK ════════
+// unit 1: phone basics (OS operation)
 var CHECKLIST=[
   {id:'power',    t:'전원 켜고 끄기'},
   {id:'unlock',   t:'잠금 풀기 (위로 밀기)'},
@@ -651,16 +652,20 @@ var CHECKLIST=[
   {id:'app',      t:'아무 앱이나 열기'},
   {id:'back',     t:'뒤로가기 · 홈 버튼'},
   {id:'settings', t:'설정 앱 들어가기'},
-  {id:'calc',     t:'계산기로 계산하기'},
-  {id:'camera',   t:'카메라로 사진 찍기'},
-  {id:'dial',     t:'전화 번호 눌러보기'},
-  {id:'call',     t:'걸려온 전화 받기'},
   {id:'qsedit',   t:'빠른 설정 버튼 편집하기'}
+];
+// unit 2: using the built-in apps
+var APPCHECKS=[
+  {id:'calc',   t:'계산기로 계산하기'},
+  {id:'camera', t:'카메라로 사진 찍기'},
+  {id:'dial',   t:'전화 번호 눌러보기'},
+  {id:'call',   t:'걸려온 전화 받기'}
 ];
 // learning units (depth 1) — more added later (앱 설치하기 등)
 var SECTIONS=[
-  {id:'basics', ico:'📱', t:'휴대폰 기본 조작 알아보기', open:true, items:CHECKLIST},
-  {id:'apps',   ico:'📲', t:'앱 설치하기',              soon:true, items:[]}
+  {id:'basics',   ico:'📱', t:'휴대폰 기본 조작 알아보기', open:true,  items:CHECKLIST},
+  {id:'appbasic', ico:'🧰', t:'기본 어플 사용하기',        open:false, items:APPCHECKS},
+  {id:'apps',     ico:'📲', t:'앱 설치하기',               soon:true,  items:[]}
 ];
 var doneChecks=new Set();
 function renderChecks(){
