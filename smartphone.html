@@ -155,9 +155,25 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);m
 .dock{margin:6px 12px 0;background:rgba(255,255,255,.14);backdrop-filter:blur(28px);border-radius:28px;padding:11px 6px;display:flex;justify-content:space-around;z-index:1;position:relative}
 
 /* ════════ NOTIFICATION SHADE (Samsung One UI) ════════ */
-.shade{position:absolute;top:0;left:0;right:0;z-index:200;background:linear-gradient(180deg,rgba(30,32,44,.98),rgba(17,18,27,.99));backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-radius:0 0 36px 36px;transform:translateY(-100%);will-change:transform;color:#fff;padding-bottom:14px;
-  display:flex;flex-direction:column;min-height:calc(100% - 42px)}
+.shade{position:absolute;top:0;left:0;right:0;z-index:200;background:linear-gradient(180deg,rgba(30,32,44,.98),rgba(17,18,27,.99));backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-radius:0 0 36px 36px;transform:translateY(-100%);will-change:transform;color:#fff;padding-bottom:12px;
+  display:flex;flex-direction:column}
+.shade.expanded{min-height:calc(100% - 42px)}
 .shade.snap{transition:transform .34s cubic-bezier(.25,1,.3,1)}
+/* compact (first pull) vs full (expanded) */
+.sh-full{display:none}
+.shade.expanded .sh-full{display:block}
+.shade.expanded .sh-compact{display:none}
+.sh-expand{text-align:center;padding:8px 0 4px;font-size:.92rem;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer}
+.sh-foot{display:none}
+.shade.expanded .sh-foot{display:block}
+.shade.expanded .sh-expand{display:none}
+/* compact row: 6 fixed circular toggles */
+.qs-compact{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;padding:2px 10px 8px}
+.qsc{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.qsc-circ{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.35rem;transition:.12s}
+.qsc.on .qsc-circ{background:#5a9eff;color:#fff}
+.qsc:active .qsc-circ{transform:scale(.86)}
+.qsc-lbl{font-size:.54rem;color:rgba(255,255,255,.72);text-align:center;line-height:1.2;max-width:54px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .shade-ovr{position:absolute;inset:0;z-index:199;display:none;background:rgba(0,0,0,.3)}
 .shade-ovr.on{display:block}
 .sh-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px}
@@ -176,12 +192,12 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);m
 /* tile carousel panel */
 .qs-panel{background:rgba(255,255,255,.06);border-radius:26px;margin:0 14px 10px;padding:16px 8px 8px;overflow:hidden;position:relative;touch-action:pan-y}
 .qs-track{display:flex;transition:transform .3s cubic-bezier(.3,1,.4,1)}
-.qs-page{min-width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:16px 0}
-.qs-tile{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
-.qs-circ{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:.12s}
+.qs-page{min-width:100%;display:grid;grid-template-columns:repeat(5,1fr);gap:15px 0}
+.qs-tile{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.qs-circ{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.15rem;transition:.12s}
 .qs-tile.on .qs-circ{background:#5a9eff;color:#fff}
 .qs-tile:active .qs-circ{transform:scale(.86)}
-.qs-tlbl{font-size:.55rem;color:rgba(255,255,255,.78);text-align:center;line-height:1.25;max-width:62px}
+.qs-tlbl{font-size:.5rem;color:rgba(255,255,255,.78);text-align:center;line-height:1.2;max-width:54px}
 .qs-dots{display:flex;justify-content:center;gap:7px;padding:8px 0 2px}
 .qs-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.28);transition:.2s}
 .qs-dot.on{background:#fff;width:16px;border-radius:3px}
@@ -333,33 +349,47 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);m
       <div class="sicons" id="sb-icons"></div>
     </div>
 
-    <!-- SHADE (Samsung One UI quick settings) -->
+    <!-- SHADE (Samsung One UI quick settings, 2-stage) -->
     <div class="shade" id="shade">
       <div class="sh-head">
         <span class="sh-headL"><span id="sh-time">10:30</span> · <span id="sh-date">월요일, 6월 16일</span></span>
-        <span class="sh-headR"><span class="sh-hic" onclick="openQSEdit()">✏️</span><span class="sh-hic" onclick="hwPower()">⏻</span><span class="sh-hic" onclick="openApp('settings')">⚙️</span></span>
+        <span class="sh-headR"><span class="sh-hic" onclick="openQSEdit()">✏️</span><span class="sh-hic" onclick="hwPower()">⏻</span><span class="sh-hic" onclick="openSettingsFromShade()">⚙️</span></span>
       </div>
-      <div class="qs-lg">
-        <div class="qslg on" data-qs="wifi" onclick="qsTap('wifi')"><span class="qslg-circ">📶</span><div><div class="qslg-nm">Wi-Fi</div><div class="qslg-sub" id="qsub-wifi">우리집 5G</div></div></div>
-        <div class="qslg on" data-qs="bt" onclick="qsTap('bt')"><span class="qslg-circ">🔵</span><div><div class="qslg-nm">블루투스</div><div class="qslg-sub" id="qsub-bt">연결됨</div></div></div>
+
+      <!-- COMPACT: 6 fixed toggles in one row (first pull) -->
+      <div class="sh-compact"><div class="qs-compact" id="qs-compact"></div></div>
+
+      <!-- EXPANDED: large Wi-Fi/BT + full grid (pull/swipe again) -->
+      <div class="sh-full">
+        <div class="qs-lg">
+          <div class="qslg on" data-qs="wifi" onclick="qsTap('wifi')"><span class="qslg-circ">📶</span><div><div class="qslg-nm">Wi-Fi</div><div class="qslg-sub" id="qsub-wifi">우리집 5G</div></div></div>
+          <div class="qslg on" data-qs="bt" onclick="qsTap('bt')"><span class="qslg-circ">🔵</span><div><div class="qslg-nm">블루투스</div><div class="qslg-sub" id="qsub-bt">연결됨</div></div></div>
+        </div>
+        <div class="qs-panel">
+          <div class="qs-track" id="qs-track"></div>
+          <div class="qs-dots" id="qs-dots"></div>
+        </div>
       </div>
-      <div class="qs-panel">
-        <div class="qs-track" id="qs-track"></div>
-        <div class="qs-dots" id="qs-dots"></div>
-      </div>
+
       <div class="sh-bright">
         <span style="font-size:1rem;opacity:.7">🔆</span>
         <input type="range" class="sl-track" id="sl-bright" min="10" max="100" value="85" oninput="setBright(this.value)"/>
         <span class="sh-bdots" onclick="flashToast('밝기 옵션 (준비 중)')">⋮</span>
       </div>
-      <div class="sh-modes">
-        <div class="sh-mtile" id="m-eye" onclick="toggleEye()"><span class="sh-mt-circ">🌅</span><div><div class="sh-mt-nm">블루라이트 차단</div></div></div>
-        <div class="sh-mtile" data-qs="dark" onclick="qsTap('dark')"><span class="sh-mt-circ">🌙</span><div><div class="sh-mt-nm">다크 모드</div></div></div>
+
+      <div class="sh-full">
+        <div class="sh-modes">
+          <div class="sh-mtile" id="m-eye" onclick="toggleEye()"><span class="sh-mt-circ">🌅</span><div><div class="sh-mt-nm">블루라이트 차단</div></div></div>
+          <div class="sh-mtile" data-qs="dark" onclick="qsTap('dark')"><span class="sh-mt-circ">🌙</span><div><div class="sh-mt-nm">다크 모드</div></div></div>
+        </div>
+        <div class="sh-media">
+          <div class="sh-mtile" onclick="flashToast('Smart View — 화면 미러링 (준비 중)')"><span class="sh-mt-circ">📺</span><div><div class="sh-mt-nm">Smart View</div><div class="sh-mt-sub">화면 미러링</div></div></div>
+          <div class="sh-mtile" onclick="flashToast('기기 제어 — SmartThings (준비 중)')"><span class="sh-mt-circ">⊞</span><div><div class="sh-mt-nm">기기 제어</div><div class="sh-mt-sub">SmartThings</div></div></div>
+        </div>
       </div>
-      <div class="sh-media">
-        <div class="sh-mtile" onclick="flashToast('Smart View — 화면 미러링 (준비 중)')"><span class="sh-mt-circ">📺</span><div><div class="sh-mt-nm">Smart View</div><div class="sh-mt-sub">화면 미러링</div></div></div>
-        <div class="sh-mtile" onclick="flashToast('기기 제어 — SmartThings (준비 중)')"><span class="sh-mt-circ">⊞</span><div><div class="sh-mt-nm">기기 제어</div><div class="sh-mt-sub">SmartThings</div></div></div>
-      </div>
+
+      <!-- expand handle (compact) / close (expanded) -->
+      <div class="sh-expand" id="sh-expand" onclick="toggleExpand()">▼ 더 보기</div>
       <div class="sh-foot" onclick="closeShade()">▲ 위로 밀어서 닫기</div>
     </div>
     <div class="shade-ovr" id="shade-ovr" onclick="closeShade()"></div>
@@ -516,26 +546,35 @@ body{background:radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d);m
 <script>
 // ════════ OS STATE ════════
 var OS={
-  screen:'off', bootedOnce:false, shadeOpen:false, homePage:0,
-  q:{wifi:true,bt:true,data:true,sound:true,flash:false,plane:false,rotate:true,loc:true,dark:false,hotspot:false,nfc:true,aod:false},
+  screen:'off', bootedOnce:false, shadeOpen:false, expanded:false, homePage:0,
+  q:{wifi:true,bt:true,data:true,plane:false,rotate:true,flash:false,nfc:true,
+     hotspot:false,powersave:false,winlink:false,screenrec:false,loc:true,dnd:false,dark:false},
+  soundMode:'sound', // sound | vibrate | mute
   brightness:85, volume:60, appStack:[], qsPage:0, eye:false
 };
-// ordered quick-settings tiles — first 8 on page 1, rest on page 2 (· · dots)
+// metadata for every quick toggle
+var QTILE={
+  wifi:{nm:'Wi-Fi',ico:'📶'}, bt:{nm:'블루투스',ico:'🔵'},
+  sound:{nm:'소리',ico:'🔊'}, rotate:{nm:'세로',ico:'🔄'}, plane:{nm:'비행기 모드',ico:'✈️'},
+  flash:{nm:'손전등',ico:'🔦'}, nfc:{nm:'NFC',ico:'🇳'}, data:{nm:'모바일 데이터',ico:'↕️'},
+  hotspot:{nm:'모바일 핫스팟',ico:'📡'}, powersave:{nm:'절전 모드',ico:'🔋'},
+  winlink:{nm:'Windows 연결',ico:'🪟'}, screenrec:{nm:'화면 녹화',ico:'⏺️'},
+  loc:{nm:'위치',ico:'📍'}, dnd:{nm:'방해 금지',ico:'🔕'}
+};
+// compact view: 6 fixed toggles in one row
+var COMPACT=['wifi','bt','sound','rotate','plane','flash'];
+// expanded grid (Wi-Fi/BT are the big tiles above) — 5 per row, editable order
 var QSTILES=[
-  {k:'sound',  nm:'소리',     ico:'🔊', state:'sound'},
-  {k:'rotate', nm:'세로',     ico:'🔒', state:'rotate'},
-  {k:'qr',     nm:'QR 코드 스캔', ico:'🔳', act:1},
-  {k:'gpt',    nm:'ChatGPT',  ico:'🤖', act:1},
-  {k:'flash',  nm:'손전등',   ico:'🔦', state:'flash'},
-  {k:'nfc',    nm:'NFC',      ico:'🇳', state:'nfc'},
-  {k:'data',   nm:'모바일 데이터', ico:'↕️', state:'data'},
-  {k:'capture',nm:'화면 캡처', ico:'✂️', act:1},
-  {k:'hotspot',nm:'모바일 핫스팟', ico:'📡', state:'hotspot'},
-  {k:'aod',    nm:'Always On Display', ico:'🕙', state:'aod'},
-  {k:'loc',    nm:'위치',     ico:'📍', state:'loc'},
-  {k:'quickshare',nm:'Quick Share', ico:'🔄', act:1}
+  {k:'sound'},{k:'rotate'},{k:'plane'},{k:'flash'},{k:'nfc'},
+  {k:'data'},{k:'hotspot'},{k:'powersave'},{k:'winlink'},{k:'screenrec'},
+  {k:'loc'},{k:'dnd'}
 ];
-QSTILES.forEach(function(t){t.vis=true;});
+QSTILES.forEach(function(t){t.vis=true;t.nm=QTILE[t.k].nm;t.ico=QTILE[t.k].ico;t.state=t.k;});
+// sound is a 3-state cycle (소리/진동/무음)
+var SOUND_META={sound:{ico:'🔊',nm:'소리'},vibrate:{ico:'📳',nm:'진동'},mute:{ico:'🔇',nm:'무음'}};
+function tileIco(k){return k==='sound'?SOUND_META[OS.soundMode].ico:QTILE[k].ico;}
+function tileNm(k){return k==='sound'?SOUND_META[OS.soundMode].nm:QTILE[k].nm;}
+function tileOn(k){return k==='sound'?(OS.soundMode!=='mute'):!!OS.q[k];}
 var APPS={
   phone:{n:'전화',i:'📞',bg:'linear-gradient(135deg,#1a8a3a,#34c759)',open:'dialer'},
   messages:{n:'메시지',i:'💬',bg:'linear-gradient(135deg,#0a6cff,#4a9bff)',stub:true},
@@ -631,11 +670,14 @@ var QEXPLAIN={
   dark:'다크 모드는 화면을 어둡게 해 눈이 편하고 배터리도 아껴요.',
   hotspot:'내 폰 데이터를 다른 기기와 나눠 써요.',
   nfc:'교통카드·간편결제에 쓰는 근거리 통신이에요.',
-  aod:'화면이 꺼져 있어도 시계·알림을 항상 보여줘요.'
+  powersave:'절전 모드를 켜면 배터리를 아껴 더 오래 써요.',
+  winlink:'컴퓨터(Windows)와 연결해 사진·메시지를 함께 봐요.',
+  screenrec:'화면에 보이는 것을 동영상으로 녹화해요.',
+  dnd:'방해 금지를 켜면 알림 소리·진동이 울리지 않아요.'
 };
 
 // ════════ INIT ════════
-buildHome();startClock();initLock();renderQSTiles();initQSSwipe();initShade();initHomeSwipe();renderQS();applyBright();renderStatus();renderChecks();
+buildHome();startClock();initLock();renderCompact();renderQSTiles();initQSSwipe();initShade();initHomeSwipe();renderQS();applyBright();renderStatus();renderChecks();
 fitPhone();window.addEventListener('resize',fitPhone);
 
 // ════════ CLOCK ════════
@@ -713,7 +755,7 @@ function hwPower(){
 }
 function hwVol(d){
   OS.volume=Math.max(0,Math.min(100,OS.volume+d*10));
-  if(OS.volume===0){OS.q.sound=false;} else if(d>0){OS.q.sound=true;}
+  if(OS.volume===0){OS.soundMode='mute';} else if(d>0&&OS.soundMode==='mute'){OS.soundMode='sound';}
   renderQS();renderStatus();syncSettings();
   flashToast((d>0?'🔊 볼륨 ':'🔉 볼륨 ')+OS.volume+'%');
   fb('act',(d>0?'🔊 볼륨 올리기':'🔉 볼륨 내리기')+' ('+OS.volume+'%)','옆면 위/아래 버튼으로 소리 크기를 조절해요.');
@@ -756,6 +798,7 @@ function unlockTo(app){OS.appStack=[];showScr('home');openApp(app);check('unlock
 // ════════ NAVIGATION ════════
 function openApp(key){
   var a=APPS[key];if(!a)return;
+  closeShade();
   check('app');
   if(key==='settings')check('settings');
   fb('act','📲 '+a.n+' 열기','앱 아이콘을 누르면 해당 앱이 열려요.'+(a.stub?' (이 앱은 다음 단계에서 만들 예정이에요)':''));
@@ -782,8 +825,8 @@ function navBack(){
 }
 function navRecents(){closeShade();OS.appStack=[];showScr('home');flashToast('최근 앱 (준비 중)');fb('info','▢ 최근 앱','왼쪽 ▢ 버튼은 최근 사용한 앱 목록을 보여줘요. (준비 중)');}
 
-// ════════ NOTIFICATION SHADE ════════
-var sh,ovr,dragging=false,startY=0,startT=0,curT=0;
+// ════════ NOTIFICATION SHADE (2-stage) ════════
+var sh,ovr,dragging=false,wasOpenAtStart=false,startY=0,startT=0,curT=0;
 function shadeH(){return sh.offsetHeight||420;}
 function setT(px){curT=px;sh.style.transform='translateY('+px+'px)';
   var prog=1-Math.min(1,Math.abs(px)/shadeH());
@@ -791,69 +834,78 @@ function setT(px){curT=px;sh.style.transform='translateY('+px+'px)';
 function initShade(){
   sh=document.getElementById('shade');ovr=document.getElementById('shade-ovr');
   var ps=document.getElementById('pscr');
-  // closed by percentage so it stays fully hidden no matter the content height
   sh.style.transform='translateY(-100%)';curT=-shadeH();
   function ds(e){
     if(['off','boot'].includes(OS.screen))return;
     var t=e.touches?e.touches[0]:e,rect=ps.getBoundingClientRect(),y=t.clientY-rect.top;
     if(!OS.shadeOpen && y>50)return;
-    dragging=true;startY=t.clientY;startT=OS.shadeOpen?0:-shadeH();sh.classList.remove('snap');
+    dragging=true;wasOpenAtStart=OS.shadeOpen;startY=t.clientY;startT=OS.shadeOpen?0:-shadeH();sh.classList.remove('snap');
   }
   function dm(e){
-    if(!dragging)return;var t=e.touches?e.touches[0]:e;
-    var np=startT+(t.clientY-startY);if(np>0)np=0;if(np<-shadeH())np=-shadeH();
+    if(!dragging)return;var t=e.touches?e.touches[0]:e,dy=t.clientY-startY;
+    // open + compact + drag down → expand
+    if(OS.shadeOpen && !OS.expanded && dy>48){dragging=false;expandShade();return;}
+    var np=startT+dy;if(np>0)np=0;if(np<-shadeH())np=-shadeH();
     setT(np);if(e.cancelable)e.preventDefault();
   }
   function de(){if(!dragging)return;dragging=false;sh.classList.add('snap');
-    if(curT>-shadeH()*0.6)openShade();else closeShade();}
+    if(curT>-shadeH()*0.6){ if(wasOpenAtStart)snapOpen(); else openShade(); }
+    else closeShade();}
   ps.addEventListener('touchstart',ds,{passive:true});ps.addEventListener('touchmove',dm,{passive:false});ps.addEventListener('touchend',de);
   ps.addEventListener('mousedown',ds);window.addEventListener('mousemove',dm);window.addEventListener('mouseup',de);
 }
-function openShade(){if(['off','boot'].includes(OS.screen))return;var wasOpen=OS.shadeOpen;OS.shadeOpen=true;
+function snapOpen(){sh.classList.add('snap');setT(0);ovr.classList.add('on');} // re-anchor, no state change
+function openShade(){if(['off','boot'].includes(OS.screen))return;var wasOpen=OS.shadeOpen;OS.shadeOpen=true;OS.expanded=false;sh.classList.remove('expanded');
   sh.classList.remove('snap');sh.style.transform='translateY(-100%)';void sh.offsetHeight; // start closed + reflow
   sh.classList.add('snap');setT(0);ovr.classList.add('on');
-  if(!wasOpen){check('shade');fb('ok','🔽 알림창 열기','화면 맨 위(상태표시줄)를 잡고 아래로 끌어내리면 빠른 설정창이 나와요. Wi-Fi·소리·밝기를 빠르게 바꿀 수 있어요.');}}
-function closeShade(){OS.shadeOpen=false;if(!sh)return;sh.classList.add('snap');setT(-shadeH());setTimeout(function(){if(!OS.shadeOpen)ovr.classList.remove('on');},300);}
+  if(!wasOpen){check('shade');fb('ok','🔽 알림창 열기','상태표시줄을 잡고 내리면 빠른 설정 6개가 나와요. 한 번 더 내리면(또는 "더 보기") 전체 설정이 펼쳐져요.');}}
+function expandShade(){OS.expanded=true;sh.classList.add('snap','expanded');setT(0);ovr.classList.add('on');
+  fb('info','⬇️ 전체 빠른 설정','한 번 더 내리면 Wi-Fi·블루투스 큰 버튼과 모든 빠른 설정이 펼쳐져요.');}
+function toggleExpand(){ if(OS.expanded){sh.classList.add('snap');sh.classList.remove('expanded');OS.expanded=false;setT(0);} else expandShade(); }
+function closeShade(){OS.shadeOpen=false;OS.expanded=false;if(!sh)return;sh.classList.add('snap');sh.classList.remove('expanded');setT(-shadeH());setTimeout(function(){if(!OS.shadeOpen)ovr.classList.remove('on');},300);}
+function openSettingsFromShade(){closeShade();openApp('settings');}
 
 // ════════ QUICK SETTINGS ════════
-var QMETA={
-  wifi:{nm:'Wi-Fi'},bt:{nm:'블루투스'},data:{nm:'모바일 데이터'},sound:{nm:'소리'},
-  flash:{nm:'손전등'},plane:{nm:'비행기 모드'},rotate:{nm:'세로(화면 회전)'},loc:{nm:'위치'},
-  dark:{nm:'다크 모드'},hotspot:{nm:'모바일 핫스팟'},nfc:{nm:'NFC'},aod:{nm:'Always On Display'}
-};
 function qsTap(key){
+  if(key==='sound'){ // 3-state cycle: 소리 → 진동 → 무음 → 소리
+    OS.soundMode = OS.soundMode==='sound'?'vibrate':OS.soundMode==='vibrate'?'mute':'sound';
+    OS.volume = OS.soundMode==='sound'?(OS.volume||60):0;
+    renderQS();renderStatus();syncSettings();
+    flashToast('🔔 '+SOUND_META[OS.soundMode].nm);
+    check('qstoggle');
+    fb('ok','🔔 소리 모드: '+SOUND_META[OS.soundMode].nm,'한 번씩 누를 때마다 소리 → 진동 → 무음 으로 바뀌어요.');
+    return;
+  }
   OS.q[key]=!OS.q[key];
-  // side-effects
   if(key==='plane' && OS.q.plane){OS.q.wifi=false;OS.q.data=false;OS.q.bt=false;}
   if((key==='wifi'||key==='data'||key==='bt') && OS.q[key]){OS.q.plane=false;}
   if(key==='dark')applyDark();
-  if(key==='sound'){OS.volume=OS.q.sound?(OS.volume||60):0;}
   renderQS();renderStatus();syncSettings();
-  var nm=(QMETA[key]?QMETA[key].nm:key);
+  var nm=(QTILE[key]?QTILE[key].nm:key);
   flashToast((OS.q[key]?'✅ ':'⭕ ')+nm+(OS.q[key]?' 켜짐':' 꺼짐'));
   check('qstoggle'); if(key==='dark')check('dark');
   fb('ok',(OS.q[key]?'✅ ':'⭕ ')+nm+(OS.q[key]?' 켜짐':' 꺼짐'),QEXPLAIN[key]||'빠른 설정 버튼을 눌러 켜고 꺼요.');
 }
-// tap a tile in the carousel (toggle or action)
-function qsTileTap(k){
-  var t=null;QSTILES.forEach(function(x){if(x.k===k)t=x;});
-  if(!t)return;
-  if(t.act){flashToast(t.nm+' (준비 중)');return;}
-  qsTap(t.state);
+function qsTileTap(k){ qsTap(k); }
+// compact row: 6 fixed circular toggles
+function renderCompact(){
+  var el=document.getElementById('qs-compact');if(!el)return;
+  el.innerHTML=COMPACT.map(function(k){
+    return '<div class="qsc'+(tileOn(k)?' on':'')+'" onclick="qsTap(\''+k+'\')"><span class="qsc-circ">'+tileIco(k)+'</span><span class="qsc-lbl">'+tileNm(k)+'</span></div>';
+  }).join('');
 }
-// build the 2-page tile carousel + dots
+// expanded grid (5 per row) + dots
 function renderQSTiles(){
   var track=document.getElementById('qs-track'),dots=document.getElementById('qs-dots');
   if(!track)return;
   var vis=QSTILES.filter(function(t){return t.vis;});
-  var per=8,pages=Math.max(1,Math.ceil(vis.length/per));
+  var per=10,pages=Math.max(1,Math.ceil(vis.length/per));
   if(OS.qsPage>=pages)OS.qsPage=pages-1;
   var html='';
   for(var p=0;p<pages;p++){
     html+='<div class="qs-page">';
     vis.slice(p*per,p*per+per).forEach(function(t){
-      var on=t.state&&OS.q[t.state];
-      html+='<div class="qs-tile'+(on?' on':'')+'" onclick="qsTileTap(\''+t.k+'\')"><span class="qs-circ">'+t.ico+'</span><span class="qs-tlbl">'+t.nm+'</span></div>';
+      html+='<div class="qs-tile'+(tileOn(t.k)?' on':'')+'" onclick="qsTap(\''+t.k+'\')"><span class="qs-circ">'+tileIco(t.k)+'</span><span class="qs-tlbl">'+tileNm(t.k)+'</span></div>';
     });
     html+='</div>';
   }
@@ -918,7 +970,7 @@ function renderQS(){
   });
   set('qsub-wifi',OS.q.wifi?'우리집 5G':'꺼짐');
   set('qsub-bt',OS.q.bt?'연결됨':'꺼짐');
-  renderQSTiles();
+  renderCompact();renderQSTiles();
 }
 function applyDark(){document.getElementById('s-settings').classList.toggle('dark',OS.q.dark);updateNavTheme();
   document.body.style.background=OS.q.dark?'radial-gradient(circle at 30% 20%,#0a0a14,#050508 60%,#000)':'radial-gradient(circle at 30% 20%,#1b2540,#0a0e1a 60%,#05070d)';}
@@ -932,7 +984,8 @@ function applyBright(){var dim=document.getElementById('bright-dim');
 // ════════ STATUS BAR ════════
 function renderStatus(){
   var ic=[];
-  if(!OS.q.sound)ic.push('<span>🔇</span>');
+  if(OS.soundMode==='mute')ic.push('<span>🔇</span>');
+  else if(OS.soundMode==='vibrate')ic.push('<span>📳</span>');
   if(OS.q.plane){ic.push('<span>✈️</span>');}
   else{
     if(OS.q.wifi)ic.push('<span title="Wi-Fi">📶</span>');
@@ -946,20 +999,21 @@ function renderStatus(){
 
 // ════════ SETTINGS TOGGLES (synced w/ quick settings) ════════
 function settingToggle(key){
+  if(key==='sound'){qsTap('sound');return;} // cycle 3-state
   OS.q[key]=!OS.q[key];
   if(key==='dark')applyDark();
-  if(key==='sound'){OS.volume=OS.q.sound?(OS.volume||60):0;}
   syncSettings();renderQS();renderStatus();
   check('qstoggle');if(key==='dark')check('dark');
-  var nm=(QMETA[key]?QMETA[key].nm:key);
+  var nm=(QTILE[key]?QTILE[key].nm:key);
   fb('ok',(OS.q[key]?'✅ ':'⭕ ')+nm+(OS.q[key]?' 켜짐':' 꺼짐'),'설정 앱의 스위치로도 켜고 끌 수 있어요. '+(QEXPLAIN[key]||''));
 }
 function syncSettings(){
-  ['wifi','bt','data','sound','dark','rotate'].forEach(function(k){
+  ['wifi','bt','data','dark','rotate'].forEach(function(k){
     var el=document.getElementById('set-'+k);if(el)el.classList.toggle('on',OS.q[k]);
   });
+  var se=document.getElementById('set-sound');if(se)se.classList.toggle('on',OS.soundMode!=='mute');
   set('set-wifi-sb',OS.q.wifi?'우리집 5G에 연결됨':'꺼짐');
-  set('set-sound-sb',OS.q.sound?'소리':'무음');
+  set('set-sound-sb',SOUND_META[OS.soundMode].nm);
 }
 
 // ════════ TOAST ════════
